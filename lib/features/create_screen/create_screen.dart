@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../core/constant/images.dart';
 
 class CreateScreen extends StatelessWidget{
