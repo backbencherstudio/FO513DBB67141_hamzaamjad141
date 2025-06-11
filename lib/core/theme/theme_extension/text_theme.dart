@@ -12,7 +12,7 @@ class AppTextTheme {
     ),
     headlineMedium: GoogleFonts.poppins(
       fontSize: 26.sp,
-      fontWeight: FontWeight.w700,
+      fontWeight: FontWeight.w400,
     ),
     headlineSmall: GoogleFonts.poppins(
       fontSize: 24.sp,
