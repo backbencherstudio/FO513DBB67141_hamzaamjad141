@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   static ColorScheme darkColorScheme = ColorScheme(
     brightness: Brightness.dark,
-    primary: Color(0xff090C20),
+    primary: Color(0xff3762E4),
     onPrimary: Color(0xffFFFFFF),
     secondary: Color(0xff23293D),
     onSecondary: Color(0xffF9FAFB),
@@ -20,4 +20,5 @@ class AppColors {
   static const Color onError = Color(0xffEB3D4D);
   static const Color surface = Color(0xff161721);
   static const Color onSurface = Color(0xffF9FAFB);
+  static const Color bottomNavBarBackground = Color(0xff212432);
 }
