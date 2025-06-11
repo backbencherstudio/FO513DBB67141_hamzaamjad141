@@ -18,27 +18,24 @@ class StripeServices {
     await Stripe.instance.applySettings();
   }
 
-
   Future<String?> createPaymentMethod() async {
-    try{
+    try {
       final paymentMethod = await Stripe.instance.createPaymentMethod(
-          params: PaymentMethodParams.card(
-            paymentMethodData: PaymentMethodData(
-            billingDetails: BillingDetails(
-              email: 'shakinhabib2000@gmail.com'
-            ),
-          ),),
+        params: PaymentMethodParams.card(
+          paymentMethodData: PaymentMethodData(
+            billingDetails: BillingDetails(email: 'shakinhabib2000@gmail.com'),
+          ),
+        ),
       );
       debugPrint("\npayment method id : ${paymentMethod.id}\n");
       return paymentMethod.id;
-    }catch(e){
+    } catch (e) {
       Fluttertoast.showToast(
-          msg: "Failed to create payment method",
+        msg: "Failed to create payment method",
         backgroundColor: Colors.red,
         fontSize: 14.sp,
       );
-      throw Exception('\nFailed to create payment method: $e\n',);
+      throw Exception('\nFailed to create payment method: $e\n');
     }
   }
-
 }

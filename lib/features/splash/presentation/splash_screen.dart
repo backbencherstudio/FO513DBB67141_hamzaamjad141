@@ -40,14 +40,8 @@ class _SplashScreenState extends State<SplashScreen>
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         context.go(RouteName.onboardingScreen);
-       // goToOnboardingScreen(context);
       }
     });
-  }
-
-  Future<void> goToOnboardingScreen(context) async {
-    await Future.delayed(Duration(milliseconds: 500));
-    context.go(RouteName.onboardingScreen);
   }
 
   @override
@@ -57,13 +51,14 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Offset _flightPath(double t, Size screenSize) {
-    // Custom arc: left to center with a dip and lift
+    /// Custom arc: left to center with a dip and lift
     final startX = -planeSize;
     final endX = screenSize.width / 2 - planeSize / 2;
     final midY = screenSize.height / 2 - 60;
 
     final x = startX + (endX - startX) * t;
-    final y = midY + 130 * sin(pi * t); // sine wave to arc it down then up again
+    final y =
+        midY + 130 * sin(pi * t); // sine wave to arc it down then up again
 
     return Offset(x, y);
   }
