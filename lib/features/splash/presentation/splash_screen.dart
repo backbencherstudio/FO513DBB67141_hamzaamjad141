@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen>
   late Animation<double> _animation;
 
   final planeSize = 40.0;
-  final animationDuration = Duration(milliseconds: 1600);
+  final animationDuration = Duration(milliseconds: 1900);
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _animation = CurvedAnimation(
       parent: _animationController,
-      curve: Curves.fastEaseInToSlowEaseOut,
+      curve: Curves.linear,
     );
 
     _animationController.forward();

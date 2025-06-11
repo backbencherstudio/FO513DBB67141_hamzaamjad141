@@ -46,6 +46,7 @@ class OnboardingFooter extends StatelessWidget {
                           color: Color(0xff919EAB),
                         ),
                       ),
+                      buttonSize: 58.h,
                       icon: Icon(Icons.arrow_forward),
                       backgroundColor: AppColors.surface,
                       width: 218.w,

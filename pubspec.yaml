@@ -43,7 +43,6 @@ dependencies:
   geocoding: ^4.0.0
   geolocator: ^14.0.1
   location: ^8.0.0
-  flutter_stripe: ^11.5.0
   fluttertoast: ^8.2.12
   google_fonts: ^6.2.1
   flutter_svg: ^2.1.0
