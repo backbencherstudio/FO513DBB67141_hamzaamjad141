@@ -252,10 +252,10 @@ packages:
     dependency: transitive
     description:
       name: geocoding_android
-      sha256: fe7df2e35dc49a5176af634ff9c7b0312d9a2adc94320b936a56241f8028bbbc
+      sha256: ba810da90d6633cbb82bbab630e5b4a3b7d23503263c00ae7f1ef0316dcae5b9
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.0"
+    version: "4.0.1"
   geocoding_ios:
     dependency: transitive
     description:
@@ -324,10 +324,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: "0b1e06223bee260dee31a171fb1153e306907563a0b0225e8c1733211911429a"
+      sha256: b453934c36e289cef06525734d1e676c1f91da9e22e2017d9dcab6ce0f999175
       url: "https://pub.dev"
     source: hosted
-    version: "15.1.2"
+    version: "15.1.3"
   google_fonts:
     dependency: "direct main"
     description:
@@ -653,6 +653,15 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  slider_button:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "36044d7ffe10e5cd11ac5b4298fa8be785f177a9"
+      url: "https://github.com/nahidulislamshakin/Slider-Button_package.git"
+    source: git
+    version: "2.1.2"
   source_span:
     dependency: transitive
     description:
@@ -761,10 +770,10 @@ packages:
     dependency: transitive
     description:
       name: vector_graphics
-      sha256: "44cc7104ff32563122a929e4620cf3efd584194eec6d1d913eb5ba593dbcf6de"
+      sha256: a4f059dc26fc8295b5921376600a194c4ec7d55e72f2fe4c7d2831e103d461e6
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.18"
+    version: "1.1.19"
   vector_graphics_codec:
     dependency: transitive
     description:

@@ -14,7 +14,6 @@ CustomTransitionPage buildPageWithTransition({
     child: child,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       switch (transitionType) {
-
         case PageTransitionType.slideBottomToTop:
           return SlideTransition(
             position: animation.drive(
