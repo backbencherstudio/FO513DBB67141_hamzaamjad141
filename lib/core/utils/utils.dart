@@ -300,7 +300,7 @@ class Utils {
         return Icon(
           Icons.image_not_supported,
           size: 35.sp,
-        ); // Show an error icon if the image fails to load
+        ); // Show an error icons if the image fails to load
       },
     );
   }
