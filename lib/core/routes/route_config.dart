@@ -1,8 +1,17 @@
+
+
 part of 'part_of_import.dart';
+
+
+
 
 class RouteConfig {
   GoRouter goRouter = GoRouter(
-    initialLocation: RouteName.ebookScreen,
+
+    initialLocation: RouteName.signupScreen,
+
+
+
     routes: [
       /// Bottom NavBar
       StatefulShellRoute.indexedStack(
@@ -59,7 +68,13 @@ class RouteConfig {
           return const MaterialPage(child: SplashScreen());
         },
       ),
-
+ GoRoute(
+        name: RouteName.signupScreen,
+        path: RouteName.signupScreen,
+        pageBuilder: (context, state) {
+          return const MaterialPage(child: SignupScreen());
+        },
+      ),
       GoRoute(
         name: RouteName.onboardingScreen,
         path: RouteName.onboardingScreen,
