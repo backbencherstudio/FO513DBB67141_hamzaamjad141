@@ -45,9 +45,11 @@ class SignInScreen extends StatelessWidget {
             SizedBox(height: 48.h),
             CustomTextformfiled(text: "Email" ,hintext: "Enter your email", icons: AppIcons.message, controller: emailController),
             SizedBox(height: 18.h,),
-            CustomTextformfiled(text: "Password" ,hintext: "Enter your password", icons:AppIcons.eye , controller: passwordController),
+            CustomTextformfiled(text: "Password" ,isobscure: true ,hintext: "Enter your password", icons:AppIcons.eye , controller: passwordController),
             SizedBox(height: 36.h,),
-            CustomDummyButton(onTap: (){},text: "Continue",),
+            CustomDummyButton(onTap: (){
+              context.go(RouteName.ebookScreen);
+            },text: "Continue",),
             SizedBox(height: 24.h,),
             CustomforgetmeSection(),
             SizedBox(height:64.h,),

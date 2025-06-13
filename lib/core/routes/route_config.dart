@@ -8,7 +8,7 @@ part of 'part_of_import.dart';
 class RouteConfig {
   GoRouter goRouter = GoRouter(
 
-    initialLocation: RouteName.weatherScreen,
+    initialLocation: RouteName.signInScreen,
 
     routes: [
       /// Bottom NavBar

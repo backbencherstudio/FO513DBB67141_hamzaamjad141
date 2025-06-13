@@ -48,6 +48,7 @@ class ResetPassScreen extends StatelessWidget {
             SizedBox(height: 48.h),
             CustomTextformfiled(
               hintext: "Enter your password",
+              isobscure: true,
               text: "Password",
               icons: AppIcons.eye,
               controller: passwordController,
@@ -55,6 +56,7 @@ class ResetPassScreen extends StatelessWidget {
             SizedBox(height: 16.h),
             CustomTextformfiled(
               hintext: "Enter your password",
+              isobscure: true,
               text: "password",
               icons: AppIcons.eye,
               controller: confirmPasswordController,

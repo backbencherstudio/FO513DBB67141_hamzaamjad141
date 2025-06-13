@@ -13,9 +13,11 @@ class SignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  
-    final TextEditingController emailController = TextEditingController();
+      final TextEditingController nameController = TextEditingController();
+      final TextEditingController liscenceController = TextEditingController();
+      final TextEditingController emailController = TextEditingController();
       final TextEditingController passwordController = TextEditingController();
+        final TextEditingController confirmPasswordController = TextEditingController();
     return CreateScreen(
       child: SingleChildScrollView(
         child: Column(
@@ -41,15 +43,15 @@ class SignupScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 48.h),
-            CustomTextformfiled(text: "Name" ,hintext: "Enter your name", icons: AppIcons.user, controller: emailController),
+            CustomTextformfiled(text: "Name" ,hintext: "Enter your name", icons: AppIcons.user, controller: nameController),
             SizedBox(height: 18.h,),
             CustomTextformfiled(text: "Email" ,hintext: "Enter your email", icons: AppIcons.message, controller: emailController),
             SizedBox(height: 18.h,),
-            CustomTextformfiled(text: "Current License" ,hintext: "No License", icons: AppIcons.dropdown, controller: emailController),
+            CustomTextformfiled(text: "Current License" ,hintext: "No License", icons: AppIcons.dropdown, controller: liscenceController),
             SizedBox(height: 18.h,),
-            CustomTextformfiled(text: "Password" ,hintext: "Enter your password", icons: AppIcons.eye, controller: emailController),
+            CustomTextformfiled(text: "Password" ,isobscure: true ,hintext: "Enter your password", icons: AppIcons.eye, controller: passwordController),
             SizedBox(height: 18.h,),
-            CustomTextformfiled(text: "Confirm Password" ,hintext: "Enter your password", icons:AppIcons.eye , controller: passwordController),
+            CustomTextformfiled(text: "Confirm Password" ,isobscure: true,hintext: "Enter your password", icons:AppIcons.eye , controller: confirmPasswordController),
             SizedBox(height: 36.h,),
             CustomDummyButton(onTap: (){
             context.push(RouteName.signUpOtpScreen);
