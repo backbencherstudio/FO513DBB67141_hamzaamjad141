@@ -47,7 +47,6 @@ class SignUpOtpScreen extends StatelessWidget {
             PinCodeTextField(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               appContext: context,
-            
               length: 4,
               hintCharacter: '●',
               obscureText: false,
