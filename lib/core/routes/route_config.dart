@@ -140,6 +140,19 @@ class RouteConfig {
           );
         },
       ),
+      GoRoute(
+        name: RouteName.ebookPlay,
+        path: '${RouteName.ebookPlay}/:ebookId',
+        pageBuilder: (context, state) {
+          final ebookId = state.pathParameters['ebookId']!;
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.fade,
+            child: EbookPlay(ebookId: ebookId),
+          );
+        },
+      ),
     ],
   );
 }

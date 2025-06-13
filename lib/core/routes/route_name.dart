@@ -18,4 +18,5 @@ class RouteName {
   static const String resetPassScreen ='/ResetPassScreen';
   static const String signupScreen = '/SignupScreen';
   static const String signupIntroScreen = '/SignupIntroScreen';
+  static const String ebookPlay = '/e-book-play';
 }

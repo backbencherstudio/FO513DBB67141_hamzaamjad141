@@ -273,7 +273,7 @@ class Utils {
   }
 
   static String dateFormat({required DateTime date, String? format}) {
-    return DateFormat(format ?? 'MMM dd, yyyy').format(date);
+    return DateFormat(format ?? 'dd MMM, yyyy').format(date);
   }
 
   static Widget networkImage({

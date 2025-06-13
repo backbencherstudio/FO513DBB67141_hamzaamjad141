@@ -18,8 +18,6 @@ class SecondaryButtonWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 40.h,
-        width: 40.h,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           gradient: LinearGradient(
