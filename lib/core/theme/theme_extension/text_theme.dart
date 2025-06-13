@@ -26,11 +26,11 @@ class AppTextTheme {
     ),
     titleMedium: GoogleFonts.poppins(
       fontSize: 20.sp,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     titleSmall: GoogleFonts.poppins(
       fontSize: 18.sp,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
 
     bodyLarge: GoogleFonts.poppins(

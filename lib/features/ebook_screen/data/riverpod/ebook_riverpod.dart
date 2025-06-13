@@ -6,7 +6,7 @@ import '../dummy_data.dart';
 final ebookListProvider = Provider<List<EBook>>((ref) {
   return EbookList.map((e) => EBook.fromJson(e)).toList();
 });
-final ebookByIdProvider = Provider.family<EBook?, String>((ref, bookId) {
+/*final ebookByIdProvider = Provider.family<EBook?, String>((ref, bookId) {
   final ebooks = ref.watch(ebookListProvider);
   return ebooks.firstWhere((book) => book.bookId == bookId, orElse: () => null);
-});
+});*/

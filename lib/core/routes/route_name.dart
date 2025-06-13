@@ -2,7 +2,6 @@ class RouteName {
   static const String splashScreen = "/splash_screen";
   static const String onboardingScreen = '/onboarding_screen';
 
-
   static const String weatherScreen = '/weather-screen';
   static const String pilotLogBookScreen = '/pilot-logbook-screen';
   static const String voiceAIScreen = '/voice-ai-screen';
@@ -13,4 +12,11 @@ class RouteName {
   static const String signupScreen = "/SignupScreen";
   static const String ebookPlay = '/e-book-play';
 
+  static const String signInScreen = "/SignInScreen";
+  static const String signUpOtpScreen = '/SignUpOtpScreen';
+  static const String acountCreatedScreen = '/AcountCreatedScreen';
+  static const String forgetPasScreen = '/ForgetPasScreen';
+  static const String successScreen = '/SuccessScreen';
+  static const String forgetOtpScreen = '/ForgetOtpScreen';
+  static const String resetPassScreen ='/ResetPassScreen';
 }

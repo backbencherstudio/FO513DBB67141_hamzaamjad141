@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:aviation_app/core/constant/images.dart';
+import 'package:aviation_app/core/constant/padding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -21,7 +22,7 @@ class CustomDummyButton extends StatelessWidget {
         children: [
           
           Padding(
-            padding: const EdgeInsets.all(30.0),
+            padding: AppPadding.screenHorizontal,
             child: Image.asset(AppImages.button),
           ),
 
