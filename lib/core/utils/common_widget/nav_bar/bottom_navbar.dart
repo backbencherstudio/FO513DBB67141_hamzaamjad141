@@ -27,7 +27,7 @@ class BottomBarWidget extends StatelessWidget {
               onTap: (index) => navigationShell.goBranch(index),
               type: BottomNavigationBarType.fixed,
               backgroundColor: AppColors.bottomNavBarBackground,
-              elevation: 5,
+              elevation: 0,
               selectedLabelStyle: TextStyle(fontSize: 0),
               unselectedLabelStyle: TextStyle(fontSize: 0),
               items: [
@@ -75,7 +75,7 @@ class BottomBarWidget extends StatelessWidget {
             ),
           ),
         ),
-      )
+      ),
     );
   }
 }

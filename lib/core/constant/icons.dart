@@ -10,4 +10,5 @@ class AppIcons{
   static const String eBookOutline = '$iconPath/e-book_outline.svg';
   static const String eBookFill = '$iconPath/e-book_fill.svg';
   static const String voiceAiSvg = '$iconPath/voice_ai.svg';
+  static const String love = '$iconPath/love.svg';
 }
