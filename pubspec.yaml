@@ -54,6 +54,7 @@ dependencies:
     git:
       url: https://github.com/nahidulislamshakin/Slider-Button_package.git
   dots_indicator: ^4.0.1
+  pin_code_fields: ^8.0.1
 
 dev_dependencies:
   flutter_test:

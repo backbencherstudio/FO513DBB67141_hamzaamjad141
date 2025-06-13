@@ -5,12 +5,16 @@ import 'package:flutter_svg/svg.dart';
 
 class CustomTextformfiled extends StatelessWidget {
   final String text;
+  final String hintext;
   final String icons;
+  final bool? isobscure;
   final TextEditingController controller;
   const CustomTextformfiled({super.key,
   required this.text,
   required this.icons,
-  required this.controller
+  required this.hintext,
+  required this.controller,
+   this.isobscure,
   });
 
   @override
@@ -23,22 +27,35 @@ class CustomTextformfiled extends StatelessWidget {
         color: Color(0xff161721),
       ),
       child: Padding(
-        padding: EdgeInsets.only(
-          left: 19.w,
-          right: 19.w,
-          top: 20.h,
-          bottom: 20.h,
-        ),
-        child: TextFormField(
-          controller: controller,
-          decoration: InputDecoration(
-            labelText: text,
-            labelStyle: TextStyle(color: Colors.grey),
-            suffixIcon: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: SvgPicture.asset(icons),
+        padding:  EdgeInsets.only(left: 19.w, right: 19.w, top: 13.h, bottom: 13.h),
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(text,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                color: Color(0xff777980),
+              ),
+              ),
             ),
-          ),
+            SizedBox(height: 2.h,),
+            Expanded(
+              child: TextFormField(
+                obscureText: isobscure ?? false,
+                controller: controller,
+                decoration: InputDecoration(
+               hintText: hintext,
+
+                  suffixIcon: Padding(
+                    padding:  EdgeInsets.only(left: 2, right: 2, top: 2, bottom: 5),
+                    child: SvgPicture.asset(icons,
+                                    
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -14,10 +14,10 @@ class AppIcons{
   static const String voiceAiSvg = '$iconPath/voice_ai.svg';
   static const String love = '$iconPath/love.svg';
 
-  static const String message = 'assets/icons/Icon.svg';
-  static const String eye = 'assets/icons/eye.svg';
+  static const String message = 'assets/icons/gmail.svg';
+  static const String eye = 'assets/icons/eye-disable.svg';
 
-
-
+static const String user = 'assets/icons/user.svg';
+static const String dropdown = 'assets/icons/direction-down 01.svg';
 
 }
