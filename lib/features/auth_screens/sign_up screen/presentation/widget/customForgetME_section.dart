@@ -12,7 +12,9 @@ class CustomforgetmeSection extends StatelessWidget {
       padding: AppPadding.screenHorizontal,
       child: Row(
         children: [
-          Checkbox(value: true, onChanged: (v) {}),
+          Checkbox(value: true, onChanged: (v) {},
+          // activeColor: Color(),
+          ),
           SizedBox(width: 1.w),
           Text("Remember me",
           style: style.bodyMedium!.copyWith( fontWeight: FontWeight.w400,color: Color(0xffffffff))
