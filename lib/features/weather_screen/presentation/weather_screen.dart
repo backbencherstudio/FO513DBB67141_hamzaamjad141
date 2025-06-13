@@ -1,4 +1,6 @@
+import 'package:aviation_app/core/constant/padding.dart';
 import 'package:aviation_app/core/theme/theme_extension/app_colors.dart';
+import 'package:aviation_app/core/utils/common_widget/primary_button/primary_button.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:aviation_app/features/ebook_screen/presentation/widgets/e_book_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +32,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return CreateScreen(
-      child: SafeArea(
+      child: Padding(
+        padding: AppPadding.screenHorizontal,
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -81,6 +84,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
                         ],
                       ),
                     ),
+                    SizedBox(height: 20.h,),
+
+                    SizedBox(
+                        width: double.infinity,
+                        child: PrimaryButton(bodyText: "Get Weather",))
                   ],
                 ),
               ),

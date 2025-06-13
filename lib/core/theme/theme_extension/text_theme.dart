@@ -33,7 +33,7 @@ class AppTextTheme {
 
     bodyLarge: GoogleFonts.poppins(
       fontSize: 18.sp,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w500,
     ),
     bodyMedium: GoogleFonts.poppins(
       fontSize: 16.sp,
