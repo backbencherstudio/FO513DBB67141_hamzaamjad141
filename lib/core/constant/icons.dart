@@ -1,6 +1,7 @@
 class AppIcons{
   static const String iconPath = 'assets/icons';
   static const String voiceAi = '$iconPath/voice_ai.png';
+<<<<<<< HEAD
   static const String weatherOutline = '$iconPath/weather_outline.svg';
   static const String weatherFill = '$iconPath/weather_fill.svg';
   static const String pilotLogBookOutline = '$iconPath/pilot_log_book_outline.svg';
@@ -11,4 +12,8 @@ class AppIcons{
   static const String eBookFill = '$iconPath/e-book_fill.svg';
   static const String voiceAiSvg = '$iconPath/voice_ai.svg';
   static const String love = '$iconPath/love.svg';
+=======
+  static const String message = 'assets/icons/Icon.svg';
+  static const String eye = 'assets/icons/eye.svg';
+>>>>>>> f99567b (auth login)
 }
