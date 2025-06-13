@@ -22,40 +22,44 @@ class EbookScreen extends StatelessWidget {
             EBookAppBar(textTheme: textTheme),
             SizedBox(height: 32.h),
             Text('E-book', style: textTheme.headlineSmall),
-
-            /*Expanded(
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 8.0,
-                  mainAxisSpacing: 8.0,
-                  childAspectRatio: 0.75,
+            TextFormField(),
+            Expanded(
+              child: Container(
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.7, // Example constraint
                 ),
-                itemCount: EbookList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final data = EbookList[index];
-                  EBook book = EBook.fromJson(data);
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 8.0,
+                    mainAxisSpacing: 8.0,
+                    childAspectRatio: 0.75,
+                  ),
+                  itemCount: EbookList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final data = EbookList[index];
+                    EBook book = EBook.fromJson(data);
 
-                  return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.grey[200],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: SizedBox(
-                            height: 150,  // Fixed height
-                            width: double.infinity,  // Full width
-                            child: Image.network(
-                              book.imageUrl,
-                              fit: BoxFit.cover,
-                              loadingBuilder: (context, child, loadingProgress) {
-                                if (loadingProgress == null) {
-                                  return child; // Image loaded successfully
-                                } else {
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.grey[200],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: SizedBox(
+                              height: 150,
+                              width: double.infinity,
+                              child: Image.network(
+                                book.imageUrl,
+                                fit: BoxFit.cover,
+                                loadingBuilder: (context, child, loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  }
                                   return Center(
                                     child: CircularProgressIndicator(
                                       value: loadingProgress.expectedTotalBytes != null
@@ -64,53 +68,55 @@ class EbookScreen extends StatelessWidget {
                                           : null,
                                     ),
                                   );
-                                }
-                              },
-                              errorBuilder: (context, error, stackTrace) {
-                                return Center(
-                                  child: Icon(
-                                    Icons.error,
-                                    color: Colors.red,
-                                    size: 40,
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 8),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            book.bookTitle,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Row(
-                            children: [
-                              Text(book.bookId),
-                              Spacer(),
-                              LinearProgressIndicator(
-                                value: book.progress,
-                                backgroundColor: Colors.grey[300],
-                                valueColor: AlwaysStoppedAnimation(Colors.blue),
+                                },
+                                errorBuilder: (context, error, stackTrace) {
+                                  return const Center(
+                                    child: Icon(
+                                      Icons.error,
+                                      color: Colors.red,
+                                      size: 40,
+                                    ),
+                                  );
+                                },
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                          const SizedBox(height: 8),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text(
+                              book.bookTitle,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Row(
+                              children: [
+                                Expanded(child: Text(book.bookId)),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: LinearProgressIndicator(
+                                    value: book.progress,
+                                    backgroundColor: Colors.grey[300],
+                                    valueColor: const AlwaysStoppedAnimation(Colors.blue),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),*/
+            ),
           ],
         ),
       ),

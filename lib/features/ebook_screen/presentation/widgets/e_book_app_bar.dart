@@ -49,7 +49,7 @@ class EBookAppBar extends StatelessWidget {
                       child: Icon(
                         Icons.error,
                         color: Colors.red,
-                        size: 40,
+                        size: 40.sp,
                       ),
                     );
                   },

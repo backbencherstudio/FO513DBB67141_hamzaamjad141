@@ -21,4 +21,6 @@ class AppColors {
   static const Color surface = Color(0xff161721);
   static const Color onSurface = Color(0xffF9FAFB);
   static const Color bottomNavBarBackground = Color(0xff212432);
+  static const Color secondaryTextColor = Color(0xff777980);
+  static const Color deActiveTextColor = Color(0xff777980);
 }

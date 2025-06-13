@@ -16,7 +16,9 @@ class AppTextTheme {
     ),
     headlineSmall: GoogleFonts.poppins(
       fontSize: 24.sp,
-      fontWeight: FontWeight.w600,
+
+      fontWeight: FontWeight.w400,
+
     ),
     titleLarge: GoogleFonts.poppins(
       fontSize: 22.sp,
@@ -33,7 +35,7 @@ class AppTextTheme {
 
     bodyLarge: GoogleFonts.poppins(
       fontSize: 18.sp,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w500,
     ),
     bodyMedium: GoogleFonts.poppins(
       fontSize: 16.sp,
