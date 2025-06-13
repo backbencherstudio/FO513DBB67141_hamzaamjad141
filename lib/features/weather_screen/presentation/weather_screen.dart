@@ -64,6 +64,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                         borderRadius: BorderRadius.circular(8.r),
                       ),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Align(
                             alignment: Alignment.topLeft,
@@ -74,11 +75,15 @@ class _WeatherScreenState extends State<WeatherScreen> {
                               ),
                             ),
                           ),
-                          TextFormField(
-                            focusNode: _focusNode,
-                            onTapOutside: (_) => _focusNode.unfocus(),
-                            decoration: InputDecoration(
-                              hintText: "Enter ICAO code",
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: TextFormField(
+
+                              focusNode: _focusNode,
+                              onTapOutside: (_) => _focusNode.unfocus(),
+                              decoration: InputDecoration(
+                                hintText: "Enter ICAO code",
+                              ),
                             ),
                           ),
                         ],
