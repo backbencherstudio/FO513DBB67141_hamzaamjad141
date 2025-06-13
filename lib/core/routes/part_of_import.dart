@@ -1,5 +1,12 @@
 import 'package:aviation_app/core/routes/build_page_with_transition.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
+import 'package:aviation_app/features/auth_screens/forget_password%20screen/presentation/forget_otp_screen.dart';
+import 'package:aviation_app/features/auth_screens/forget_password%20screen/presentation/forget_pas_screen.dart';
+import 'package:aviation_app/features/auth_screens/forget_password%20screen/presentation/reset_pass_screen.dart';
+import 'package:aviation_app/features/auth_screens/forget_password%20screen/presentation/success_screen.dart';
+import 'package:aviation_app/features/auth_screens/sign_Up%20screen/presentation/acount_created_screen.dart';
+import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/sign_in_screen.dart';
+import 'package:aviation_app/features/auth_screens/sign_Up%20screen/presentation/Sign_up_otp_screen.dart';
 import 'package:aviation_app/features/auth_screens/sign_up%20screen/presentation/signUp_screen.dart';
 import 'package:aviation_app/features/ebook_screen/presentation/ebook_screen.dart';
 import 'package:aviation_app/features/pilot_log_book/pilot_log_book_screen.dart';
