@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'core/routes/route_config.dart';
+import 'core/routes/part_of_import.dart';
 import 'core/services/local_storage_services/hive_services.dart';
 import 'core/theme/theme.dart';
 
