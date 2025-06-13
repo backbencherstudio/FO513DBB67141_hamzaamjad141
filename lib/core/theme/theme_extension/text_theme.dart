@@ -16,7 +16,9 @@ class AppTextTheme {
     ),
     headlineSmall: GoogleFonts.poppins(
       fontSize: 24.sp,
+
       fontWeight: FontWeight.w400,
+
     ),
     titleLarge: GoogleFonts.poppins(
       fontSize: 22.sp,
