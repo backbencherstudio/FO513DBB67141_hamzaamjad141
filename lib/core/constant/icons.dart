@@ -16,6 +16,9 @@ class AppIcons{
 
   static const String message = 'assets/icons/Icon.svg';
   static const String eye = 'assets/icons/eye.svg';
+  static const String circleCheckBox = 'assets/icons/checkbox.svg';
+  static const String backIcon = '$iconPath/arrow_left.svg';
+  static const String saveIcon = '$iconPath/save_Icon.svg';
 
 
 

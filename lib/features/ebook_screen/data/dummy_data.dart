@@ -2,7 +2,6 @@ final EbookList = [
   {
     "bookId": "1",
     "bookTitle": "Pride and Prejudice",
-    "isComplete": true,
     "publishDate": "1813-01-28T00:00:00.000Z",
     "audioUrl":
         "https://ia800701.us.archive.org/32/items/undertheguns_2411_librivox/undertheguns_02_wittenmyer_128kb.mp3",
@@ -13,7 +12,6 @@ final EbookList = [
   {
     "bookId": "2",
     "bookTitle": "Moby-Dick",
-    "isComplete": true,
     "publishDate": "1813-01-28T00:00:00.000Z",
     "audioUrl":
         "https://ia600701.us.archive.org/32/items/undertheguns_2411_librivox/undertheguns_00_wittenmyer_128kb.mp3",
@@ -24,12 +22,29 @@ final EbookList = [
   {
     "bookId": "3",
     "bookTitle": "The Adventures of Sherlock Holmes",
-    "isComplete": true,
     "publishDate": "1813-01-28T00:00:00.000Z",
     "audioUrl":
         "https://ia800701.us.archive.org/32/items/undertheguns_2411_librivox/undertheguns_12_wittenmyer_128kb.mp3",
     "imageUrl": "https://covers.openlibrary.org/b/id/7222248-L.jpg",
     "bookContent": "Detective Sherlock Holmes solves cases...",
-    "progress": 1.0,
+    "progress": 0.0,
+  },{
+    "bookId": "4",
+    "bookTitle": "The Adventures of Sherlock Holmes",
+    "publishDate": "1813-01-28T00:00:00.000Z",
+    "audioUrl":
+        "https://ia800701.us.archive.org/32/items/undertheguns_2411_librivox/undertheguns_12_wittenmyer_128kb.mp3",
+    "imageUrl": "https://covers.openlibrary.org/b/id/7222248-L.jpg",
+    "bookContent": "Detective Sherlock Holmes solves cases...",
+    "progress": 0.0,
+  },{
+    "bookId": "5",
+    "bookTitle": "The Adventures of Sherlock Holmes",
+    "publishDate": "1813-01-28T00:00:00.000Z",
+    "audioUrl":
+        "https://ia800701.us.archive.org/32/items/undertheguns_2411_librivox/undertheguns_12_wittenmyer_128kb.mp3",
+    "imageUrl": "https://covers.openlibrary.org/b/id/7222248-L.jpg",
+    "bookContent": "Detective Sherlock Holmes solves cases...",
+    "progress": 0.0,
   },
 ];

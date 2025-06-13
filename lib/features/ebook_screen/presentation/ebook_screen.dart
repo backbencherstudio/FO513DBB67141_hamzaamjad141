@@ -1,5 +1,4 @@
 import 'package:aviation_app/core/constant/padding.dart';
-
 import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:aviation_app/features/ebook_screen/data/dummy_data.dart';
 import 'package:aviation_app/features/ebook_screen/presentation/widgets/e_book_app_bar.dart';
@@ -21,27 +20,38 @@ class EbookScreen extends StatelessWidget {
         child: Column(
           children: [
             EBookAppBar(textTheme: textTheme),
-            SizedBox(height: 32.h),
-            Text('E-book', style: textTheme.headlineSmall),
-            Expanded(
-              child: Container(
-                constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height * 0.7, // Example constraint
-                ),
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 8.0,
-                    mainAxisSpacing: 8.0,
-                    childAspectRatio: 0.55,
-                  ),
-                  itemCount: EbookList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final data = EbookList[index];
-                    EBook book = EBook.fromJson(data);
-
-                    return BookCard(book: book);
-                  },
+            Flexible(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(height: 10.h),
+                    Text(
+                      'E-book',
+                      style: textTheme.headlineSmall!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 20.h),
+                    GridView.builder(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 8.0,
+                            mainAxisSpacing: 8.0,
+                            childAspectRatio: 0.55,
+                          ),
+                      itemCount: EbookList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final data = EbookList[index];
+                        EBook book = EBook.fromJson(data);
+                        return BookCard(book: book);
+                      },
+                    ),
+                    SizedBox(height: 200.h),
+                  ],
                 ),
               ),
             ),
@@ -51,4 +61,3 @@ class EbookScreen extends StatelessWidget {
     );
   }
 }
-

@@ -11,8 +11,6 @@ class RouteName {
   static const String navBar = '/nav-bar';
 
   static const String signupScreen = "/SignupScreen";
-
-
-
+  static const String ebookPlay = '/e-book-play';
 
 }
