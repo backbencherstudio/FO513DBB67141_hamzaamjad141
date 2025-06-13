@@ -9,9 +9,6 @@ class RouteName {
   static const String ebookScreen = '/ebook-screen';
   static const String navBar = '/nav-bar';
 
-  static const String signupScreen = "/SignupScreen";
-  static const String ebookPlay = '/e-book-play';
-
   static const String signInScreen = "/SignInScreen";
   static const String signUpOtpScreen = '/SignUpOtpScreen';
   static const String acountCreatedScreen = '/AcountCreatedScreen';
@@ -19,4 +16,7 @@ class RouteName {
   static const String successScreen = '/SuccessScreen';
   static const String forgetOtpScreen = '/ForgetOtpScreen';
   static const String resetPassScreen ='/ResetPassScreen';
+  static const String signupScreen = '/SignupScreen';
+  static const String signupIntroScreen = '/SignupIntroScreen';
+  static const String ebookPlay = '/e-book-play';
 }

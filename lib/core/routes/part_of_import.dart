@@ -8,6 +8,7 @@ import 'package:aviation_app/features/auth_screens/forget_password%20screen/pres
 import 'package:aviation_app/features/auth_screens/forget_password%20screen/presentation/reset_pass_screen.dart';
 import 'package:aviation_app/features/auth_screens/forget_password%20screen/presentation/success_screen.dart';
 import 'package:aviation_app/features/auth_screens/sign_Up%20screen/presentation/acount_created_screen.dart';
+import 'package:aviation_app/features/auth_screens/sign_Up%20screen/presentation/signUp_intro_screen.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/sign_in_screen.dart';
 import 'package:aviation_app/features/auth_screens/sign_Up%20screen/presentation/Sign_up_otp_screen.dart';
 import 'package:aviation_app/features/auth_screens/sign_up%20screen/presentation/signUp_screen.dart';

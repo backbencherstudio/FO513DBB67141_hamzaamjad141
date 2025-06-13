@@ -23,9 +23,14 @@ class AppIcons {
 
 
 
+static const String user = 'assets/icons/user.svg';
+static const String dropdown = 'assets/icons/direction-down 01.svg';
+static const String google = 'assets/icons/google.svg';
+static const String facebook = 'assets/icons/facebook.svg';
+static const String left = 'assets/icons/left.svg';
+static const String right = 'assets/icons/right.svg';
   static const String eyeOutline = '$iconPath/eye_outline.svg';
   static const String clockOutline = '$iconPath/clock_outline.svg';
 
-  static const String user = 'assets/icons/user.svg';
-  static const String dropdown = 'assets/icons/direction-down 01.svg';
+
 }
