@@ -53,8 +53,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 focusNode: _focusNode,
               ),
               SizedBox(height: 12.h,),
-              WeatherResult()
-              // TabBarView(children: [])
+              WeatherResult(),
+              SizedBox(height: 145.h,),
             ],
           ),
         ),
