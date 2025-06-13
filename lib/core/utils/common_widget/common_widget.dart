@@ -10,15 +10,4 @@ class CommonWidget {
     VoidCallback? onTap,
   }) => SecondaryButtonWidget(onTap: onTap, child: child);
 
-  static Widget primaryButton({
-    required VoidCallback onTap,
-    required String bodyText,
-    bool isSecondary = false,
-    bool isActive = true,
-  }) => PrimaryButton(
-    onTap: onTap,
-    bodyText: bodyText,
-    isActive: isActive,
-    isSecondary: isSecondary,
-  );
 }
