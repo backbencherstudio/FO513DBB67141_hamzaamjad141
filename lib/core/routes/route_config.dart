@@ -1,16 +1,8 @@
-
-
 part of 'part_of_import.dart';
-
-
-
 
 class RouteConfig {
   GoRouter goRouter = GoRouter(
-
-    initialLocation: RouteName.signupScreen,
-
-
+    initialLocation: RouteName.ebookScreen,
 
     routes: [
       /// Bottom NavBar
@@ -68,7 +60,7 @@ class RouteConfig {
           return const MaterialPage(child: SplashScreen());
         },
       ),
- GoRoute(
+      GoRoute(
         name: RouteName.signupScreen,
         path: RouteName.signupScreen,
         pageBuilder: (context, state) {

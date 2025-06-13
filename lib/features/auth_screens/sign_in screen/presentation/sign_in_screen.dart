@@ -1,7 +1,7 @@
 import 'package:aviation_app/core/constant/icons.dart';
-import 'package:aviation_app/features/auth_screens/sign_up%20screen/presentation/widget/customForgetME_section.dart';
-import 'package:aviation_app/features/auth_screens/sign_up%20screen/presentation/widget/custom_dummy_button.dart';
-import 'package:aviation_app/features/auth_screens/sign_up%20screen/presentation/widget/custom_textformfiled.dart';
+import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/customForgetME_section.dart';
+import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/custom_dummy_button.dart';
+import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/custom_textformfiled.dart' show CustomTextformfiled;
 import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
