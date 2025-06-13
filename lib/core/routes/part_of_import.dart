@@ -5,7 +5,7 @@ import 'package:aviation_app/features/ebook_screen/presentation/ebook_screen.dar
 import 'package:aviation_app/features/pilot_log_book/pilot_log_book_screen.dart';
 import 'package:aviation_app/features/podcast_screen/podcast_screen.dart';
 import 'package:aviation_app/features/voice_ai_screen/voice_ai_screen.dart';
-import 'package:aviation_app/features/weather_screen/weather_screen.dart';
+import 'package:aviation_app/features/weather_screen/presentation/weather_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
