@@ -93,7 +93,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
                     SizedBox(
                         width: double.infinity,
-                        child: PrimaryButton(bodyText: "Get Weather",))
+                        child: PrimaryButton(bodyText: "Get Weather",onTap: (){},))
                   ],
                 ),
               ),
