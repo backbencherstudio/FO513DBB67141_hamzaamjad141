@@ -17,8 +17,17 @@ class AppIcons {
   static const String message = 'assets/icons/gmail.svg';
   static const String eye = 'assets/icons/eye-disable.svg';
 
+<<<<<<< HEAD
+static const String user = 'assets/icons/user.svg';
+static const String dropdown = 'assets/icons/direction-down 01.svg';
+static const String google = 'assets/icons/google.svg';
+static const String facebook = 'assets/icons/facebook.svg';
+static const String left = 'assets/icons/left.svg';
+static const String right = 'assets/icons/right.svg';
+=======
   static const String eyeOutline = '$iconPath/eye_outline.svg';
   static const String clockOutline = '$iconPath/clock_outline.svg';
+>>>>>>> 6d9922d4f3c3acdfa9e9f0723940c735a7f7a8c8
 
   static const String user = 'assets/icons/user.svg';
   static const String dropdown = 'assets/icons/direction-down 01.svg';
