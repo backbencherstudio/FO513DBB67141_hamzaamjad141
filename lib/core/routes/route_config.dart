@@ -6,7 +6,7 @@ part of 'part_of_import.dart';
 
 class RouteConfig {
   GoRouter goRouter = GoRouter(
-    initialLocation: RouteName.signupScreen,
+    initialLocation: RouteName.ebookScreen,
 
     routes: [
       /// Bottom NavBar
