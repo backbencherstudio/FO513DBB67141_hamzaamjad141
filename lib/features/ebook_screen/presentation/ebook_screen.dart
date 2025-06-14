@@ -1,5 +1,4 @@
 import 'package:aviation_app/core/constant/padding.dart';
-
 import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:aviation_app/features/ebook_screen/data/dummy_data.dart';
 import 'package:aviation_app/features/ebook_screen/presentation/widgets/e_book_app_bar.dart';
@@ -7,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../model/e_book_model.dart';
+import 'widgets/book_card.dart';
 
 class EbookScreen extends StatelessWidget {
   const EbookScreen({super.key});
@@ -20,100 +20,38 @@ class EbookScreen extends StatelessWidget {
         child: Column(
           children: [
             EBookAppBar(textTheme: textTheme),
-            SizedBox(height: 32.h),
-            Text('E-book', style: textTheme.headlineSmall),
-            TextFormField(),
-            Expanded(
-              child: Container(
-                constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height * 0.7, // Example constraint
-                ),
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 8.0,
-                    mainAxisSpacing: 8.0,
-                    childAspectRatio: 0.75,
-                  ),
-                  itemCount: EbookList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final data = EbookList[index];
-                    EBook book = EBook.fromJson(data);
-
-                    return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.grey[200],
+            Flexible(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(height: 10.h),
+                    Text(
+                      'E-book',
+                      style: textTheme.headlineSmall!.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: SizedBox(
-                              height: 150,
-                              width: double.infinity,
-                              child: Image.network(
-                                book.imageUrl,
-                                fit: BoxFit.cover,
-                                loadingBuilder: (context, child, loadingProgress) {
-                                  if (loadingProgress == null) {
-                                    return child;
-                                  }
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      value: loadingProgress.expectedTotalBytes != null
-                                          ? loadingProgress.cumulativeBytesLoaded /
-                                          (loadingProgress.expectedTotalBytes ?? 1)
-                                          : null,
-                                    ),
-                                  );
-                                },
-                                errorBuilder: (context, error, stackTrace) {
-                                  return const Center(
-                                    child: Icon(
-                                      Icons.error,
-                                      color: Colors.red,
-                                      size: 40,
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
+                    ),
+                    SizedBox(height: 20.h),
+                    GridView.builder(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 8.0,
+                            mainAxisSpacing: 8.0,
+                            childAspectRatio: 0.55,
                           ),
-                          const SizedBox(height: 8),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              book.bookTitle,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Row(
-                              children: [
-                                Expanded(child: Text(book.bookId)),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: LinearProgressIndicator(
-                                    value: book.progress,
-                                    backgroundColor: Colors.grey[300],
-                                    valueColor: const AlwaysStoppedAnimation(Colors.blue),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
+                      itemCount: EbookList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final data = EbookList[index];
+                        EBook book = EBook.fromJson(data);
+                        return BookCard(book: book);
+                      },
+                    ),
+                    SizedBox(height: 200.h),
+                  ],
                 ),
               ),
             ),
