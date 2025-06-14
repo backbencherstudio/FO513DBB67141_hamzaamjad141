@@ -6,8 +6,6 @@ import '../../../../core/constant/icons.dart';
 import '../../../../core/theme/theme_extension/app_colors.dart';
 import '../../../../core/utils/common_widget/common_widget.dart';
 
-
-
 class EBookAppBar extends StatelessWidget {
   const EBookAppBar({super.key, required this.textTheme});
 
@@ -37,7 +35,7 @@ class EBookAppBar extends StatelessWidget {
                         child: CircularProgressIndicator(
                           value: loadingProgress.expectedTotalBytes != null
                               ? loadingProgress.cumulativeBytesLoaded /
-                              (loadingProgress.expectedTotalBytes ?? 1)
+                                    (loadingProgress.expectedTotalBytes ?? 1)
                               : null,
                         ),
                       );
@@ -46,11 +44,7 @@ class EBookAppBar extends StatelessWidget {
                   errorBuilder: (context, error, stackTrace) {
                     // Fallback widget in case of error
                     return Center(
-                      child: Icon(
-                        Icons.error,
-                        color: Colors.red,
-                        size: 40.sp,
-                      ),
+                      child: Icon(Icons.error, color: Colors.red, size: 40.sp),
                     );
                   },
                 ),
@@ -60,13 +54,17 @@ class EBookAppBar extends StatelessWidget {
                 children: [
                   Text(
                     'Good Morning,',
-                    style: textTheme.labelLarge!.copyWith(color: AppColors.primary),
+                    style: textTheme.labelLarge!.copyWith(
+                      color: AppColors.primary,
+                    ),
                   ),
                   Text('Ronald Richards'),
                 ],
               ),
               const Spacer(),
-              CommonWidget.secondaryButton(child: SvgPicture.asset(AppIcons.love)),
+              CommonWidget.secondaryButton(
+                child: SvgPicture.asset(AppIcons.love),
+              ),
             ],
           ),
         ],
