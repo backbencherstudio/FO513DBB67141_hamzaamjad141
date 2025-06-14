@@ -1,4 +1,5 @@
 import 'package:aviation_app/core/constant/icons.dart';
+import 'package:aviation_app/core/constant/padding.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/core/utils/utils.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/custom_dummy_button.dart';
@@ -62,16 +63,16 @@ class ResetPassScreen extends StatelessWidget {
               controller: confirmPasswordController,
             ),
             SizedBox(height: 36.h),
-            CustomDummyButton(
-              onTap: () {
-                context.push(RouteName.successScreen);
-              },
-              text: "Continue",
+             Padding(
+              padding: AppPadding.screenHorizontal,
+              child: Utils.primaryButton(text: "Continue", 
+              height: 54.h,
+              onPressed: () {    context.push(RouteName.successScreen);}),
             ),
             SizedBox(height: 16.h),
 
             Padding(
-              padding: EdgeInsetsGeometry.only(left: 24.w, right: 24.w),
+              padding: AppPadding.screenHorizontal,
               child: Utils.primaryButton(
                 onPressed: () {},
                 text: "Cancel",

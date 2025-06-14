@@ -30,7 +30,10 @@ static const String google = 'assets/icons/google.svg';
 static const String facebook = 'assets/icons/facebook.svg';
 static const String left = 'assets/icons/left.svg';
 static const String right = 'assets/icons/right.svg';
-
+static const String tick = "assets/icons/tick.svg";
+static const String appleStore ='assets/icons/applestore.svg';
+static const String googleStore = "assets/icons/playstore.svg";
+static const String card = "assets/icons/card.svg";
 
 
   static const String eyeOutline = '$iconPath/eye_outline.svg';
