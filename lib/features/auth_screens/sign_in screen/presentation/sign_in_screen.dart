@@ -1,7 +1,8 @@
 import 'package:aviation_app/core/constant/icons.dart';
+import 'package:aviation_app/core/constant/padding.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
+import 'package:aviation_app/core/utils/utils.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/customForgetME_section.dart';
-import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/custom_dummy_button.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/custom_textformfiled.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/richtext.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
@@ -47,16 +48,18 @@ class SignInScreen extends StatelessWidget {
             SizedBox(height: 18.h,),
             CustomTextformfiled(text: "Password" ,isobscure: true ,hintext: "Enter your password", icons:AppIcons.eye , controller: passwordController),
             SizedBox(height: 36.h,),
-            CustomDummyButton(onTap: (){
-              context.go(RouteName.ebookScreen);
-            },text: "Continue",),
+            Padding(
+              padding: AppPadding.screenHorizontal,
+              child: Utils.primaryButton(text: "Continue", 
+              height: 54.h,
+              onPressed: () {   context.go(RouteName.ebookScreen);}),
+            ),
             SizedBox(height: 24.h,),
             CustomforgetmeSection(),
             SizedBox(height:64.h,),
             SignInOrSignUp(text: 'Sign up', onTap: () { 
-                            context.push(RouteName.signupScreen);
-
-             },),
+            context.push(RouteName.signupScreen);
+            },),
         
         
           ],

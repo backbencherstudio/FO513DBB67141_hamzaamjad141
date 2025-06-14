@@ -1,8 +1,9 @@
 import 'package:aviation_app/core/constant/icons.dart';
+import 'package:aviation_app/core/constant/padding.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
+import 'package:aviation_app/core/utils/utils.dart';
 import 'package:aviation_app/features/auth_screens/sign_Up%20screen/presentation/widgets/customContainer.dart';
 import 'package:aviation_app/features/auth_screens/sign_Up%20screen/presentation/widgets/or_vector.dart';
-import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/custom_dummy_button.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/richtext.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:flutter/material.dart';
@@ -53,14 +54,12 @@ class SignupIntroScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 48.h),
-
-            CustomDummyButton(
-              onTap: () {
-                context.go(RouteName.signupScreen);
-              },
-              text: "Continue",
+            Padding(
+            padding: AppPadding.screenHorizontal,
+            child: Utils.primaryButton(text: "Continue", 
+            height: 54.h,
+            onPressed: () { context.go(RouteName.signupScreen);}),
             ),
-
             SizedBox(height: 36.h),
             OrVector(),
             SizedBox(height: 24.h,),

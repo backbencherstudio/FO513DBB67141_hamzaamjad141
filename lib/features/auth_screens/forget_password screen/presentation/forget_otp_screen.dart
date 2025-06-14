@@ -1,6 +1,7 @@
+import 'package:aviation_app/core/constant/padding.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/core/theme/theme_extension/app_colors.dart';
-import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/custom_dummy_button.dart';
+import 'package:aviation_app/core/utils/utils.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/resendtext.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:flutter/material.dart';
@@ -69,10 +70,12 @@ class ForgetOtpScreen extends StatelessWidget {
             
             ),
             SizedBox(height: 36.h,),
-            CustomDummyButton(onTap: () {
-              context.push(RouteName.resetPassScreen);
-            }, text: "Verify Now"),
-
+            Padding(
+              padding: AppPadding.screenHorizontal,
+              child: Utils.primaryButton(text: "Verify Now",
+              height: 54.h,
+              onPressed: () {context.push(RouteName.resetPassScreen);}),
+            ),
             SizedBox(height: 16.h),
             Resendtext(),
           ],

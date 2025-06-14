@@ -8,7 +8,7 @@ part of 'part_of_import.dart';
 class RouteConfig {
   GoRouter goRouter = GoRouter(
 
-    initialLocation: RouteName.ebookScreen,
+    initialLocation: RouteName.paymentIntro,
 
     routes: [
       /// Bottom NavBar
@@ -71,6 +71,20 @@ class RouteConfig {
         path: RouteName.signUpOtpScreen,
         pageBuilder: (context, state) {
           return const MaterialPage(child: SignUpOtpScreen());
+        },
+      ),
+      GoRoute(
+        name: RouteName.paymentSelection,
+        path: RouteName.paymentSelection,
+        pageBuilder: (context, state) {
+          return const MaterialPage(child: PaymentSelection());
+        },
+      ),
+      GoRoute(
+        name: RouteName.paymentIntro,
+        path: RouteName.paymentIntro,
+        pageBuilder: (context, state) {
+          return const MaterialPage(child: PaymentIntroScreen());
         },
       ),
  GoRoute(
