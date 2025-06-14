@@ -19,7 +19,7 @@ class BookCard extends StatelessWidget {
     TextTheme textTheme = Theme.of(context).textTheme;
     return GestureDetector(
       onTap: (){
-        context.go('${RouteName.ebookPlay}/${book.bookId}');
+        context.push('${RouteName.ebookPlay}/${book.bookId}');
       },
       child: Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
