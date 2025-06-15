@@ -3,7 +3,7 @@ part of 'part_of_import.dart';
 
 class RouteConfig {
   GoRouter goRouter = GoRouter(
-    initialLocation: RouteName.splashScreen,
+    initialLocation: RouteName.pilotLogBookScreen,
 
     routes: [
       /// Bottom NavBar
