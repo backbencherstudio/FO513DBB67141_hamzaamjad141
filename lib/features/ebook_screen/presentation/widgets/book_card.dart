@@ -24,8 +24,9 @@ class BookCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(width: double.infinity,),
             Container(
               decoration: BoxDecoration(
                 boxShadow: [
