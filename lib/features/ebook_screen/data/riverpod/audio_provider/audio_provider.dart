@@ -1,9 +1,12 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final audioPlayerProvider = StateNotifierProvider.family<AudioPlayerNotifier, AudioPlayerState, String>((ref, audioUrl) {
-  return AudioPlayerNotifier(audioUrl);
-});
+final audioPlayerProvider =
+    StateNotifierProvider.family<AudioPlayerNotifier, AudioPlayerState, String>(
+      (ref, audioUrl) {
+        return AudioPlayerNotifier(audioUrl);
+      },
+    );
 
 class AudioPlayerState {
   final bool isPlaying;
@@ -37,49 +40,66 @@ class AudioPlayerState {
   }
 }
 
-
 class AudioPlayerNotifier extends StateNotifier<AudioPlayerState> {
   late AudioPlayer _audioPlayer;
   final String audioUrl;
 
   AudioPlayerNotifier(this.audioUrl)
-      : super(AudioPlayerState(
-    isPlaying: false,
-    currentPosition: Duration.zero,
-    totalDuration: Duration.zero,
-    isLoading: true,
-    errorMessage: null,
-  )) {
+    : super(
+        AudioPlayerState(
+          isPlaying: false,
+          currentPosition: Duration.zero,
+          totalDuration: Duration.zero,
+          isLoading: true,
+          errorMessage: null,
+        ),
+      ) {
     _audioPlayer = AudioPlayer();
     _setupListeners();
     _initializePlayer();
   }
 
   void _setupListeners() {
-    _audioPlayer.onPlayerStateChanged.listen((state) {
-      if (mounted) {
-        updateState(isPlaying: state == PlayerState.playing);
-      }
-    }, onError: (error) {
-      if (mounted) updateState(errorMessage: 'Player State Error: $error', isLoading: false);
-    });
+    _audioPlayer.onPlayerStateChanged.listen(
+      (state) {
+        if (mounted) {
+          updateState(isPlaying: state == PlayerState.playing);
+        }
+      },
+      onError: (error) {
+        if (mounted) {
+          updateState(
+            errorMessage: 'Player State Error: $error',
+            isLoading: false,
+          );
+        }
+      },
+    );
 
-    _audioPlayer.onPositionChanged.listen((position) {
-      if (mounted) updateState(currentPosition: position);
-    }, onError: (error) {
-      if (mounted) updateState(errorMessage: 'Position Error: $error');
-    });
+    _audioPlayer.onPositionChanged.listen(
+      (position) {
+        if (mounted) updateState(currentPosition: position);
+      },
+      onError: (error) {
+        if (mounted) updateState(errorMessage: 'Position Error: $error');
+      },
+    );
 
-    _audioPlayer.onDurationChanged.listen((duration) {
-      if (mounted) {
-        updateState(
-          totalDuration: duration,
-          isLoading: (duration.inSeconds) <= 0,
-        );
-      }
-    }, onError: (error) {
-      if (mounted) updateState(errorMessage: 'Duration Error: $error', isLoading: false);
-    });
+    _audioPlayer.onDurationChanged.listen(
+      (duration) {
+        if (mounted) {
+          updateState(
+            totalDuration: duration,
+            isLoading: (duration.inSeconds) <= 0,
+          );
+        }
+      },
+      onError: (error) {
+        if (mounted) {
+          updateState(errorMessage: 'Duration Error: $error', isLoading: false);
+        }
+      },
+    );
   }
 
   Future<void> _initializePlayer() async {
@@ -123,14 +143,16 @@ class AudioPlayerNotifier extends StateNotifier<AudioPlayerState> {
   }
 
   void seekForward() {
-    if (state.totalDuration.inSeconds > 0 && state.currentPosition.inSeconds + 30 <= state.totalDuration.inSeconds) {
+    if (state.totalDuration.inSeconds > 0 &&
+        state.currentPosition.inSeconds + 30 <= state.totalDuration.inSeconds) {
       final newPosition = state.currentPosition + const Duration(seconds: 30);
       _audioPlayer.seek(newPosition);
     }
   }
 
   void seekBackward() {
-    if (state.totalDuration.inSeconds > 0 && state.currentPosition.inSeconds - 15 >= 0) {
+    if (state.totalDuration.inSeconds > 0 &&
+        state.currentPosition.inSeconds - 15 >= 0) {
       final newPosition = state.currentPosition - const Duration(seconds: 15);
       _audioPlayer.seek(newPosition);
     }
@@ -152,4 +174,3 @@ class AudioPlayerNotifier extends StateNotifier<AudioPlayerState> {
     super.dispose();
   }
 }
-

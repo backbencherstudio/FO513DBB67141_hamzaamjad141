@@ -9,7 +9,8 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/riverpod/ebook_riverpod.dart';
-import 'widgets/audio_player_widget.dart' show AudioPlayerWidget; // Assuming this contains your provider for EBook
+import 'widgets/audio_player_widget.dart'
+    show AudioPlayerWidget; // Assuming this contains your provider for EBook
 
 class EbookPlay extends ConsumerWidget {
   final String ebookId;
@@ -51,17 +52,18 @@ class EbookPlay extends ConsumerWidget {
               SizedBox(height: 20.h),
               ebook != null
                   ? Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  /*ClipRRect(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        /*ClipRRect(
                       borderRadius: BorderRadius.circular(6.r),
                       child: Image.network(ebook.imageUrl)),*/
-                  Text('Title: ${ebook.bookTitle}'),
-                  Text('Publish Date: ${ebook.publishDate}'),
-                  Text('Description: ${ebook.bookContent}'),
-                  if (audioUrl != null) AudioPlayerWidget(audioUrl: audioUrl),
-                ],
-              )
+                        Text('Title: ${ebook.bookTitle}'),
+                        Text('Publish Date: ${ebook.publishDate}'),
+                        Text('Description: ${ebook.bookContent}'),
+                        if (audioUrl != null)
+                          AudioPlayerWidget(audioUrl: audioUrl),
+                      ],
+                    )
                   : Center(child: CircularProgressIndicator()),
             ],
           ),
@@ -70,5 +72,3 @@ class EbookPlay extends ConsumerWidget {
     );
   }
 }
-
-

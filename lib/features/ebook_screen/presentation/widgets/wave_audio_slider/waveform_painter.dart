@@ -85,7 +85,7 @@ class WaveformPainter extends CustomPainter {
     // Draw the divider between wave and reflection
     final dividerPaint = Paint()
       ..color = Colors.white
-          .withOpacity(0.2) // Light divider
+          .withValues(alpha: 0.2) // Light divider
       ..strokeWidth = 1.0;
     canvas.drawLine(
       Offset(0, dividerY),
@@ -100,7 +100,7 @@ class WaveformPainter extends CustomPainter {
       final reflectionHeight = height;
       final normalizedX = i / (barCount - 1);
       paint.color = (normalizedX <= progressRatio ? Colors.blue : Colors.grey)
-          .withOpacity(0.4); // 40% opacity
+          .withValues(alpha: 0.4); // 40% opacity
       canvas.drawRect(
         Rect.fromLTWH(x, dividerY + 2, barWidth, reflectionHeight),
         paint,
