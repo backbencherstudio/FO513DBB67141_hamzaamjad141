@@ -7,7 +7,6 @@ part of 'part_of_import.dart';
 
 class RouteConfig {
   GoRouter goRouter = GoRouter(
-
     initialLocation: RouteName.aiAssistant,
 
     routes: [
@@ -20,7 +19,15 @@ class RouteConfig {
             routes: [
               GoRoute(
                 path: RouteName.weatherScreen,
-                builder: (context, state) => const WeatherScreen(),
+                pageBuilder: (context, state) {
+                  return buildPageWithTransition(
+                    context: context,
+                    state: state,
+                    transitionType: PageTransitionType.slideRightToLeft,
+                    child: WeatherScreen(),
+                  );
+                },
+                //builder: (context, state) => const WeatherScreen(),
               ),
             ],
           ),
@@ -71,6 +78,20 @@ class RouteConfig {
         path: RouteName.signUpOtpScreen,
         pageBuilder: (context, state) {
           return const MaterialPage(child: SignUpOtpScreen());
+        },
+      ),
+      GoRoute(
+        name: RouteName.paymentSelection,
+        path: RouteName.paymentSelection,
+        pageBuilder: (context, state) {
+          return const MaterialPage(child: PaymentSelection());
+        },
+      ),
+      GoRoute(
+        name: RouteName.paymentIntro,
+        path: RouteName.paymentIntro,
+        pageBuilder: (context, state) {
+          return const MaterialPage(child: PaymentIntroScreen());
         },
       ),
  GoRoute(

@@ -40,6 +40,9 @@ class OnboardingFooter extends StatelessWidget {
                             tabBarController.index + 1,
                           );
                         }
+                        else if(tabBarController.index == 2){
+                          context.go(RouteName.signupScreen);
+                        }
                         return false;
                       },
                       label: Text(
