@@ -1,4 +1,5 @@
 import 'package:aviation_app/core/constant/icons.dart';
+import 'package:aviation_app/core/constant/padding.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/core/utils/utils.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/custom_dummy_button.dart';
@@ -51,10 +52,12 @@ class ForgetPasScreen extends StatelessWidget {
               controller: emailController,
             ),
             SizedBox(height: 36.h),
-            CustomDummyButton(onTap: () {
-
-              context.push(RouteName.forgetOtpScreen);
-            }, text: "Continue"),
+             Padding(
+              padding: AppPadding.screenHorizontal,
+              child: Utils.primaryButton(text: "Continue", 
+              height: 54.h,
+              onPressed: () { context.push(RouteName.forgetOtpScreen);}),
+            ),
             SizedBox(height: 16.h),
 
             Padding(

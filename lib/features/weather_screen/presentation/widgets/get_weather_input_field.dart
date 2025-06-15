@@ -72,7 +72,9 @@ class GetWeatherInputField extends StatelessWidget {
                   bodyText: "Get Weather",
                   onTap: () {
                     if(textEditingController.text.isNotEmpty){
+                      weatherNotifier.onTabChange(0);
                       weatherNotifier.onGetWeather(searchCommand: textEditingController.text);
+
                     }
                   },
                 );

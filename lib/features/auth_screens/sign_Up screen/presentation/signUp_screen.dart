@@ -1,6 +1,8 @@
 import 'package:aviation_app/core/constant/icons.dart';
+import 'package:aviation_app/core/constant/padding.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
-import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/custom_dummy_button.dart';
+import 'package:aviation_app/core/utils/utils.dart';
+import 'package:aviation_app/features/auth_screens/sign_Up%20screen/presentation/widgets/customAnimatedContainer.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/custom_textformfiled.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/richtext.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
@@ -47,15 +49,18 @@ class SignupScreen extends StatelessWidget {
             SizedBox(height: 18.h,),
             CustomTextformfiled(text: "Email" ,hintext: "Enter your email", icons: AppIcons.message, controller: emailController),
             SizedBox(height: 18.h,),
-            CustomTextformfiled(text: "Current License" ,hintext: "No License", icons: AppIcons.dropdown, controller: liscenceController),
+            CustomAnimatedContainer(text: 'Current License', icons: AppIcons.dropdown  , hintext: 'No License', controller: liscenceController, dropdownItems: ["No License","SPL","PPL","CPL","ATPL","CH"],),
             SizedBox(height: 18.h,),
             CustomTextformfiled(text: "Password" ,isobscure: true ,hintext: "Enter your password", icons: AppIcons.eye, controller: passwordController),
             SizedBox(height: 18.h,),
             CustomTextformfiled(text: "Confirm Password" ,isobscure: true,hintext: "Enter your password", icons:AppIcons.eye , controller: confirmPasswordController),
             SizedBox(height: 36.h,),
-            CustomDummyButton(onTap: (){
-            context.push(RouteName.signUpOtpScreen);
-            },text: "Continue",),
+            Padding(
+            padding: AppPadding.screenHorizontal,
+            child: Utils.primaryButton(text: "Continue", 
+            height: 54.h,
+            onPressed: () {context.push(RouteName.signUpOtpScreen);}),
+            ),
             SizedBox(height:45.h,),
             SignInOrSignUp(text: "Sign in",onTap: () {
               context.push(RouteName.signInScreen);
