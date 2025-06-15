@@ -36,6 +36,8 @@ class AppIcons {
 
   static const String forwardAudio = '$iconPath/forward_30_sec.svg';
   static const String backwardAudio = '$iconPath/backward_15_sec.svg';
+  static const String keyboardStroke = '$iconPath/keyboard-stroke-rounded.svg';
+  static const String cancelIcon = '$iconPath/cancel_icon.svg';
 
   static const String airplaneTakeOff = '$iconPath/airplane-take-off.svg';
   static const String clouds = '$iconPath/clouds.svg';

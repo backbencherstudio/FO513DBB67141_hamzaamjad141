@@ -7,8 +7,7 @@ part of 'part_of_import.dart';
 
 class RouteConfig {
   GoRouter goRouter = GoRouter(
-
-    initialLocation: RouteName.weatherScreen,
+    initialLocation: RouteName.aiAssistant,
 
     routes: [
       /// Bottom NavBar
@@ -172,6 +171,18 @@ class RouteConfig {
             state: state,
             transitionType: PageTransitionType.fade,
             child: EbookPlay(ebookId: ebookId),
+          );
+        },
+      ),
+      GoRoute(
+        name: RouteName.aiAssistant,
+        path: RouteName.aiAssistant,
+        pageBuilder: (context, state) {
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.fade,
+            child: VoiceAiScreen(),
           );
         },
       ),
