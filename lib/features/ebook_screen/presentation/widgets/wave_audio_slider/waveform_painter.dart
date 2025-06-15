@@ -1,6 +1,11 @@
+import 'dart:async';
 import 'dart:math' as math;
+import 'package:aviation_app/core/theme/theme_extension/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../data/riverpod/audio_provider/audio_provider.dart';
 
 List<double> heightStore = [];
 List<bool> increaseStatus = [];
@@ -15,6 +20,43 @@ void generate() {
     } else {
       increaseStatus = [...increaseStatus, false];
     }
+  }
+}
+
+class AutoUpdatingWaveform extends ConsumerStatefulWidget {
+  final String audioUrl;
+  const AutoUpdatingWaveform({super.key, required this.audioUrl});
+
+  @override
+  ConsumerState<AutoUpdatingWaveform> createState() =>
+      _AutoUpdatingWaveformState();
+}
+
+class _AutoUpdatingWaveformState extends ConsumerState<AutoUpdatingWaveform> {
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    generate();
+    _timer = Timer.periodic(const Duration(milliseconds: 2), (_) {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = ref.watch(audioPlayerProvider(widget.audioUrl));
+    return CustomPaint(
+      size: Size(double.infinity, 300.h),
+      painter: WaveformPainter(state.currentPosition, state.totalDuration),
+    );
   }
 }
 
@@ -35,57 +77,46 @@ class WaveformPainter extends CustomPainter {
     final totalWidth = (barWidth + spacing) * barCount - spacing;
     final startX = (size.width - totalWidth) / 2;
 
-    // Define surface height (50% of total height for wave + reflection)
     final surfaceHeight = size.height / 2;
-    final dividerY = surfaceHeight; // Divider at the middle
-    // Calculate progress ratio
-    final progressRatio =
-        currentPosition.inSeconds /
-            totalDuration.inSeconds.clamp(1, double.infinity);
+    final dividerY = surfaceHeight;
 
-    // Draw the waveform bars on the surface with random heights
+    final progressRatio =
+        currentPosition.inMilliseconds /
+        totalDuration.inMilliseconds.clamp(1, double.infinity);
+
     for (int i = 0; i < barCount; i++) {
       final x = startX + i * (barWidth + spacing);
-      double height = 0;
-      if (heightStore.length <= i) {
-        height = random.nextDouble() * surfaceHeight; // Initialize if not set
-        heightStore = [...heightStore, height];
-        increaseStatus = [...increaseStatus, height <= surfaceHeight * 0.8];
-      } else {
-        // Update height based on increaseStatus
-        if (increaseStatus[i]) {
-          height = heightStore[i] + random.nextInt(7);
-          height = height.clamp(
-            0,
-            surfaceHeight,
-          ); // Bound between 0 and surfaceHeight
-          if (height >= surfaceHeight) {
-            increaseStatus[i] = false; // Switch to decrease when max is reached
-          }
-        } else {
-          height = heightStore[i] - random.nextInt(7);
-          height = height.clamp(
-            0,
-            surfaceHeight,
-          ); // Bound between 0 and surfaceHeight
-          if (height <= surfaceHeight * 0.3) {
-            increaseStatus[i] = true; // Switch to increase when below 50%
-          }
+      double height = heightStore[i];
+
+      if (increaseStatus[i]) {
+        height += random.nextInt(3).toDouble();
+        if (height >= surfaceHeight) {
+          height = surfaceHeight;
+          increaseStatus[i] = false;
         }
-        heightStore[i] = height; // Update heightStore with bounded value
+      } else {
+        height -= random.nextInt(3).toDouble();
+        if (height <= surfaceHeight * 0.3) {
+          height = surfaceHeight * 0.3;
+          increaseStatus[i] = true;
+        }
       }
-      final normalizedX = i / (barCount - 1); // 0 to 1 for progress
-      paint.color = normalizedX <= progressRatio ? Colors.blue : Colors.grey;
+
+      height = height.clamp(0, surfaceHeight);
+      heightStore[i] = height;
+
+      final normalizedX = i / (barCount - 1);
+      paint.color = normalizedX <= progressRatio
+          ? AppColors.primary
+          : Colors.grey;
       canvas.drawRect(
         Rect.fromLTWH(x, dividerY - height, barWidth, height),
         paint,
       );
     }
 
-    // Draw the divider between wave and reflection
     final dividerPaint = Paint()
-      ..color = Colors.white
-          .withValues(alpha: 0.2) // Light divider
+      ..color = Colors.white.withOpacity(0.2)
       ..strokeWidth = 1.0;
     canvas.drawLine(
       Offset(0, dividerY),
@@ -93,23 +124,19 @@ class WaveformPainter extends CustomPainter {
       dividerPaint,
     );
 
-    // Draw the reflection with 40% opacity and same height
     for (int i = 0; i < barCount; i++) {
       final x = startX + i * (barWidth + spacing);
       final height = heightStore[i] * 0.6;
-      final reflectionHeight = height;
       final normalizedX = i / (barCount - 1);
-      paint.color = (normalizedX <= progressRatio ? Colors.blue : Colors.grey)
-          .withValues(alpha: 0.4); // 40% opacity
-      canvas.drawRect(
-        Rect.fromLTWH(x, dividerY + 2, barWidth, reflectionHeight),
-        paint,
-      ); // Offset by 2 for separation
+      paint.color =
+          (normalizedX <= progressRatio ? AppColors.primary : Colors.grey)
+              .withValues(alpha: 0.4);
+      canvas.drawRect(Rect.fromLTWH(x, dividerY + 2, barWidth, height), paint);
     }
   }
 
   @override
   bool shouldRepaint(covariant WaveformPainter oldDelegate) =>
       currentPosition != oldDelegate.currentPosition ||
-          totalDuration != oldDelegate.totalDuration;
+      totalDuration != oldDelegate.totalDuration;
 }

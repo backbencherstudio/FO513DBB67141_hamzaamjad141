@@ -37,6 +37,9 @@ static const String right = 'assets/icons/right.svg';
   static const String clockOutline = '$iconPath/clock_outline.svg';
 
 
+  static const String forwardAudio = '$iconPath/forward_30_sec.svg';
+  static const String backwardAudio = '$iconPath/backward_15_sec.svg';
+
 
 }
 
