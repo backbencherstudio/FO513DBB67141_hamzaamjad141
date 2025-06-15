@@ -4,6 +4,7 @@ part 'weather_model.g.dart';
 
 @JsonSerializable()
 class WeatherModel{
+  bool isFavorite;
   final String code;
   final String time;
   final String flightRules;
@@ -14,6 +15,7 @@ class WeatherModel{
   final String clouds;
   final String rawMetar;
   WeatherModel({
+    this.isFavorite = false,
     required this.code,
     required this.time,
     required this.flightRules,

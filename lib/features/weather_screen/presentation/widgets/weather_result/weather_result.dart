@@ -56,34 +56,43 @@ class _WeatherResultState extends State<WeatherResult>
                     bodyText: "Home Base",
                     backgroundColor:
                         (weatherState.selectedTab == 0 &&
-                            weatherState.searchedWeather == null)
-                        ? AppColors.surface
-                        : Colors.white,
+                            weatherState.searchedWeather != null)
+                        ? Colors.white
+                        : AppColors.surface,
                     borderColor: Colors.transparent,
                     dots: false,
                     textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color:
                           (weatherState.selectedTab == 0 &&
-                              weatherState.searchedWeather == null)
-                          ? AppColors.deActiveTextColor
-                          : Color(0xff070707),
+                              weatherState.searchedWeather != null)
+                          ? Color(0xff070707)
+                          : AppColors.deActiveTextColor,
                     ),
                   );
                 },
               ),
             ),
             Expanded(
-              child: PrimaryButton(
-                onTap: () {
-                  _tabController.animateTo(1);
+              child: Consumer(
+                builder: (_, ref, _) {
+                  final weatherState = ref.watch(weatherProvider);
+                  return PrimaryButton(
+                    onTap: () {
+                      ref.read(weatherProvider.notifier).onTabChange(1);
+                    },
+                    bodyText: "Favorites",
+                    dots: false,
+                    backgroundColor: weatherState.selectedTab == 1
+                        ? Colors.white
+                        : AppColors.surface,
+                    borderColor: Colors.transparent,
+                    textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: weatherState.selectedTab == 1
+                          ? Color(0xff070707)
+                          : AppColors.deActiveTextColor,
+                    ),
+                  );
                 },
-                bodyText: "Favorites",
-                dots: false,
-                backgroundColor: AppColors.surface,
-                borderColor: Colors.transparent,
-                textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.deActiveTextColor,
-                ),
               ),
             ),
           ],
@@ -93,27 +102,31 @@ class _WeatherResultState extends State<WeatherResult>
         Consumer(
           builder: (_, ref, _) {
             final weatherState = ref.watch(weatherProvider);
-            return (weatherState.searchCommand != null) &&
-                    (weatherState.searchedWeather == null)
-                ? Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.all(16.r),
-                    decoration: BoxDecoration(
-                      color: Colors.red.withValues(alpha: 0.09),
-                      borderRadius: BorderRadius.circular(8.r),
-                      border: Border.all(
-                        color: Colors.red.withValues(alpha: 0.2),
-                      ),
-                    ),
-                    child: Text(
-                      "Error fetching weather:\nWeather not found",
-                      style: textTheme.bodyMedium?.copyWith(color: Colors.red),
-                      textAlign: TextAlign.center,
-                    ),
-                  )
-                : (weatherState.searchCommand != null) &&
-                      (weatherState.searchedWeather != null)
-                ? WeatherCard(weather: weatherState.searchedWeather!,)
+            return weatherState.selectedTab == 0
+                ? ((weatherState.searchCommand != null) &&
+                          (weatherState.isWeatherFound == false)
+                      ? Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(16.r),
+                          decoration: BoxDecoration(
+                            color: Colors.red.withValues(alpha: 0.09),
+                            borderRadius: BorderRadius.circular(8.r),
+                            border: Border.all(
+                              color: Colors.red.withValues(alpha: 0.2),
+                            ),
+                          ),
+                          child: Text(
+                            "Error fetching weather:\nWeather not found",
+                            style: textTheme.bodyMedium?.copyWith(
+                              color: Colors.red,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        )
+                      : (weatherState.searchCommand != null) &&
+                            (weatherState.isWeatherFound == true)
+                      ? WeatherCard(weather: weatherState.searchedWeather!)
+                      : SizedBox.shrink())
                 : SizedBox.shrink();
           },
         ),

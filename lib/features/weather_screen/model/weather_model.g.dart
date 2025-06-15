@@ -7,6 +7,7 @@ part of 'weather_model.dart';
 // **************************************************************************
 
 WeatherModel _$WeatherModelFromJson(Map<String, dynamic> json) => WeatherModel(
+  isFavorite: json['isFavorite'] as bool? ?? false,
   code: json['code'] as String,
   time: json['time'] as String,
   flightRules: json['flightRules'] as String,
@@ -20,6 +21,7 @@ WeatherModel _$WeatherModelFromJson(Map<String, dynamic> json) => WeatherModel(
 
 Map<String, dynamic> _$WeatherModelToJson(WeatherModel instance) =>
     <String, dynamic>{
+      'isFavorite': instance.isFavorite,
       'code': instance.code,
       'time': instance.time,
       'flightRules': instance.flightRules,

@@ -2,6 +2,7 @@
 class WeatherData{
   static const List<Map<String, dynamic>> weatherList = [
     {
+      "isFavorite":false,
       "code": "dac",
       "time": "5/28/2025, 6:30:00 AM (EST)",
       "flightRules": "IFR",

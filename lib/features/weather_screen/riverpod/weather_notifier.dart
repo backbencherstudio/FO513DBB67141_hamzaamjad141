@@ -25,6 +25,7 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
   /// search weather by code
   Future<void> onGetWeather({required String searchCommand}) async {
     try {
+      state = state.copyWith(isWeatherFound: false, searchCommand: searchCommand);
       debugPrint("Searching...\n");
       final weatherList = state.weatherList ?? [];
       final searchedWeatherList = weatherList.where(
@@ -34,13 +35,14 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
       if (searchedWeatherList.isNotEmpty) {
         debugPrint("Successfully found weather.\n");
         searchedWeather = searchedWeatherList.first;
+        state = state.copyWith(searchedWeather: searchedWeather,isWeatherFound: true);
       }
       else{
         debugPrint("Could not found weather for $searchCommand.\n");
         searchedWeather = null;
       }
 
-      state = state.copyWith(searchedWeather: searchedWeather,searchCommand: searchCommand);
+
     } catch (error) {
       throw Exception(
         'Exception while searching weather for $searchCommand. Error : $error',
@@ -51,5 +53,14 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
   /// on Tab change
   void onTabChange(int index) {
     state = state.copyWith(selectedTab: index);
+  }
+
+  void onAddToFavouriteWeather({required WeatherModel weather}){
+    final updatedSearchedWeather = state.searchedWeather;
+    updatedSearchedWeather!.isFavorite = !updatedSearchedWeather!.isFavorite;
+    state = state.copyWith(
+      searchedWeather:  updatedSearchedWeather,
+      favouriteWeatherList: [...state.favouriteWeatherList,weather]
+    );
   }
 }
