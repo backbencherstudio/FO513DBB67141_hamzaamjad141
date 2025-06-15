@@ -39,7 +39,7 @@ class _AutoUpdatingWaveformState extends ConsumerState<AutoUpdatingWaveform> {
   void initState() {
     super.initState();
     generate();
-    _timer = Timer.periodic(const Duration(milliseconds: 2), (_) {
+    _timer = Timer.periodic(const Duration(milliseconds: 1000), (_) {
       setState(() {});
     });
   }

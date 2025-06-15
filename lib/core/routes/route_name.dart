@@ -19,4 +19,5 @@ class RouteName {
   static const String signupScreen = '/SignupScreen';
   static const String signupIntroScreen = '/SignupIntroScreen';
   static const String ebookPlay = '/e-book-play';
+  static const String aiAssistant = '/ai-assistant';
 }
