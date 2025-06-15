@@ -12,7 +12,9 @@ import '../../../../../core/theme/theme_extension/app_colors.dart';
 
 class WeatherCard extends StatelessWidget {
   final WeatherModel weather;
-  const WeatherCard({super.key, required this.weather});
+  final bool isExpand;
+
+  const WeatherCard({super.key, required this.weather, this.isExpand = true,});
 
   Widget _customListTile({
     required TextTheme textTheme,
@@ -48,93 +50,114 @@ class WeatherCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return Container(
-      padding: EdgeInsets.all(16.r),
-      width: double.infinity,
-      // height: 466.h,
-      decoration: BoxDecoration(
-        color: AppColors.secondary,
-        borderRadius: BorderRadius.circular(8.r),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 8.h,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(weather.code.toUpperCase(), style: textTheme.titleMedium),
-              Consumer(
-                builder: (_, ref, _) {
-                  return CommonWidget.secondaryButton(
-                    child:  SvgPicture.asset( weather.isFavorite ? AppIcons.loveFill : AppIcons.love),
-                    onTap: ()=> ref.read(weatherProvider.notifier).onAddToFavouriteWeather(weather: weather),
-                  );
-                }
-              ),
-            ],
-          ),
+    return AnimatedSize(
+      curve: Curves.fastOutSlowIn,
+      duration: Duration(milliseconds: 400),
+      child: Container(
+        padding: EdgeInsets.all(16.r),
+        width: double.infinity,
+        // height: 466.h,
+        decoration: BoxDecoration(
+          color: AppColors.secondary,
+          borderRadius: BorderRadius.circular(8.r),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 8.h,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  spacing: 8.h,
+                  children: [
+                    Text(weather.name.toUpperCase(), style: textTheme.titleMedium),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 2.h),
+                      decoration: BoxDecoration(
+                        color: Colors.yellow,
+                        borderRadius: BorderRadius.circular(8.r)
+                      ),
+                      child: Text(weather.code.toUpperCase(),style: textTheme.bodySmall?.copyWith(color: Color(0xff070707)),),
+                    )
+                  ],
+                ),
+                Consumer(
+                  builder: (_, ref, _) {
+                    return CommonWidget.secondaryButton(
+                      child:  SvgPicture.asset( weather.isFavorite ? AppIcons.loveFill : AppIcons.love),
+                      onTap: ()=> ref.read(weatherProvider.notifier).onAddToFavouriteWeather(weather: weather),
+                    );
+                  }
+                ),
+              ],
+            ),
 
-          Divider(color: Colors.white.withValues(alpha: 0.3)),
+            if(isExpand)
+            Column(
+              children: [
+                Divider(color: Colors.white.withValues(alpha: 0.3)),
+                Column(
+                  spacing: 12.h,
+                  children: [
+                    _customListTile(
+                      textTheme: textTheme,
+                      svgIconPath: AppIcons.clockOutline,
+                      title: "Time (EST):",
+                      body: weather.time,
+                    ),
+                    _customListTile(
+                      textTheme: textTheme,
+                      svgIconPath: AppIcons.airplaneTakeOff,
+                      title: "Flight Rules",
+                      body: weather.flightRules,
+                    ),
+                    _customListTile(
+                      textTheme: textTheme,
+                      svgIconPath: AppIcons.temperature,
+                      title: "Temperature:",
+                      body: weather.temperature,
+                    ),
+                    _customListTile(
+                      textTheme: textTheme,
+                      svgIconPath: AppIcons.dewPoint,
+                      title: "Dewpoint:",
+                      body: weather.dewPoint,
+                    ),
+                    _customListTile(
+                      textTheme: textTheme,
+                      svgIconPath: AppIcons.eyeOutline,
+                      title: "Visibility:",
+                      body: weather.visibility,
+                    ),
+                    _customListTile(
+                      textTheme: textTheme,
+                      svgIconPath: AppIcons.wind,
+                      title: "Wind",
+                      body: weather.wind,
+                    ),
+                    _customListTile(
+                      textTheme: textTheme,
+                      svgIconPath: AppIcons.clouds,
+                      title: "Clouds",
+                      body: weather.clouds,
+                    ),
+                    _customListTile(
+                      textTheme: textTheme,
+                      svgIconPath: AppIcons.raw,
+                      title: "Raw METAR",
+                      body: weather.rawMetar,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 4.h),
+                PrimaryButton(bodyText: "Set As Home Base", onTap: () {}),
+              ],
+            )
 
-          Column(
-            spacing: 12.h,
-            children: [
-              _customListTile(
-                textTheme: textTheme,
-                svgIconPath: AppIcons.clockOutline,
-                title: "Time (EST):",
-                body: weather.time,
-              ),
-              _customListTile(
-                textTheme: textTheme,
-                svgIconPath: AppIcons.airplaneTakeOff,
-                title: "Flight Rules",
-                body: weather.flightRules,
-              ),
-              _customListTile(
-                textTheme: textTheme,
-                svgIconPath: AppIcons.temperature,
-                title: "Temperature:",
-                body: weather.temperature,
-              ),
-              _customListTile(
-                textTheme: textTheme,
-                svgIconPath: AppIcons.dewPoint,
-                title: "Dewpoint:",
-                body: weather.dewPoint,
-              ),
-              _customListTile(
-                textTheme: textTheme,
-                svgIconPath: AppIcons.eyeOutline,
-                title: "Visibility:",
-                body: weather.visibility,
-              ),
-              _customListTile(
-                textTheme: textTheme,
-                svgIconPath: AppIcons.wind,
-                title: "Wind",
-                body: weather.wind,
-              ),
-              _customListTile(
-                textTheme: textTheme,
-                svgIconPath: AppIcons.clouds,
-                title: "Clouds",
-                body: weather.clouds,
-              ),
-              _customListTile(
-                textTheme: textTheme,
-                svgIconPath: AppIcons.raw,
-                title: "Raw METAR",
-                body: weather.rawMetar,
-              ),
-            ],
-          ),
-
-          SizedBox(height: 4.h),
-          PrimaryButton(bodyText: "Set As Home Base", onTap: () {}),
-        ],
+          ],
+        ),
       ),
     );
   }

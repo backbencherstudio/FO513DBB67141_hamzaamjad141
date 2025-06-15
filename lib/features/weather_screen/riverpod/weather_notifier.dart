@@ -56,11 +56,28 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
   }
 
   void onAddToFavouriteWeather({required WeatherModel weather}){
-    final updatedSearchedWeather = state.searchedWeather;
-    updatedSearchedWeather!.isFavorite = !updatedSearchedWeather!.isFavorite;
-    state = state.copyWith(
-      searchedWeather:  updatedSearchedWeather,
-      favouriteWeatherList: [...state.favouriteWeatherList,weather]
-    );
+    weather.isFavorite = !weather.isFavorite;
+
+    if(weather.isFavorite){
+      state = state.copyWith(
+          searchedWeather:  weather.code == state.searchedWeather!.code ? weather : null,
+          favouriteWeatherList: [...state.favouriteWeatherList,weather]
+      );
+    }
+    else{
+      state = state.copyWith(
+          searchedWeather:  weather.code == state.searchedWeather!.code ? weather : null,
+          favouriteWeatherList: state.favouriteWeatherList.where((element) => element.code != weather.code).toList()
+      );
+    }
+
+  }
+
+  void onExpand(int index){
+    if(state.expandedIndex == index){
+      state = state.copyWith(expandedIndex: -1);
+      return;
+    }
+    state = state.copyWith(expandedIndex: index);
   }
 }

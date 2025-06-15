@@ -7,6 +7,7 @@ class WeatherState {
   final WeatherModel? searchedWeather;
   final String? searchCommand;
   final bool isWeatherFound;
+  final int? expandedIndex;
   WeatherState({
     this.weatherList,
     this.searchedWeather,
@@ -14,6 +15,7 @@ class WeatherState {
     this.searchCommand,
     this.favouriteWeatherList = const [],
     this.isWeatherFound = false,
+    this.expandedIndex,
   });
   WeatherState copyWith({
     List<WeatherModel>? weatherList,
@@ -22,6 +24,7 @@ class WeatherState {
     String? searchCommand,
     List<WeatherModel>? favouriteWeatherList,
     bool? isWeatherFound,
+    int? expandedIndex,
   }) {
     return WeatherState(
       weatherList: weatherList ?? this.weatherList,
@@ -30,6 +33,7 @@ class WeatherState {
       searchCommand: searchCommand ?? this.searchCommand,
       favouriteWeatherList: favouriteWeatherList ?? this.favouriteWeatherList,
       isWeatherFound: isWeatherFound ?? this.isWeatherFound,
+      expandedIndex: expandedIndex ?? this.expandedIndex,
     );
   }
 }

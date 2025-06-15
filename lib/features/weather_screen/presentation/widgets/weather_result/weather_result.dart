@@ -7,6 +7,7 @@ import 'package:hive_flutter/adapters.dart';
 
 import '../../../../../core/theme/theme_extension/app_colors.dart';
 import '../../../../../core/utils/common_widget/primary_button/primary_button.dart';
+import '../favourite_weather/favourite_weather_list.dart';
 import '../weather_card/weather_card.dart';
 
 class WeatherResult extends StatefulWidget {
@@ -127,7 +128,7 @@ class _WeatherResultState extends State<WeatherResult>
                             (weatherState.isWeatherFound == true)
                       ? WeatherCard(weather: weatherState.searchedWeather!)
                       : SizedBox.shrink())
-                : SizedBox.shrink();
+                : FavouriteWeathersList();
           },
         ),
       ],
