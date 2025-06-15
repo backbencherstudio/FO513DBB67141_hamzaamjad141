@@ -8,7 +8,7 @@ part of 'part_of_import.dart';
 class RouteConfig {
   GoRouter goRouter = GoRouter(
 
-    initialLocation: RouteName.paymentIntro,
+    initialLocation: RouteName.weatherScreen,
 
     routes: [
       /// Bottom NavBar
@@ -20,7 +20,15 @@ class RouteConfig {
             routes: [
               GoRoute(
                 path: RouteName.weatherScreen,
-                builder: (context, state) => const WeatherScreen(),
+                pageBuilder: (context, state) {
+                  return buildPageWithTransition(
+                    context: context,
+                    state: state,
+                    transitionType: PageTransitionType.slideRightToLeft,
+                    child: WeatherScreen(),
+                  );
+                },
+                //builder: (context, state) => const WeatherScreen(),
               ),
             ],
           ),

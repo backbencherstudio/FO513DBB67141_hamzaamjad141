@@ -25,6 +25,7 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
   /// search weather by code
   Future<void> onGetWeather({required String searchCommand}) async {
     try {
+      state = state.copyWith(isWeatherFound: false, searchCommand: searchCommand);
       debugPrint("Searching...\n");
       final weatherList = state.weatherList ?? [];
       final searchedWeatherList = weatherList.where(
@@ -34,13 +35,14 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
       if (searchedWeatherList.isNotEmpty) {
         debugPrint("Successfully found weather.\n");
         searchedWeather = searchedWeatherList.first;
+        state = state.copyWith(searchedWeather: searchedWeather,isWeatherFound: true);
       }
       else{
         debugPrint("Could not found weather for $searchCommand.\n");
         searchedWeather = null;
       }
 
-      state = state.copyWith(searchedWeather: searchedWeather,searchCommand: searchCommand);
+
     } catch (error) {
       throw Exception(
         'Exception while searching weather for $searchCommand. Error : $error',
@@ -51,5 +53,31 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
   /// on Tab change
   void onTabChange(int index) {
     state = state.copyWith(selectedTab: index);
+  }
+
+  void onAddToFavouriteWeather({required WeatherModel weather}){
+    weather.isFavorite = !weather.isFavorite;
+
+    if(weather.isFavorite){
+      state = state.copyWith(
+          searchedWeather:  weather.code == state.searchedWeather!.code ? weather : null,
+          favouriteWeatherList: [...state.favouriteWeatherList,weather]
+      );
+    }
+    else{
+      state = state.copyWith(
+          searchedWeather:  weather.code == state.searchedWeather!.code ? weather : null,
+          favouriteWeatherList: state.favouriteWeatherList.where((element) => element.code != weather.code).toList()
+      );
+    }
+
+  }
+
+  void onExpand(int index){
+    if(state.expandedIndex == index){
+      state = state.copyWith(expandedIndex: -1);
+      return;
+    }
+    state = state.copyWith(expandedIndex: index);
   }
 }
