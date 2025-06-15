@@ -23,10 +23,6 @@ class VoiceAiScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 20.w),
-              CommonWidget.secondaryButton(
-                child: SvgPicture.asset(AppIcons.backIcon),
-              ),
-              SizedBox(height: 30),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
