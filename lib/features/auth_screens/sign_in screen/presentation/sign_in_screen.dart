@@ -52,7 +52,7 @@ class SignInScreen extends StatelessWidget {
               padding: AppPadding.screenHorizontal,
               child: Utils.primaryButton(text: "Continue", 
               height: 54.h,
-              onPressed: () {   context.go(RouteName.ebookScreen);}),
+              onPressed: () {   context.go(RouteName.weatherScreen);}),
             ),
             SizedBox(height: 24.h,),
             CustomforgetmeSection(),
