@@ -8,7 +8,6 @@ import 'package:aviation_app/features/profile_screen/presentation/widgets/profil
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -24,7 +23,12 @@ class ProfileScreen extends StatelessWidget {
           SafeArea(
             child: Padding(
               padding: EdgeInsets.all(24.r),
-              child: PrimaryButton(bodyText: "Log out", onTap: () async  { await logOutBottomSheet(context: context);}),
+              child: PrimaryButton(
+                bodyText: "Log out",
+                onTap: () async {
+                  await logOutBottomSheet(context: context);
+                },
+              ),
             ),
           ),
         ],
