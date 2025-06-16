@@ -17,14 +17,15 @@ import 'package:aviation_app/features/auth_screens/sign_up%20screen/presentation
 import 'package:aviation_app/features/ebook_screen/presentation/ebook_screen.dart';
 import 'package:aviation_app/features/pilot_log_book/presentation/instructor_entry_screen/instructor_entry_screen.dart';
 import 'package:aviation_app/features/pilot_log_book/presentation/log_entry_screen/log_entry_screen.dart';
-import 'package:aviation_app/features/podcast_screen/podcast_screen.dart';
 import 'package:aviation_app/features/profile_screen/presentation/profile_screen.dart';
+import 'package:aviation_app/features/podcast_screen/presentation/podcast_player_screen.dart';
 import 'package:aviation_app/features/voice_ai_screen/presentation/voice_ai_screen.dart';
 import 'package:aviation_app/features/weather_screen/presentation/weather_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
 import '../../features/pilot_log_book/presentation/log_book_summary_screen/pilot_log_book_screen.dart';
+import '../../features/podcast_screen/presentation/podcast_screen.dart';
 import '../../features/splash/presentation/splash_screen.dart';
 import '../utils/common_widget/nav_bar/bottom_navbar.dart';
 part 'route_config.dart';

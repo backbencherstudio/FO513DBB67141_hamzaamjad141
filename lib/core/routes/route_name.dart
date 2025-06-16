@@ -23,5 +23,7 @@ class RouteName {
   static const String logEntryScreen = '/logEntryScreen';
   static const String instructorEntryScreen = "/instructorEntryScreen";
   static const String profileScreen = '/profileScreen';
+  static const String podcastPlayerScreen = "/podcast-player-screen";
+
 
 }

@@ -9,7 +9,7 @@ import '../../../data/riverpod/audio_provider/audio_provider.dart';
 
 List<double> heightStore = [];
 List<bool> increaseStatus = [];
-void generate() {
+Future<void> generate() async {
   final surfaceHeight = 300.w / 2;
   final math.Random random = math.Random();
   for (int i = 0; i < 100; i++) {
@@ -38,6 +38,7 @@ class _AutoUpdatingWaveformState extends ConsumerState<AutoUpdatingWaveform> {
   @override
   void initState() {
     super.initState();
+    // Generate waveform data in background
     generate();
     _timer = Timer.periodic(const Duration(milliseconds: 1000), (_) {
       setState(() {});
@@ -59,6 +60,7 @@ class _AutoUpdatingWaveformState extends ConsumerState<AutoUpdatingWaveform> {
     );
   }
 }
+
 
 class WaveformPainter extends CustomPainter {
   final Duration currentPosition;
