@@ -195,6 +195,45 @@ class RouteConfig {
           );
         },
       ),
+
+      GoRoute(
+        name: RouteName.profileScreen,
+        path: RouteName.profileScreen,
+        pageBuilder: (context, state) {
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.slideRightToLeft,
+            child: ProfileScreen(),
+          );
+        },
+      ),
+
+      GoRoute(
+        name: RouteName.logEntryScreen,
+        path: RouteName.logEntryScreen,
+        pageBuilder: (context, state) {
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.slideRightToLeft,
+            child: LogEntryScreen(),
+          );
+        },
+      ),
+
+      GoRoute(
+        name: RouteName.instructorEntryScreen,
+        path: RouteName.instructorEntryScreen,
+        pageBuilder: (context, state) {
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.slideRightToLeft,
+            child: InstructorEntryScreen(),
+          );
+        },
+      ),
     ],
   );
 }

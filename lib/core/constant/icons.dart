@@ -57,5 +57,6 @@ class AppIcons {
   static const String airplaneTakeOffFill  = "$iconPath/airplane_take_off.svg";
 
   static const String global = "$iconPath/global.svg";
+  static const String edit = "$iconPath/Edit.svg";
 
 }
