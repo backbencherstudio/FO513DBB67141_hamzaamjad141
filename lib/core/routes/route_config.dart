@@ -1,8 +1,9 @@
 part of 'part_of_import.dart';
 
+
 class RouteConfig {
   GoRouter goRouter = GoRouter(
-    initialLocation: RouteName.podcastScreen,
+    initialLocation: RouteName.splashScreen,
 
     routes: [
       /// Bottom NavBar
@@ -68,7 +69,7 @@ class RouteConfig {
           return const MaterialPage(child: SplashScreen());
         },
       ),
-      GoRoute(
+       GoRoute(
         name: RouteName.signUpOtpScreen,
         path: RouteName.signUpOtpScreen,
         pageBuilder: (context, state) {
@@ -89,56 +90,55 @@ class RouteConfig {
           return const MaterialPage(child: PaymentIntroScreen());
         },
       ),
-      GoRoute(
+ GoRoute(
         name: RouteName.signInScreen,
         path: RouteName.signInScreen,
         pageBuilder: (context, state) {
           return const MaterialPage(child: SignInScreen());
         },
       ),
-      GoRoute(
+       GoRoute(
         name: RouteName.acountCreatedScreen,
         path: RouteName.acountCreatedScreen,
         pageBuilder: (context, state) {
           return const MaterialPage(child: AcountCreatedScreen());
         },
       ),
-      GoRoute(
+          GoRoute(
         name: RouteName.forgetPasScreen,
         path: RouteName.forgetPasScreen,
         pageBuilder: (context, state) {
           return const MaterialPage(child: ForgetPasScreen());
         },
       ),
-      GoRoute(
+       GoRoute(
         name: RouteName.signupIntroScreen,
         path: RouteName.signupIntroScreen,
         pageBuilder: (context, state) {
           return const MaterialPage(child: SignupIntroScreen());
-        },
-      ),
-      GoRoute(
+        },),
+       GoRoute(
         name: RouteName.successScreen,
         path: RouteName.successScreen,
         pageBuilder: (context, state) {
           return const MaterialPage(child: SuccessScreen());
         },
       ),
-      GoRoute(
+       GoRoute(
         name: RouteName.forgetOtpScreen,
         path: RouteName.forgetOtpScreen,
         pageBuilder: (context, state) {
           return const MaterialPage(child: ForgetOtpScreen());
         },
       ),
-      GoRoute(
+       GoRoute(
         name: RouteName.resetPassScreen,
         path: RouteName.resetPassScreen,
         pageBuilder: (context, state) {
           return const MaterialPage(child: ResetPassScreen());
         },
       ),
-      GoRoute(
+       GoRoute(
         name: RouteName.signupScreen,
         path: RouteName.signupScreen,
         pageBuilder: (context, state) {
@@ -167,6 +167,18 @@ class RouteConfig {
             state: state,
             transitionType: PageTransitionType.fade,
             child: EbookPlay(ebookId: ebookId),
+          );
+        },
+      ),
+      GoRoute(
+        name: RouteName.aiAssistant,
+        path: RouteName.aiAssistant,
+        pageBuilder: (context, state) {
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.fade,
+            child: VoiceAiScreen(),
           );
         },
       ),

@@ -20,5 +20,7 @@ class RouteName {
   static const String aiAssistant = '/ai-assistant';
   static const String paymentIntro = '/PaymentIntroScreen';
   static const String paymentSelection = '/PaymentSelection';
+  static const String logEntryScreen = '/logEntryScreen';
+  static const String instructorEntryScreen = "/instructorEntryScreen";
 
 }
