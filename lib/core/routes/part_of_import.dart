@@ -18,6 +18,7 @@ import 'package:aviation_app/features/ebook_screen/presentation/ebook_screen.dar
 import 'package:aviation_app/features/pilot_log_book/presentation/instructor_entry_screen/instructor_entry_screen.dart';
 import 'package:aviation_app/features/pilot_log_book/presentation/log_entry_screen/log_entry_screen.dart';
 import 'package:aviation_app/features/podcast_screen/podcast_screen.dart';
+import 'package:aviation_app/features/profile_screen/presentation/profile_screen.dart';
 import 'package:aviation_app/features/voice_ai_screen/presentation/voice_ai_screen.dart';
 import 'package:aviation_app/features/weather_screen/presentation/weather_screen.dart';
 import 'package:flutter/material.dart';

@@ -208,6 +208,19 @@ class RouteConfig {
           );
         },
       ),
+
+      GoRoute(
+        name: RouteName.profileScreen,
+        path: RouteName.profileScreen,
+        pageBuilder: (context, state) {
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.slideRightToLeft,
+            child: ProfileScreen(),
+          );
+        },
+      ),
     ],
   );
 }
