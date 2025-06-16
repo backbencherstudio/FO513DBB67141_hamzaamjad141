@@ -182,6 +182,19 @@ class RouteConfig {
           );
         },
       ),
+      GoRoute(
+        name: RouteName.podcastPlayerScreen,
+        path: '${RouteName.podcastPlayerScreen}/:podcastId',
+        pageBuilder: (context, state) {
+          final podcastId = state.pathParameters['podcastId']!;
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.fade,
+            child: PodcastPlayerScreen(podcastId: podcastId),
+          );
+        },
+      ),
     ],
   );
 }

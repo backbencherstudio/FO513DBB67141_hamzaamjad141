@@ -15,6 +15,7 @@ import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation
 import 'package:aviation_app/features/auth_screens/sign_Up%20screen/presentation/Sign_up_otp_screen.dart';
 import 'package:aviation_app/features/auth_screens/sign_up%20screen/presentation/signUp_screen.dart';
 import 'package:aviation_app/features/ebook_screen/presentation/ebook_screen.dart';
+import 'package:aviation_app/features/podcast_screen/presentation/podcast_player_screen.dart';
 import 'package:aviation_app/features/voice_ai_screen/presentation/voice_ai_screen.dart';
 import 'package:aviation_app/features/weather_screen/presentation/weather_screen.dart';
 import 'package:flutter/material.dart';

@@ -60,7 +60,7 @@ class PodcastPlayerScreen extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(6.r),
                       child: Image.network(podcast.imageUrl,height: 256.h,width: 256.w,fit: BoxFit.cover,)),
                   SizedBox(height: 24.h,),
-                  Text(Utils.dateFormat(date: podcast.publishDate),style: textTheme.labelSmall,),
+                  Text(podcast.hostName,style: textTheme.labelSmall,),
                   SizedBox(height: 5.h,),
                   Text(podcast.title,style: textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),),
                   SizedBox(height: 24.h,),

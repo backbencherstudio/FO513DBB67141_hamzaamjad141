@@ -5,9 +5,8 @@ final List<Map<String, dynamic>> podcasts = [
     "hostName": "Sarah Lee",
     "publishDate": "2025-06-16T00:00:00Z",
     "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-    "imageUrl":
-        "https://psfiles.com/wp-content/uploads/2023/02/PsFiles-Free-Podcast-Cover-Art-Design-Template-PSD-Download-View.jpg",
-    "progress": 0.45,
+    "imageUrl": "https://psfiles.com/wp-content/uploads/2023/02/PsFiles-Free-Podcast-Cover-Art-Design-Template-PSD-Download-View.jpg",
+    "progress": 0.45
   },
   {
     "podcastId": "podcast002",
@@ -15,9 +14,8 @@ final List<Map<String, dynamic>> podcasts = [
     "hostName": "John Doe",
     "publishDate": "2025-06-15T00:00:00Z",
     "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-    "imageUrl":
-        "https://psfiles.com/wp-content/uploads/2023/05/PsFiles-Free-Podcast-Cover-Art-Template-Design-PSD-Download.jpg",
-    "progress": 0.60,
+    "imageUrl": "https://psfiles.com/wp-content/uploads/2023/05/PsFiles-Free-Podcast-Cover-Art-Template-Design-PSD-Download.jpg",
+    "progress": 0.60
   },
   {
     "podcastId": "podcast003",
@@ -25,8 +23,8 @@ final List<Map<String, dynamic>> podcasts = [
     "hostName": "Dr. Emily White",
     "publishDate": "2025-06-14T00:00:00Z",
     "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-    "imageUrl":
-        "https://psfiles.com/wp-content/uploads/2023/01/PsFiles-Podcast-Cover-Art-Template-Design-PSD-Free-Download-1152x648.jpg",
-    "progress": 0.30,
-  },
+    "imageUrl": "https://psfiles.com/wp-content/uploads/2023/01/PsFiles-Podcast-Cover-Art-Template-Design-PSD-Free-Download-1152x648.jpg",
+    "progress": 0.30
+  }
 ];
+

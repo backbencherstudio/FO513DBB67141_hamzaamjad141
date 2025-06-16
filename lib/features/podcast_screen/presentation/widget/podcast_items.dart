@@ -1,6 +1,8 @@
 import 'package:aviation_app/features/podcast_screen/model/podcast_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../core/routes/route_name.dart';
 import '../../../../core/theme/theme_extension/app_colors.dart';
 import '../../../../core/utils/utils.dart';
 
@@ -15,7 +17,7 @@ class PodcastItem extends StatelessWidget {
 
     return GestureDetector(
       onTap: (){
-
+        context.push('${RouteName.podcastPlayerScreen}/${podcast.podcastId}');
       },
       child: Container(
         width: double.infinity,
