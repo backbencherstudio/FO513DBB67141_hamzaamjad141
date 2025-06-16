@@ -47,4 +47,15 @@ class AppIcons {
   static const String wind = '$iconPath/wind.svg';
   static const String loveFill = "$iconPath/love_fill.svg";
 
+  static const String airplane = "$iconPath/airplane.svg";
+  static const String clockRectangle = "$iconPath/clock_rectangle.svg";
+  static const String picHours = "$iconPath/pic_hours.svg";
+  static const String moon = "$iconPath/moon.svg";
+  static const String ifrHours = "$iconPath/ifr_hours.svg";
+  static const String sun = "$iconPath/sun.svg";
+  static const String airplaneLanding = "$iconPath/airplane_landing.svg";
+  static const String airplaneTakeOffFill  = "$iconPath/airplane_take_off.svg";
+
+  static const String global = "$iconPath/global.svg";
+
 }

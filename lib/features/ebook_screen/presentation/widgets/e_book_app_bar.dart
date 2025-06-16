@@ -61,10 +61,10 @@ class EBookAppBar extends StatelessWidget {
                   Text('Ronald Richards'),
                 ],
               ),
-              const Spacer(),
-              CommonWidget.secondaryButton(
-                child: SvgPicture.asset(AppIcons.love),
-              ),
+              //const Spacer(),
+              // CommonWidget.secondaryButton(
+              //   child: SvgPicture.asset(AppIcons.love),
+              // ),
             ],
           ),
         ],
