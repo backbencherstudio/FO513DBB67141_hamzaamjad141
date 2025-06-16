@@ -20,10 +20,7 @@ class BuildTextFiled extends HookWidget {
 
     // Create a scale animation
     final scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
-      CurvedAnimation(
-        parent: animationController,
-        curve: Curves.easeInOut,
-      ),
+      CurvedAnimation(parent: animationController, curve: Curves.easeInOut),
     );
 
     // Start the animation when the widget mounts, and handle cleanup
@@ -42,18 +39,18 @@ class BuildTextFiled extends HookWidget {
               Colors.white,
               Colors.transparent,
               Colors.white,
-              Colors.transparent
+              Colors.transparent,
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            stops: const [0.0, 0.05,0.7, 1.0],
+            stops: const [0.0, 0.05, 0.7, 1.0],
           ),
           borderRadius: BorderRadius.circular(12.r),
         ),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.r),
-            color: AppColors.secondary
+            color: AppColors.secondary,
           ),
           child: Container(
             decoration: BoxDecoration(
@@ -66,14 +63,19 @@ class BuildTextFiled extends HookWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    AppColors.primary.withValues(alpha: 0.01),
+                    AppColors.primary.withValues(alpha: 0.08),
                     Color(0xff23293D).withValues(alpha: 0.7),
                     Color(0xff23293D).withValues(alpha: 0.7),
-                    AppColors.primary.withValues(alpha: 0.01),
+                    AppColors.primary.withValues(alpha: 0.08),
                   ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  stops: const [0.0, 0.25,0.75, 1.0], // Gradual stops for smoothness
+                  stops: const [
+                    0.0,
+                    0.25,
+                    0.75,
+                    1.0,
+                  ], // Gradual stops for smoothness
                 ),
                 borderRadius: BorderRadius.circular(12.r),
               ),
@@ -100,10 +102,12 @@ class BuildTextFiled extends HookWidget {
                       textAlign: TextAlign.left,
                     ),
                   ),
+                  SizedBox(width: 5.w),
                   GestureDetector(
-                    onTap: () {
-                    },
-                    child: CommonWidget.secondaryButton(child: SvgPicture.asset('assets/icons/send.svg'))
+                    onTap: () {},
+                    child: CommonWidget.secondaryButton(
+                      child: SvgPicture.asset('assets/icons/send.svg'),
+                    ),
                   ),
                 ],
               ),
