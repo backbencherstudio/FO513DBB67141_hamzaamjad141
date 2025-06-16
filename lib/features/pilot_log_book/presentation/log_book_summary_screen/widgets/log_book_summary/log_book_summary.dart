@@ -4,7 +4,7 @@ import 'package:aviation_app/core/utils/common_widget/primary_button/primary_but
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../riverpod/log_book_notifier.dart';
+import '../../../../riverpod/log_book_notifier.dart';
 import 'log_book_summary_card.dart';
 
 class LogBookSummary extends StatelessWidget {

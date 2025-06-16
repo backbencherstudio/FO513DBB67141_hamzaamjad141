@@ -3,7 +3,7 @@ part of 'part_of_import.dart';
 
 class RouteConfig {
   GoRouter goRouter = GoRouter(
-    initialLocation: RouteName.pilotLogBookScreen,
+    initialLocation: RouteName.splashScreen,
 
     routes: [
       /// Bottom NavBar
@@ -179,6 +179,32 @@ class RouteConfig {
             state: state,
             transitionType: PageTransitionType.fade,
             child: VoiceAiScreen(),
+          );
+        },
+      ),
+
+      GoRoute(
+        name: RouteName.logEntryScreen,
+        path: RouteName.logEntryScreen,
+        pageBuilder: (context, state) {
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.slideRightToLeft,
+            child: LogEntryScreen(),
+          );
+        },
+      ),
+
+      GoRoute(
+        name: RouteName.instructorEntryScreen,
+        path: RouteName.instructorEntryScreen,
+        pageBuilder: (context, state) {
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.slideRightToLeft,
+            child: InstructorEntryScreen(),
           );
         },
       ),
