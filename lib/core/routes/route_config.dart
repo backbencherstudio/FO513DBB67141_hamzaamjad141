@@ -1,13 +1,9 @@
-
-
 part of 'part_of_import.dart';
-
-
 
 
 class RouteConfig {
   GoRouter goRouter = GoRouter(
-    initialLocation: RouteName.aiAssistant,
+    initialLocation: RouteName.splashScreen,
 
     routes: [
       /// Bottom NavBar

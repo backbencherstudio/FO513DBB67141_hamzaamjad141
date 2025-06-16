@@ -10,28 +10,8 @@ import '../../../../../core/utils/common_widget/primary_button/primary_button.da
 import '../favourite_weather/favourite_weather_list.dart';
 import '../weather_card/weather_card.dart';
 
-class WeatherResult extends StatefulWidget {
+class WeatherResult extends StatelessWidget {
   const WeatherResult({super.key});
-
-  @override
-  State<WeatherResult> createState() => _WeatherResultState();
-}
-
-class _WeatherResultState extends State<WeatherResult>
-    with SingleTickerProviderStateMixin {
-  late final TabController _tabController;
-
-  @override
-  void initState() {
-    _tabController = TabController(length: 2, vsync: this);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

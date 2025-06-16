@@ -23,90 +23,92 @@ class VoiceAiScreen extends ConsumerWidget {
 
     return CreateScreen(
       child: SafeArea(
-        child: Padding(
-          padding: AppPadding.screenHorizontal,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              SizedBox(height: 20.w),
-              GestureDetector(
-                onTap: () {
-                  ref.read(showTextFieldProvider.notifier).state =
-                  !showTextField; // Toggle state
-                },
-                child: CommonWidget.secondaryButton(
-                  child: SvgPicture.asset(AppIcons.keyboardStroke),
-                ),
-              ),
-              SizedBox(height: 30),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Text(
-                      'Ask me anything about aviation!',
-                      style: textTheme.headlineMedium!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: AppPadding.screenHorizontal,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                SizedBox(height: 20.w),
+                GestureDetector(
+                  onTap: () {
+                    ref.read(showTextFieldProvider.notifier).state =
+                    !showTextField; // Toggle state
+                  },
+                  child: CommonWidget.secondaryButton(
+                    child: SvgPicture.asset(AppIcons.keyboardStroke),
                   ),
-                ],
-              ),
-              SizedBox(height: 20.h),
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 300),
-                transitionBuilder: (Widget child, Animation<double> animation) {
-                  return ScaleTransition(
-                    scale: Tween<double>(begin: 0.9, end: 1.0).animate(
-                      CurvedAnimation(
-                        parent: animation,
-                        curve: Curves.easeInOut,
+                ),
+                SizedBox(height: 30),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Text(
+                        'Ask me anything about aviation!',
+                        style: textTheme.headlineMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                    child: FadeTransition(
-                      opacity: Tween<double>(begin: 0.0, end: 1.0).animate(
+                  ],
+                ),
+                SizedBox(height: 20.h),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  transitionBuilder: (Widget child, Animation<double> animation) {
+                    return ScaleTransition(
+                      scale: Tween<double>(begin: 0.9, end: 1.0).animate(
                         CurvedAnimation(
                           parent: animation,
                           curve: Curves.easeInOut,
                         ),
                       ),
-                      child: child,
-                    ),
-                  );
-                },
-                child: showTextField
-                    ? const BuildTextFiled(key: ValueKey('textField'))
-                    : Row(
-                  key: const ValueKey('circleBoxRow'),
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CircleShadowBox(
-                      replacement: SvgPicture.asset(
-                        'assets/images/Timer.svg',
-                        width: 200.h,
-                        height: 200.h,
+                      child: FadeTransition(
+                        opacity: Tween<double>(begin: 0.0, end: 1.0).animate(
+                          CurvedAnimation(
+                            parent: animation,
+                            curve: Curves.easeInOut,
+                          ),
+                        ),
+                        child: child,
                       ),
-                      child: const Text('00 : 00'),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              Center(
-                child: Text(
-                  showTextField ? 'Type your question' : 'Hold to Speak',
-                  style: textTheme.bodyMedium!.copyWith(
-                    color: AppColors.secondaryTextColor,
+                    );
+                  },
+                  child: showTextField
+                      ? const BuildTextFiled(key: ValueKey('textField'))
+                      : Row(
+                    key: const ValueKey('circleBoxRow'),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircleShadowBox(
+                        replacement: SvgPicture.asset(
+                          'assets/images/Timer.svg',
+                          width: 200.h,
+                          height: 200.h,
+                        ),
+                        child: const Text('00 : 00'),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              SizedBox(height: 20),
-              const AudioMessageWidget(),
-              SizedBox(height: 20),
-              const AudioMessageWidget(),
-            ],
+                SizedBox(height: 20),
+                Center(
+                  child: Text(
+                    showTextField ? 'Type your question' : 'Hold to Speak',
+                    style: textTheme.bodyMedium!.copyWith(
+                      color: AppColors.secondaryTextColor,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                const AudioMessageWidget(),
+                SizedBox(height: 20),
+                const AudioMessageWidget(),
+              ],
+            ),
           ),
         ),
       ),
