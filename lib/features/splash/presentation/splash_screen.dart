@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen>
   late Animation<double> _animation;
 
   final planeSize = 40.0;
-  final animationDuration = Duration(milliseconds: 1900);
+  final animationDuration = Duration(milliseconds: 1500);
 
   @override
   void initState() {
@@ -39,7 +39,10 @@ class _SplashScreenState extends State<SplashScreen>
 
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        context.go(RouteName.onboardingScreen);
+         Future.delayed(Duration(milliseconds: 300)).then((_){
+           context.go(RouteName.onboardingScreen);
+         });
+
       }
     });
   }
