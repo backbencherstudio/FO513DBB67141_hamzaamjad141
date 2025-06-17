@@ -3,7 +3,7 @@ part of 'part_of_import.dart';
 
 class RouteConfig {
   GoRouter goRouter = GoRouter(
-    initialLocation: RouteName.splashScreen,
+    initialLocation: RouteName.editProfileScreen,
 
     routes: [
       /// Bottom NavBar
@@ -231,6 +231,19 @@ class RouteConfig {
             state: state,
             transitionType: PageTransitionType.slideRightToLeft,
             child: InstructorEntryScreen(),
+          );
+        },
+      ),
+
+      GoRoute(
+        name: RouteName.editProfileScreen,
+        path: RouteName.editProfileScreen,
+        pageBuilder: (context, state) {
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.slideRightToLeft,
+            child: EditProfileScreen(),
           );
         },
       ),
