@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import '../../../core/constant/icons.dart';
 import '../../../core/constant/padding.dart';
 import '../../../core/utils/common_widget/common_widget.dart';
-import '../../../core/utils/utils.dart';
 import '../../create_screen/create_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -40,13 +39,6 @@ class PodcastPlayerScreen extends ConsumerWidget {
                     },
                     child: CommonWidget.secondaryButton(
                       child: SvgPicture.asset(AppIcons.backIcon),
-                    ),
-                  ),
-                  CommonWidget.secondaryButton(
-                    child: SvgPicture.asset(
-                      'assets/icons/save_icon.svg',
-                      height: 20.h,
-                      width: 20.w,
                     ),
                   ),
                 ],
