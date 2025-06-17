@@ -34,9 +34,9 @@ class PaymentSelection extends StatelessWidget {
           SizedBox(height: 24.h,),
           CustomSelectTile(title: 'Debit or Credit Card', discription: 'Securely use your Visa, MasterCard, or other major credit cards for your subscription.',
           img: AppIcons.card, isChecked: true, onTap: () {},),
-          SizedBox(height: 18.h,),
-          CustomSelectTile(title: 'Apple Pay', discription: 'Conveniently use Apple Pay for a quick and secure payment experience.',
-          img: AppIcons.appleStore, isChecked: true, onTap: () {},),
+          // SizedBox(height: 18.h,),
+          // CustomSelectTile(title: 'Apple Pay', discription: 'Conveniently use Apple Pay for a quick and secure payment experience.',
+          // img: AppIcons.appleStore, isChecked: true, onTap: () {},),
           SizedBox(height: 18.h,),
           CustomSelectTile(title: 'Google Pay', discription: 'Skip the form-filling. Pay faster using your Google account with one secure tap.',
           img: AppIcons.googleStore, isChecked: true, onTap: () {},),
@@ -44,7 +44,7 @@ class PaymentSelection extends StatelessWidget {
           Utils.primaryButton(
           height: 54.h,
           onPressed: (){
-          context.go(RouteName.signInScreen);
+          context.go(RouteName.weatherScreen);
           }, text: "Continue")
         ]),
     ));

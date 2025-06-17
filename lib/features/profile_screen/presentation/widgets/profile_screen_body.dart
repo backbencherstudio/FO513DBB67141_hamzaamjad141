@@ -1,7 +1,9 @@
 import 'package:aviation_app/core/constant/padding.dart';
+import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/core/theme/theme_extension/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/adapters.dart';
 
 class ProfileScreenBody extends StatelessWidget {
@@ -46,7 +48,7 @@ class ProfileScreenBody extends StatelessWidget {
           customListTile(
             textTheme: textTheme,
             titleText: "Subscribe",
-            onTap: () {},
+            onTap: () {context.push(RouteName.paymentIntro);},
           ),
           customListTile(
             textTheme: textTheme,
