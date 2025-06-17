@@ -44,7 +44,7 @@ class AcountCreatedScreen extends StatelessWidget {
             padding: AppPadding.screenHorizontal,
             child: Utils.primaryButton(text: "Continue", 
             height: 54.h,
-            onPressed: () {   context.go(RouteName.signInScreen);}),
+            onPressed: () {   context.go(RouteName.paymentIntro);}),
             ),
   
           ],
