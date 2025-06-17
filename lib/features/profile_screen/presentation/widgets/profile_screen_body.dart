@@ -43,7 +43,9 @@ class ProfileScreenBody extends StatelessWidget {
           customListTile(
             textTheme: textTheme,
             titleText: "My account",
-            onTap: () {},
+            onTap: () {
+              context.push(RouteName.editProfileScreen);
+            },
           ),
           customListTile(
             textTheme: textTheme,
