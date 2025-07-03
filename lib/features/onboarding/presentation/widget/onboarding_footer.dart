@@ -41,7 +41,7 @@ class OnboardingFooter extends StatelessWidget {
                           );
                         }
                         else if(tabBarController.index == 2){
-                          context.go(RouteName.signupScreen);
+                          context.go(RouteName.signupIntroScreen);
                         }
                         return false;
                       },
@@ -75,7 +75,7 @@ class OnboardingFooter extends StatelessWidget {
                 width: 109.w,
                 height: 58.h,
                 onPressed: () {
-                  context.go(RouteName.weatherScreen);                },
+                  context.go(RouteName.signupIntroScreen);                },
                 text: "Skip",
               ),
             ],

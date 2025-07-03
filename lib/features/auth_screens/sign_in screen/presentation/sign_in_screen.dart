@@ -10,6 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../sign_Up screen/presentation/widgets/customContainer.dart';
+import '../../sign_Up screen/presentation/widgets/or_vector.dart';
+
 class SignInScreen extends StatelessWidget {
   
   const SignInScreen({super.key});
@@ -56,12 +59,16 @@ class SignInScreen extends StatelessWidget {
             ),
             SizedBox(height: 24.h,),
             CustomforgetmeSection(),
+            SizedBox(height: 36.h),
+            OrVector(),
+            SizedBox(height: 24.h,),
+            GoogleLoginButton(text: 'Continue With Google', img: AppIcons.google),
             SizedBox(height:64.h,),
             SignInOrSignUp(text: 'Sign up', onTap: () { 
             context.push(RouteName.signupScreen);
             },),
-        
-        
+
+            SizedBox(height:100.h,),
           ],
         ),
       ),

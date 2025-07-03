@@ -60,7 +60,9 @@ dependencies:
   audio_service: ^0.18.18
   flutter_hooks: ^0.21.2
   hooks_riverpod: ^2.6.1
-  google_sign_in: ^7.1.0
+  google_sign_in: ^5.0.7
+  firebase_auth: ^5.6.1
+  firebase_core: ^3.15.0
 
 
 
