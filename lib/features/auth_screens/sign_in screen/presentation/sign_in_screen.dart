@@ -14,14 +14,12 @@ import '../../sign_Up screen/presentation/widgets/customContainer.dart';
 import '../../sign_Up screen/presentation/widgets/or_vector.dart';
 
 class SignInScreen extends StatelessWidget {
-  
   const SignInScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     final TextEditingController emailController = TextEditingController();
-      final TextEditingController passwordController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
     return CreateScreen(
       child: SingleChildScrollView(
         child: Column(
@@ -47,28 +45,49 @@ class SignInScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 48.h),
-            CustomTextformfiled(text: "Email" ,hintext: "Enter your email", icons: AppIcons.message, controller: emailController),
-            SizedBox(height: 18.h,),
-            CustomTextformfiled(text: "Password" ,isobscure: true ,hintext: "Enter your password", icons:AppIcons.eye , controller: passwordController),
-            SizedBox(height: 36.h,),
+            CustomTextformfiled(
+              text: "Email",
+              hintext: "Enter your email",
+              icons: AppIcons.message,
+              controller: emailController,
+            ),
+            SizedBox(height: 18.h),
+            CustomTextformfiled(
+              text: "Password",
+              isobscure: true,
+              hintext: "Enter your password",
+              icons: AppIcons.eye,
+              controller: passwordController,
+            ),
+            SizedBox(height: 36.h),
             Padding(
               padding: AppPadding.screenHorizontal,
-              child: Utils.primaryButton(text: "Continue", 
-              height: 54.h,
-              onPressed: () {   context.go(RouteName.weatherScreen);}),
+              child: Utils.primaryButton(
+                text: "Continue",
+                height: 54.h,
+                onPressed: () {
+                  context.go(RouteName.weatherScreen);
+                },
+              ),
             ),
-            SizedBox(height: 24.h,),
+            SizedBox(height: 24.h),
             CustomforgetmeSection(),
             SizedBox(height: 36.h),
             OrVector(),
-            SizedBox(height: 24.h,),
-            GoogleLoginButton(text: 'Continue With Google', img: AppIcons.google),
-            SizedBox(height:64.h,),
-            SignInOrSignUp(text: 'Sign up', onTap: () { 
-            context.push(RouteName.signupScreen);
-            },),
+            SizedBox(height: 24.h),
+            GoogleLoginButton(
+              text: 'Continue With Google',
+              img: AppIcons.google,
+            ),
+            SizedBox(height: 64.h),
+            SignInOrSignUp(
+              text: 'Sign up',
+              onTap: () {
+                context.push(RouteName.signupScreen);
+              },
+            ),
 
-            SizedBox(height:100.h,),
+            SizedBox(height: 100.h),
           ],
         ),
       ),
