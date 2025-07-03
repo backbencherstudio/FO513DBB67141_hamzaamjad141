@@ -56,7 +56,11 @@ dependencies:
   dots_indicator: ^4.0.1
   pin_code_fields: ^8.0.1
   json_annotation: ^4.9.0
-  audioplayers: ^5.2.0
+  audioplayers: ^6.4.0
+  audio_service: ^0.18.18
+  flutter_hooks: ^0.21.2
+  hooks_riverpod: ^2.6.1
+
 
 
 dev_dependencies:
@@ -87,8 +91,10 @@ flutter:
   assets:
     - assets/screen_background/
     - assets/logo/
+    - assets/
     - assets/icons/
     - assets/images/
+    - assets/images/profile/
     - assets/primary_button/
   #   - images/a_dot_ham.jpeg
 

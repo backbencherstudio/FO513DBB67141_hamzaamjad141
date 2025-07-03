@@ -1,14 +1,9 @@
-
-
 part of 'part_of_import.dart';
-
-
 
 
 class RouteConfig {
   GoRouter goRouter = GoRouter(
-
-    initialLocation: RouteName.paymentIntro,
+    initialLocation: RouteName.splashScreen,
 
     routes: [
       /// Bottom NavBar
@@ -20,7 +15,15 @@ class RouteConfig {
             routes: [
               GoRoute(
                 path: RouteName.weatherScreen,
-                builder: (context, state) => const WeatherScreen(),
+                pageBuilder: (context, state) {
+                  return buildPageWithTransition(
+                    context: context,
+                    state: state,
+                    transitionType: PageTransitionType.slideRightToLeft,
+                    child: WeatherScreen(),
+                  );
+                },
+                //builder: (context, state) => const WeatherScreen(),
               ),
             ],
           ),
@@ -164,6 +167,83 @@ class RouteConfig {
             state: state,
             transitionType: PageTransitionType.fade,
             child: EbookPlay(ebookId: ebookId),
+          );
+        },
+      ),
+      GoRoute(
+        name: RouteName.aiAssistant,
+        path: RouteName.aiAssistant,
+        pageBuilder: (context, state) {
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.fade,
+            child: VoiceAiScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        name: RouteName.podcastPlayerScreen,
+        path: '${RouteName.podcastPlayerScreen}/:podcastId',
+        pageBuilder: (context, state) {
+          final podcastId = state.pathParameters['podcastId']!;
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.fade,
+            child: PodcastPlayerScreen(podcastId: podcastId),
+          );
+        },
+      ),
+
+      GoRoute(
+        name: RouteName.profileScreen,
+        path: RouteName.profileScreen,
+        pageBuilder: (context, state) {
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.slideRightToLeft,
+            child: ProfileScreen(),
+          );
+        },
+      ),
+
+      GoRoute(
+        name: RouteName.logEntryScreen,
+        path: RouteName.logEntryScreen,
+        pageBuilder: (context, state) {
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.slideRightToLeft,
+            child: LogEntryScreen(),
+          );
+        },
+      ),
+
+      GoRoute(
+        name: RouteName.instructorEntryScreen,
+        path: RouteName.instructorEntryScreen,
+        pageBuilder: (context, state) {
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.slideRightToLeft,
+            child: InstructorEntryScreen(),
+          );
+        },
+      ),
+
+      GoRoute(
+        name: RouteName.editProfileScreen,
+        path: RouteName.editProfileScreen,
+        pageBuilder: (context, state) {
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.slideRightToLeft,
+            child: EditProfileScreen(),
           );
         },
       ),

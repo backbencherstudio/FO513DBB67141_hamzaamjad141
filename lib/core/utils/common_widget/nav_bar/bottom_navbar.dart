@@ -47,16 +47,16 @@ class BottomBarWidget extends ConsumerWidget {
                     BottomNavigationBarItem(
                       icon: SvgPicture.asset(
                         navigationShell.currentIndex == 0
-                            ? AppIcons.weatherOutline
-                            : AppIcons.weatherFill,
+                            ? AppIcons.weatherFill
+                            : AppIcons.weatherOutline,
                       ),
                       label: "",
                     ),
                     BottomNavigationBarItem(
                       icon: SvgPicture.asset(
                         navigationShell.currentIndex == 1
-                            ? AppIcons.pilotLogBookOutline
-                            : AppIcons.pilotLogBookFill,
+                            ? AppIcons.pilotLogBookFill
+                            : AppIcons.pilotLogBookOutline ,
                       ),
                       label: "",
                     ),
@@ -71,16 +71,16 @@ class BottomBarWidget extends ConsumerWidget {
                     BottomNavigationBarItem(
                       icon: SvgPicture.asset(
                         navigationShell.currentIndex == 3
-                            ? AppIcons.podcastOutline
-                            : AppIcons.podcastFill,
+                            ? AppIcons.podcastFill
+                            : AppIcons.podcastOutline ,
                       ),
                       label: "",
                     ),
                     BottomNavigationBarItem(
                       icon: SvgPicture.asset(
                         navigationShell.currentIndex == 4
-                            ? AppIcons.eBookOutline
-                            : AppIcons.eBookFill,
+                            ? AppIcons.eBookFill
+                            : AppIcons.eBookOutline ,
                       ),
                       label: "",
                     ),

@@ -1,6 +1,8 @@
+import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/constant/icons.dart';
 import '../../../../core/theme/theme_extension/app_colors.dart';
@@ -20,33 +22,36 @@ class EBookAppBar extends StatelessWidget {
           Row(
             spacing: 12.w,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(100),
-                child: Image.network(
-                  'https://i.pravatar.cc/150?img=12',
-                  height: 47.h,
-                  width: 47.h,
-                  fit: BoxFit.cover,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child; // Image loaded successfully
-                    } else {
+              GestureDetector(
+                onTap: ()=>context.push(RouteName.profileScreen),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: Image.network(
+                    'https://i.pravatar.cc/150?img=12',
+                    height: 47.h,
+                    width: 47.h,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child; // Image loaded successfully
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                      (loadingProgress.expectedTotalBytes ?? 1)
+                                : null,
+                          ),
+                        );
+                      }
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      // Fallback widget in case of error
                       return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                    (loadingProgress.expectedTotalBytes ?? 1)
-                              : null,
-                        ),
+                        child: Icon(Icons.error, color: Colors.red, size: 40.sp),
                       );
-                    }
-                  },
-                  errorBuilder: (context, error, stackTrace) {
-                    // Fallback widget in case of error
-                    return Center(
-                      child: Icon(Icons.error, color: Colors.red, size: 40.sp),
-                    );
-                  },
+                    },
+                  ),
                 ),
               ),
               Column(
@@ -61,10 +66,10 @@ class EBookAppBar extends StatelessWidget {
                   Text('Ronald Richards'),
                 ],
               ),
-              const Spacer(),
-              CommonWidget.secondaryButton(
-                child: SvgPicture.asset(AppIcons.love),
-              ),
+              //const Spacer(),
+              // CommonWidget.secondaryButton(
+              //   child: SvgPicture.asset(AppIcons.love),
+              // ),
             ],
           ),
         ],

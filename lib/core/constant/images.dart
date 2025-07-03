@@ -3,5 +3,6 @@ class AppImages {
   static const String button = 'assets/images/Button.png';
   static const String successLogo = 'assets/images/successlogo.png';
   static const String priceBg = 'assets/images/Price.png';
+  static const String men = "assets/images/profile/men.png";
   
 }
