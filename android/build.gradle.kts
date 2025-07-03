@@ -1,3 +1,15 @@
+// Project-level build.gradle.kts
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        // Add this classpath for Firebase and Google services plugin
+        classpath("com.google.gms:google-services:4.3.15") // Check for the latest version
+    }
+}
+
 allprojects {
     repositories {
         google()

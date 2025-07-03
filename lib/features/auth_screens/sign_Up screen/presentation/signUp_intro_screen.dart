@@ -1,12 +1,15 @@
 import 'package:aviation_app/core/constant/icons.dart';
 import 'package:aviation_app/core/constant/padding.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
+import 'package:aviation_app/core/services/google_account_services/google_account_service.dart';
 import 'package:aviation_app/core/utils/utils.dart';
+import 'package:aviation_app/features/auth_screens/auth_provider/auth_provider.dart';
 import 'package:aviation_app/features/auth_screens/sign_Up%20screen/presentation/widgets/customContainer.dart';
 import 'package:aviation_app/features/auth_screens/sign_Up%20screen/presentation/widgets/or_vector.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/richtext.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
@@ -63,12 +66,9 @@ class SignupIntroScreen extends StatelessWidget {
             SizedBox(height: 36.h),
             OrVector(),
             SizedBox(height: 24.h,),
-            Customcontainer(text: 'Continue With Google', img: AppIcons.google),
-            SizedBox(height: 16.h),
-            Customcontainer(
-              text: 'Continue With Facebook',
-              img: AppIcons.facebook,
-            ),
+         GoogleLoginButton(text: 'Continue With Google', img: AppIcons.google),
+
+
             SizedBox(height: 64.h),
             SignInOrSignUp(
               text: 'Sign in',
