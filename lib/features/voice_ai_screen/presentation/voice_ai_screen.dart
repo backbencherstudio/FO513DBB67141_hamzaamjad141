@@ -11,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'widget/ai_voice_recording_widget.dart';
 import '../data/provider/text_filed_to_voice.dart';
 
 class VoiceAiScreen extends ConsumerWidget {
@@ -84,11 +85,7 @@ class VoiceAiScreen extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       CircleShadowBox(
-                        replacement: SvgPicture.asset(
-                          'assets/images/Timer.svg',
-                          width: 200.h,
-                          height: 200.h,
-                        ),
+                        replacement: AiVoiceRecordingWidgets(),
                         child: const Text('00 : 00'),
                       ),
                     ],
