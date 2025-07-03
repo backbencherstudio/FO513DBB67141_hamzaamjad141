@@ -45,11 +45,7 @@ flutter {
 }
 
 dependencies {
-    // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:33.16.0"))
-
-
-    // TODO: Add the dependencies for Firebase products you want to use
-    // When using the BoM, don't specify versions in Firebase dependencies
-    // https://firebase.google.com/docs/android/setup#available-libraries
+    implementation("com.google.firebase:firebase-auth:21.0.1") // Firebase Authentication
+    implementation("com.google.android.gms:play-services-auth:20.4.0") // Google Play Services Auth
 }

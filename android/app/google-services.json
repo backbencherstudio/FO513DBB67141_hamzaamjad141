@@ -12,7 +12,20 @@
           "package_name": "com.example.aviation_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "531409801699-ansmcjs36koth1qcj6jpotci3b4sq3h6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aviation_app",
+            "certificate_hash": "5f7c8e994dcf53bb939bda846e0eb38df3eac80d"
+          }
+        },
+        {
+          "client_id": "531409801699-um1p978lfhhcvrpi2kqjsmhrot3i6a4q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBkSZfFxouq8GG_ZVLXZlBjMkz0pi7O2OY"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "531409801699-um1p978lfhhcvrpi2kqjsmhrot3i6a4q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
