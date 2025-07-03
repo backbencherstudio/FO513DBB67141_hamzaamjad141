@@ -6,20 +6,22 @@ import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:aviation_app/features/onboarding/presentation/widget/onboarding_body.dart';
 import 'package:aviation_app/features/onboarding/presentation/widget/onboarding_footer.dart';
 import 'package:aviation_app/features/onboarding/presentation/widget/onboarding_user_guide.dart';
+import 'package:aviation_app/features/onboarding/riverpod/onboarding_notifier.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:slider_button/slider_button.dart';
 
-class OnboardingScreen extends StatefulWidget {
+class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
 
   @override
-  State<OnboardingScreen> createState() => _OnboardingScreenState();
+  ConsumerState<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen>
+class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
     with SingleTickerProviderStateMixin {
   late final TabController tabBarController;
 

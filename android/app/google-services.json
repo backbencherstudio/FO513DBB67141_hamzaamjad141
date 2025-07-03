@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "531409801699",
+    "project_id": "aviation-app-f2b74",
+    "storage_bucket": "aviation-app-f2b74.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:531409801699:android:68caadd7cdfdf5d72e50d6",
+        "android_client_info": {
+          "package_name": "com.example.aviation_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkSZfFxouq8GG_ZVLXZlBjMkz0pi7O2OY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
