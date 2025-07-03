@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "531409801699-go383ju29rd22r4a59opgk1nqiou89uu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aviation_app",
+            "certificate_hash": "7bd80dc12b702ede4d670e51a178d2fab5fbc3df"
+          }
+        },
+        {
           "client_id": "531409801699-um1p978lfhhcvrpi2kqjsmhrot3i6a4q.apps.googleusercontent.com",
           "client_type": 3
         }
