@@ -22,7 +22,7 @@ class SharedPreferenceStorageService {
   }
 
   /// Save an integer value
-  static Future<void> saveInt({required String key, required  int value}) async {
+  static Future<void> saveInt({required String key, required int value}) async {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt(key, value);
