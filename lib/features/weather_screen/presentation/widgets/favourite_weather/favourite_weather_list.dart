@@ -17,11 +17,11 @@ class FavouriteWeathersList extends StatelessWidget {
         return weatherState.favouriteWeatherList.isNotEmpty
             ? ListView.builder(
           padding: EdgeInsets.zero,
-                itemCount: weatherState.weatherList!.where((weather)=>weather.isFavorite==true).toList().length,
+                itemCount: weatherState.favouriteWeatherList.length,
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (_, index) {
-                  final weather = weatherState.weatherList!.where((weather)=>weather.isFavorite==true).toList()[index];
+                  final weather = weatherState.favouriteWeatherList.toList()[index];
 
                   return Container(
                     margin: EdgeInsets.only(bottom: 12.h),

@@ -63,12 +63,9 @@ class SignupIntroScreen extends StatelessWidget {
             SizedBox(height: 36.h),
             OrVector(),
             SizedBox(height: 24.h,),
-            Customcontainer(text: 'Continue With Google', img: AppIcons.google),
-            SizedBox(height: 16.h),
-            Customcontainer(
-              text: 'Continue With Facebook',
-              img: AppIcons.facebook,
-            ),
+         GoogleLoginButton(text: 'Continue With Google', img: AppIcons.google),
+
+
             SizedBox(height: 64.h),
             SignInOrSignUp(
               text: 'Sign in',

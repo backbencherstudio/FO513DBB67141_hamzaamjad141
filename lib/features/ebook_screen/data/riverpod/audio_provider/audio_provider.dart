@@ -1,5 +1,10 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 
 final audioPlayerProvider =
     StateNotifierProvider.family<AudioPlayerNotifier, AudioPlayerState, String>(
@@ -103,6 +108,51 @@ class AudioPlayerNotifier extends StateNotifier<AudioPlayerState> {
   }
 
   Future<void> _initializePlayer() async {
+    try {
+      updateState(isLoading: true);
+      // Try setting the source directly
+      await _audioPlayer
+          .setSource(UrlSource(audioUrl, mimeType: 'audio/mpeg'))
+          .timeout(
+            const Duration(seconds: 1),
+            onTimeout: () {
+              throw TimeoutException(
+                'Failed to set audio source',
+              );
+            },
+          );
+      await _audioPlayer.play(UrlSource(audioUrl, mimeType: 'audio/mpeg'));
+      updateState(isLoading: false);
+    } catch (e) {
+      // Fallback: Download and play locally
+      try {
+        final response = await http.get(Uri.parse(audioUrl));
+        if (response.statusCode == 200) {
+          final directory = await getTemporaryDirectory();
+          final file = File('${directory.path}/temp_audio.mp3');
+          await file.writeAsBytes(
+            response.bodyBytes,
+          ); // Changed from writeBytes to writeAsBytes
+          await _audioPlayer.setSourceDeviceFile(file.path);
+          await _audioPlayer.play(DeviceFileSource(file.path));
+          updateState(isLoading: false);
+        } else {
+          updateState(
+            isLoading: false,
+            errorMessage: 'Failed to download audio: ${response.statusCode}',
+          );
+        }
+      } catch (downloadError) {
+        updateState(
+          isLoading: false,
+          errorMessage:
+              'Failed to initialize audio: $e, Download error: $downloadError',
+        );
+      }
+    }
+  }
+
+  /* Future<void> _initializePlayer() async {
     if (state.isPlaying) {
       // If audio is already playing, don't reinitialize, just resume
       await _audioPlayer.resume();
@@ -110,9 +160,11 @@ class AudioPlayerNotifier extends StateNotifier<AudioPlayerState> {
     }
 
     // If the audio was paused or hasn't started yet, set it up
-    await _audioPlayer.setSource(UrlSource(audioUrl));
-    await _audioPlayer.resume();
-  }
+    await _audioPlayer.setSource(UrlSource(audioUrl, mimeType: 'audio/mpeg'));
+    //_audioPlayer.play(source);
+    //audioPlayer.play(UrlSource(audioUrl),volume: 1);
+//    await _audioPlayer.resume();
+  }*/
 
   void updateState({
     bool? isPlaying,

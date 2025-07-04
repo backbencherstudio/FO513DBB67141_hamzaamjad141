@@ -32,6 +32,7 @@ class AppIcons {
   static const String card = "assets/icons/card.svg";
 
   static const String eyeOutline = '$iconPath/eye_outline.svg';
+  static const String openEye = '$iconPath/openEYE.svg';
   static const String clockOutline = '$iconPath/clock_outline.svg';
 
   static const String forwardAudio = '$iconPath/forward_30_sec.svg';

@@ -8,13 +8,19 @@ class CustomTextformfiled extends StatelessWidget {
   final String hintext;
   final String icons;
   final bool? isobscure;
+  final bool? isVisible;
+  final String? toogleIcon;
+  final void Function()? onTapToggle;
   final TextEditingController controller;
   const CustomTextformfiled({super.key,
   required this.text,
   required this.icons,
   required this.hintext,
   required this.controller,
-   this.isobscure,
+   this.isobscure ,
+   this.isVisible,
+   this.toogleIcon,
+   this.onTapToggle
   });
 
   @override
@@ -41,15 +47,17 @@ class CustomTextformfiled extends StatelessWidget {
             SizedBox(height: 2.h,),
             Expanded(
               child: TextFormField(
+                style: Theme.of(context).textTheme.bodyMedium,
                 obscureText: isobscure ?? false,
                 controller: controller,
                 decoration: InputDecoration(
                hintText: hintext,
 
-                  suffixIcon: Padding(
-                    padding:  EdgeInsets.only(left: 2, right: 2, top: 2, bottom: 5),
-                    child: SvgPicture.asset(icons,
-                                    
+                  suffixIcon: GestureDetector(
+                    onTap: onTapToggle,
+                    child: Padding(
+                      padding:  EdgeInsets.only(left: 2, right: 2, top: 2, bottom: 5),
+                      child: isVisible == true? SvgPicture.asset(toogleIcon!): SvgPicture.asset(icons),
                     ),
                   ),
                 ),

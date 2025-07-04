@@ -2,19 +2,22 @@ import 'dart:math';
 import 'package:aviation_app/core/constant/logos.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/routes/route_name.dart';
+import '../../onboarding/riverpod/onboarding_notifier.dart';
+import '../splash_provider/splash_provider.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
+class _SplashScreenState extends ConsumerState<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
@@ -39,10 +42,15 @@ class _SplashScreenState extends State<SplashScreen>
 
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-         Future.delayed(Duration(milliseconds: 300)).then((_){
-           context.go(RouteName.onboardingScreen);
-         });
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          final routeName = await ref
+              .read(splashProvider.notifier)
+              .handleAppOpeningCount();
 
+          if (mounted) {
+            context.go(routeName);
+          }
+        });
       }
     });
   }

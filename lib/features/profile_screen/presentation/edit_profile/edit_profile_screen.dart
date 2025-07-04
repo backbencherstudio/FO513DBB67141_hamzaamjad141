@@ -94,6 +94,7 @@ class EditProfileScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(height: 145.h,)
             ],
           ),
         ),
