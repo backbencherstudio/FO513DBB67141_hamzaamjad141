@@ -57,13 +57,27 @@ class EbookPlay extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         ClipRRect(
-                      borderRadius: BorderRadius.circular(6.r),
-                      child: Image.network(ebook.imageUrl,height: 256.h,width: 256.w,fit: BoxFit.cover,)),
-                        SizedBox(height: 24.h,),
-                        Text(Utils.dateFormat(date: ebook.publishDate),style: textTheme.labelSmall,),
-                        SizedBox(height: 5.h,),
-                        Text(ebook.bookTitle,style: textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),),
-                        SizedBox(height: 24.h,),
+                          borderRadius: BorderRadius.circular(6.r),
+                          child: Image.network(
+                            ebook.imageUrl,
+                            height: 256.h,
+                            width: 256.w,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        SizedBox(height: 24.h),
+                        Text(
+                          Utils.dateFormat(date: ebook.publishDate),
+                          style: textTheme.labelSmall,
+                        ),
+                        SizedBox(height: 5.h),
+                        Text(
+                          ebook.bookTitle,
+                          style: textTheme.headlineSmall!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 24.h),
                         if (audioUrl != null)
                           AudioPlayerWidget(audioUrl: audioUrl),
                       ],

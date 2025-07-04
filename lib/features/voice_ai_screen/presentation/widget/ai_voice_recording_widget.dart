@@ -9,11 +9,12 @@ class AiVoiceRecordingWidgets extends ConsumerStatefulWidget {
   const AiVoiceRecordingWidgets({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _AiVoiceRecordingWidgetsState();
-
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _AiVoiceRecordingWidgetsState();
 }
 
-class _AiVoiceRecordingWidgetsState extends ConsumerState<AiVoiceRecordingWidgets>
+class _AiVoiceRecordingWidgetsState
+    extends ConsumerState<AiVoiceRecordingWidgets>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _rotationAnimation;
@@ -27,8 +28,10 @@ class _AiVoiceRecordingWidgetsState extends ConsumerState<AiVoiceRecordingWidget
       duration: const Duration(seconds: 2),
     );
 
-    _rotationAnimation = Tween<double>(begin: 0, end: 2 * math.pi)
-        .animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
+    _rotationAnimation = Tween<double>(
+      begin: 0,
+      end: 2 * math.pi,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
 
     ref.read(recorderProvider.notifier).startRecording();
   }
@@ -102,12 +105,12 @@ class _AiVoiceRecordingWidgetsState extends ConsumerState<AiVoiceRecordingWidget
                 color: AppColors.secondary,
                 child: Center(
                   child: Text(
-                      "${(ref.read(recorderProvider).recordedTime?.inMinutes ?? 0).toString().padLeft(2, '0')} : "
-                          "${(ref.read(recorderProvider).recordedTime?.inSeconds ?? 0 % 60).toString().padLeft(2, '0')}"
+                    "${(ref.read(recorderProvider).recordedTime?.inMinutes ?? 0).toString().padLeft(2, '0')} : "
+                    "${(ref.read(recorderProvider).recordedTime?.inSeconds ?? 0 % 60).toString().padLeft(2, '0')}",
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
         SizedBox(height: 20),
