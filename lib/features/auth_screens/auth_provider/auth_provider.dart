@@ -4,7 +4,6 @@ import 'package:aviation_app/core/services/api_services/api_services.dart';
 import 'package:aviation_app/core/services/local_storage_services/shared_preferences_services/sharedPref_service.dart';
 import 'package:aviation_app/core/services/local_storage_services/shared_preferences_services/shared_preferences_key_name.dart';
 import 'package:aviation_app/features/auth_screens/auth_provider/auth_state.dart';
-import 'package:aviation_app/features/auth_screens/model/user_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -54,4 +53,9 @@ class AuthProvider extends StateNotifier<AuthState> {
       );
     }
   }
+
+
+
+//sign up code
+
 }
