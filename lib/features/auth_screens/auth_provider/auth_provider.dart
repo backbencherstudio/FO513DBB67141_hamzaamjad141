@@ -33,7 +33,7 @@ class AuthProvider extends StateNotifier<AuthState> {
           headers: headers,
         );
         debugPrint("\nResponse : $response\n");
-        // final UserModel user = UserModel.fromJson(response['user']);
+         final UserModel user = UserModel.fromJson(response['user']);
         final userToken = response['token'];
         await SharedPreferenceStorageService.saveString(
           SharedPreferencesKeyName.userToken,
@@ -41,8 +41,8 @@ class AuthProvider extends StateNotifier<AuthState> {
         );
         state = state.copyWith(
           googleUser: googleUserModel,
-          // user: user,
-          //  userToken: userToken,
+           user: user,
+            userToken: userToken,
         );
         debugPrint("\nuser token : $userToken.\n");
         return RouteName.weatherScreen;

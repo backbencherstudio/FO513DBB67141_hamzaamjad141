@@ -8,4 +8,6 @@ class ApiEndPoints {
   static const String sendOtp = 'users/forgetPassword';
   static const String getWeather = 'weather/search?location=';
   static const String podcast = 'podcasts';
+  static const String setHomeBase = 'weather/add-homebase';
+  static const String getHomeBase = 'weather/get-homebase';
 }

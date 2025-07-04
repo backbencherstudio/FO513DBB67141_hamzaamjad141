@@ -1,18 +1,27 @@
+import 'dart:convert';
+
 import 'package:aviation_app/core/services/api_services/api_endpoints.dart';
 import 'package:aviation_app/core/services/api_services/api_services.dart';
+import 'package:aviation_app/features/auth_screens/auth_provider/auth_provider.dart';
 import 'package:aviation_app/features/weather_screen/data/dummy_weather_list.dart';
 import 'package:aviation_app/features/weather_screen/riverpod/weather_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart';
 
 import '../model/weather_model.dart';
 
 final weatherProvider = StateNotifierProvider<WeatherNotifier, WeatherState>(
-  (ref) => WeatherNotifier(),
+  (ref)  {
+    final userToken = ref.watch(authProvider).userToken ?? "";
+    return WeatherNotifier(userToken);
+    },
 );
 
 class WeatherNotifier extends StateNotifier<WeatherState> {
-  WeatherNotifier() : super(WeatherState());
+  final String userToken;
+  WeatherNotifier(this.userToken) : super(WeatherState());
 
   /// search weather by code
   Future<void> onGetWeather({required String searchCommand}) async {
@@ -68,5 +77,34 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
       return;
     }
     state = state.copyWith(expandedIndex: index);
+  }
+  
+  Future<void> setHomeBase({required String homeBaseCode}) async {
+    try{
+      state = state.copyWith(homeBaseButtonLoading: true);
+      debugPrint("\nhome base  : $homeBaseCode\n");
+      final response = await ApiServices.instance.postData(
+          endPoint: ApiEndPoints.setHomeBase,
+          body: {"location":homeBaseCode.toString()},
+          headers: {
+            "Authorization": userToken,
+            "Content-Type": "application/json"
+          }
+      );
+      debugPrint("\nset Home base response : $response\n");
+      if(response['success']){
+        state = state.copyWith(homeBase: homeBaseCode,homeBaseButtonLoading: false);
+        Fluttertoast.showToast(msg: "Home base set successfully",backgroundColor: Colors.green,textColor: Colors.white);
+      }
+      else{
+        state = state.copyWith(homeBase: "", homeBaseButtonLoading: false);
+        Fluttertoast.showToast(msg: "Something went wrong"
+            ,backgroundColor: Colors.red,textColor: Colors.white);
+      }
+
+    }catch(error){
+      state = state.copyWith(homeBaseButtonLoading: false);
+      throw Exception('\nError while setting Home Base : $error\n');
+    }
   }
 }

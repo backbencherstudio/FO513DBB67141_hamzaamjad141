@@ -171,7 +171,28 @@ class WeatherCard extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 15.h),
-                  PrimaryButton(bodyText: "Set As Home Base", onTap: () {}),
+                  Consumer(
+                    builder: (_, ref, _) {
+                      final String homeBaseCode =
+                          ref.watch(weatherProvider).searchedWeather?.station ??
+                          "";
+                      final homeBaseButtonLoading = ref
+                          .watch(weatherProvider)
+                          .homeBaseButtonLoading;
+                      return
+                        homeBaseButtonLoading
+                          ? const Center(child: CircularProgressIndicator())
+                          :
+                        PrimaryButton(
+                              bodyText: "Set As Home Base",
+                              onTap: () async {
+                                await ref
+                                    .read(weatherProvider.notifier)
+                                    .setHomeBase(homeBaseCode: homeBaseCode);
+                              },
+                            );
+                    },
+                  ),
                 ],
               ),
           ],

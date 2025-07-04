@@ -8,6 +8,8 @@ class WeatherState {
   final bool isWeatherFound;
   final int? expandedIndex;
   final bool searchButtonLoading;
+  final String? homeBase;
+  final bool homeBaseButtonLoading;
   WeatherState({
     this.searchedWeather,
     this.selectedTab = 0,
@@ -15,7 +17,9 @@ class WeatherState {
     this.favouriteWeatherList = const [],
     this.isWeatherFound = false,
     this.expandedIndex,
-    this.searchButtonLoading = false
+    this.searchButtonLoading = false,
+    this.homeBase,
+    this.homeBaseButtonLoading = false,
   });
   WeatherState copyWith({
     List<WeatherModel>? weatherList,
@@ -26,6 +30,8 @@ class WeatherState {
     bool? isWeatherFound,
     int? expandedIndex,
     bool? searchButtonLoading,
+    String? homeBase,
+    bool? homeBaseButtonLoading,
   }) {
     return WeatherState(
       searchedWeather: searchedWeather ?? this.searchedWeather,
@@ -34,7 +40,9 @@ class WeatherState {
       favouriteWeatherList: favouriteWeatherList ?? this.favouriteWeatherList,
       isWeatherFound: isWeatherFound ?? this.isWeatherFound,
       expandedIndex: expandedIndex ?? this.expandedIndex,
-      searchButtonLoading: searchButtonLoading ?? this.searchButtonLoading
+      searchButtonLoading: searchButtonLoading ?? this.searchButtonLoading,
+      homeBase: homeBase ?? this.homeBase,
+      homeBaseButtonLoading: homeBaseButtonLoading ?? this.homeBaseButtonLoading,
     );
   }
 
@@ -47,7 +55,9 @@ class WeatherState {
         favouriteWeatherList: favouriteWeatherList,
         isWeatherFound: false,
         expandedIndex: expandedIndex,
-        searchButtonLoading: false
+        searchButtonLoading: false,
+        homeBase: null,
+      homeBaseButtonLoading: false,
     );
   }
 }
