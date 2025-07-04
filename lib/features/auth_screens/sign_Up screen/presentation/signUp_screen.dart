@@ -1,25 +1,31 @@
 import 'package:aviation_app/core/constant/icons.dart';
 import 'package:aviation_app/core/constant/padding.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
+import 'package:aviation_app/core/utils/common_widget/primary_button/primary_button.dart';
 import 'package:aviation_app/core/utils/utils.dart';
+import 'package:aviation_app/features/auth_screens/auth_provider/auth_provider.dart';
+import 'package:aviation_app/features/auth_screens/sign_Up%20screen/Riverpod/isVisible_provider.dart';
 import 'package:aviation_app/features/auth_screens/sign_Up%20screen/presentation/widgets/customAnimatedContainer.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/custom_textformfiled.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/richtext.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-      final TextEditingController nameController = TextEditingController();
-      final TextEditingController liscenceController = TextEditingController();
-      final TextEditingController emailController = TextEditingController();
-      final TextEditingController passwordController = TextEditingController();
-        final TextEditingController confirmPasswordController = TextEditingController();
+    final TextEditingController nameController = TextEditingController();
+    final TextEditingController liscenceController = TextEditingController();
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController confirmPasswordController =
+        TextEditingController();
     return CreateScreen(
       child: SingleChildScrollView(
         child: Column(
@@ -45,28 +51,124 @@ class SignupScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 48.h),
-            CustomTextformfiled(text: "Name" ,hintext: "Enter your name", icons: AppIcons.user, controller: nameController),
-            SizedBox(height: 18.h,),
-            CustomTextformfiled(text: "Email" ,hintext: "Enter your email", icons: AppIcons.message, controller: emailController),
-            SizedBox(height: 18.h,),
-            CustomAnimatedContainer(text: 'Current License', icons: AppIcons.dropdown  , hintext: 'No License', controller: liscenceController, dropdownItems: ["No License","SPL","PPL","CPL","ATPL","CH"],),
-            SizedBox(height: 18.h,),
-            CustomTextformfiled(text: "Password" ,isobscure: true ,hintext: "Enter your password", icons: AppIcons.eye, controller: passwordController),
-            SizedBox(height: 18.h,),
-            CustomTextformfiled(text: "Confirm Password" ,isobscure: true,hintext: "Enter your password", icons:AppIcons.eye , controller: confirmPasswordController),
-            SizedBox(height: 36.h,),
-            Padding(
-            padding: AppPadding.screenHorizontal,
-            child: Utils.primaryButton(text: "Continue", 
-            height: 54.h,
-            onPressed: () {context.push(RouteName.signUpOtpScreen);}),
+            CustomTextformfiled(
+              text: "Name",
+              hintext: "Enter your name",
+              icons: AppIcons.user,
+              controller: nameController,
             ),
-            SizedBox(height:45.h,),
-            SignInOrSignUp(text: "Sign in",onTap: () {
-              context.push(RouteName.signInScreen);
-            },),
-        
-            SizedBox(height: 45.h,),
+            SizedBox(height: 18.h),
+            CustomTextformfiled(
+              text: "Email",
+              hintext: "Enter your email",
+              icons: AppIcons.message,
+              controller: emailController,
+            ),
+            SizedBox(height: 18.h),
+            CustomAnimatedContainer(
+              text: 'Current License',
+              icons: AppIcons.dropdown,
+              hintext: 'No License',
+              controller: liscenceController,
+              dropdownItems: ["No License", "SPL", "PPL", "CPL", "ATPL", "CH"],
+            ),
+            SizedBox(height: 18.h),
+            Consumer(
+              builder: (context, ref,_) {
+             final isVisible = ref.watch(isPassVisibleProvider);
+                return CustomTextformfiled(
+                  isVisible: isVisible,
+                  onTapToggle: () {
+                    ref.read(isPassVisibleProvider.notifier).onTapToggle();
+                  },
+                  text: "Password",
+                  isobscure: !isVisible,
+                  hintext: "Enter your password",
+                  icons: AppIcons.eye,
+                  toogleIcon: AppIcons.openEye,
+                  controller: passwordController,
+                );
+              }
+            ),
+            SizedBox(height: 18.h),
+            Consumer(
+              builder: (context, ref, _) {
+                final isVisible = ref.watch(isConfirmPAssVisibleProvider);
+                return CustomTextformfiled(
+                  isVisible: isVisible,
+                  onTapToggle: () {
+                   ref.read(isConfirmPAssVisibleProvider.notifier).onTapToggle();
+
+                  },
+                  text: "Confirm Password",
+                  isobscure: !isVisible,
+                  hintext: "Enter your password",
+                  icons: AppIcons.eye,
+                  toogleIcon: AppIcons.openEye,
+                  controller: confirmPasswordController,
+                );
+              }
+            ),
+            SizedBox(height: 36.h),
+            Padding(
+              padding: AppPadding.screenHorizontal,
+              child: Consumer(
+                builder: (context, ref, _) {
+                  final signUpData = ref.watch(authProvider);
+                  return signUpData.isloading == true
+                      ? CircularProgressIndicator()
+                      : PrimaryButton(
+                          bodyText: "Continue",
+                          onTap: () async {
+                            if (emailController.text.isEmpty ||
+                                nameController.text.isEmpty ||
+                                liscenceController.text.isEmpty ||
+                                passwordController.text.trim() !=
+                                    confirmPasswordController.text.trim()) {
+                              Fluttertoast.showToast(
+                                msg:
+                                    passwordController.text.trim() !=
+                                        confirmPasswordController.text.trim()
+                                    ? "Passwords do not match!"
+                                    : "Please fill all the fields correctly.",
+                                backgroundColor: Colors.red,
+                                textColor: Colors.white,
+                              );
+                              return;
+                            }
+
+                            final pathName = await ref
+                                .read(authProvider.notifier)
+                                .signUPwithCredentials(
+                                  name: nameController.text.trim(),
+                                  email: emailController.text.trim(),
+                                  license: liscenceController.text.trim(),
+                                  password: passwordController.text.trim(),
+                                );
+                            if (pathName != null && context.mounted) {
+                          context.push(pathName);
+
+                            } else {
+                              Fluttertoast.showToast(
+                                msg: "Sign-up failed. Please try again.",
+                                backgroundColor: Colors.red,
+                                textColor: Colors.white,
+                              );
+                            }
+                          },
+                        );
+                },
+              ),
+            ),
+            SizedBox(height: 45.h),
+            SignInOrSignUp(
+              text: "Sign in",
+              onTap: () {
+                context.push(RouteName.signInScreen);
+              },
+            ),
+
+            SizedBox(height: 45.h),
           ],
         ),
       ),
