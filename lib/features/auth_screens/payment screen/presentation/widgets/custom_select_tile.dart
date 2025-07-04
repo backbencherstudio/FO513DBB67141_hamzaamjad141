@@ -34,7 +34,6 @@ class CustomSelectTile extends StatelessWidget {
           ref.read(selectionProvider.notifier).state = isChecked ? null : title;
         },
           child: Container(
-            height: 96.h,
             width: 350.w,
             decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.r),

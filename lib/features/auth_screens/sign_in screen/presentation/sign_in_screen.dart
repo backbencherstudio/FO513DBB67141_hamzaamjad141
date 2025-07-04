@@ -1,21 +1,30 @@
 import 'package:aviation_app/core/constant/icons.dart';
 import 'package:aviation_app/core/constant/padding.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
-import 'package:aviation_app/core/utils/utils.dart';
+import 'package:aviation_app/core/utils/common_widget/primary_button/primary_button.dart';
+import 'package:aviation_app/features/auth_screens/auth_provider/auth_provider.dart';
+import 'package:aviation_app/features/auth_screens/sign_Up%20screen/Riverpod/isVisible_provider.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/customForgetME_section.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/custom_textformfiled.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/richtext.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../sign_Up screen/presentation/widgets/customContainer.dart';
 import '../../sign_Up screen/presentation/widgets/or_vector.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     final TextEditingController emailController = TextEditingController();
@@ -52,21 +61,59 @@ class SignInScreen extends StatelessWidget {
               controller: emailController,
             ),
             SizedBox(height: 18.h),
-            CustomTextformfiled(
-              text: "Password",
-              isobscure: true,
-              hintext: "Enter your password",
-              icons: AppIcons.eye,
-              controller: passwordController,
+            Consumer(
+              builder: (context, ref, _) {
+                final isVisible = ref.watch(isLoginVisibleProvider);
+                return CustomTextformfiled(
+                  text: "Password",
+                  isobscure: !isVisible,
+                  hintext: "Enter your password",
+                  toogleIcon: AppIcons.openEye,
+                  icons: AppIcons.eye,
+                  isVisible: isVisible,
+                  onTapToggle: () {
+                    ref.read(isLoginVisibleProvider.notifier).onTapToggle();
+                  },
+                  controller: passwordController,
+                );
+              },
             ),
             SizedBox(height: 36.h),
             Padding(
               padding: AppPadding.screenHorizontal,
-              child: Utils.primaryButton(
-                text: "Continue",
-                height: 54.h,
-                onPressed: () {
-                  context.go(RouteName.weatherScreen);
+
+              child: Consumer(
+                builder: (context, ref, _) {
+                  final authData = ref.watch(authProvider);
+
+                  return authData.isloading == true
+                      ? CircularProgressIndicator()
+                      : PrimaryButton(
+                          bodyText: "Continue",
+                          onTap: () async {
+                            if (emailController.text.isNotEmpty &&
+                                passwordController.text.isNotEmpty) {
+                              final routeName = await ref
+                                  .read(authProvider.notifier)
+                                  .loginWithEmailAndPassword(
+                                    email: emailController.text.trim(),
+                                    password: passwordController.text.trim(),
+                                  );
+
+                              if (routeName != null && context.mounted) {
+                                context.go(RouteName.weatherScreen);
+                              } else {
+
+                                  Fluttertoast.showToast(
+                                    msg: "Login failed",
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                  );
+
+                              }
+                            }
+                          },
+                        );
                 },
               ),
             ),
