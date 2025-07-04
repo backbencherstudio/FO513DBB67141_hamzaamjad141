@@ -14,6 +14,12 @@ class SplashProvider{
     else{
       await SharedPreferenceStorageService.saveInt(key: SharedPreferencesKeyName.openingCount, value: openingCount+1);
       debugPrint("\nApp Opening time : $openingCount\n");
+      final userToken = await SharedPreferenceStorageService.getString(key: SharedPreferencesKeyName.userToken);
+      if(userToken != null){
+        debugPrint("\nuser token : $userToken,\n returning to weather screen...\n");
+        return RouteName.weatherScreen;
+      }
+      debugPrint("\nuser token : is null,\n returning to sign in screen...\n");
       return RouteName.signInScreen;
     }
   }

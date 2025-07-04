@@ -12,7 +12,7 @@ class SharedPreferenceStorageService {
   }
 
   /// Get a string value
-  static Future<String?> getString(String key) async {
+  static Future<String?> getString({ required String key}) async {
     try {
       final prefs = await SharedPreferences.getInstance();
       return prefs.getString(key);
