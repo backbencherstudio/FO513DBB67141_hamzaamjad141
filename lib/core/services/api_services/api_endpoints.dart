@@ -10,4 +10,5 @@ class ApiEndPoints {
   static const String podcast = 'podcasts';
   static const String setHomeBase = 'weather/add-homebase';
   static const String getHomeBase = 'weather/get-homebase';
+  static const String initializeUser = 'users/me';
 }

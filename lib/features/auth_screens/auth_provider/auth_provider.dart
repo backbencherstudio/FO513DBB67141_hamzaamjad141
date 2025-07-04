@@ -60,7 +60,8 @@ class AuthProvider extends StateNotifier<AuthState> {
   Future<String?> loginWithEmailAndPassword({
     required String email,
     required String password,
-  }) async {
+  })
+  async {
     state = state.copyWith(isLoading: true);
 
     try {
@@ -108,7 +109,8 @@ class AuthProvider extends StateNotifier<AuthState> {
     required String email,
     required String license,
     required String password,
-  }) async {
+  })
+  async {
     state = state.copyWith(isLoading: true);
     try {
       final payload = {
@@ -145,7 +147,8 @@ class AuthProvider extends StateNotifier<AuthState> {
   Future<String?> signUpOtpVerification({
     required String email,
     required String otp,
-  }) async {
+  })
+  async {
     state = state.copyWith(isLoading: true);
 
     try {
@@ -177,7 +180,8 @@ class AuthProvider extends StateNotifier<AuthState> {
 
   //forgetpass Send otp
 
-  Future<String?> sendOtp({required String email}) async {
+  Future<String?> sendOtp({required String email})
+  async {
     state = state.copyWith(isLoading: true);
     try {
       final payload = {"email": email};
@@ -202,6 +206,31 @@ class AuthProvider extends StateNotifier<AuthState> {
       state = state.copyWith(isLoading: false);
 
       throw Exception(e);
+    }
+  }
+
+  Future<bool> initializeUser({required String userToken}) async {
+    try{
+      final response = await ApiServices.instance.getData(
+          endPoint: ApiEndPoints.initializeUser,
+        headers: {
+            "Authorization":userToken
+        }
+      );
+      if(response["success"] == true){
+        debugPrint("\nUser Initialized successful\n");
+        state = state.copyWith(
+          user: UserModel.fromJson(response["user"]),
+          userToken: userToken
+        );
+        debugPrint("\nuser token after initializing : ${state.userToken}\n");
+      }
+      else{
+        debugPrint("\nUser Initialized failed\n");
+      }
+      return response['success'];
+    }catch(error){
+      return false;
     }
   }
 }

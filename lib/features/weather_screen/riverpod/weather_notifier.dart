@@ -82,7 +82,7 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
   Future<void> setHomeBase({required String homeBaseCode}) async {
     try{
       state = state.copyWith(homeBaseButtonLoading: true);
-      debugPrint("\nhome base  : $homeBaseCode\n");
+      debugPrint("\n setting home base  : $homeBaseCode\n user token is : ${userToken}\n");
       final response = await ApiServices.instance.postData(
           endPoint: ApiEndPoints.setHomeBase,
           body: {"location":homeBaseCode.toString()},
