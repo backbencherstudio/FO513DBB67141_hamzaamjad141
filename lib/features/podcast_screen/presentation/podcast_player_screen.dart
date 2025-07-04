@@ -8,19 +8,18 @@ import '../../../core/constant/padding.dart';
 import '../../../core/utils/common_widget/common_widget.dart';
 import '../../create_screen/create_screen.dart';
 import 'package:flutter/material.dart';
-
 import '../../ebook_screen/presentation/widgets/audio_player_widget.dart';
-import '../data/podcast_provider.dart';
-
+import '../data/riverpod/podcast_provider.dart';
 
 class PodcastPlayerScreen extends ConsumerWidget {
   final String podcastId;
-  const PodcastPlayerScreen({super.key, required this.podcastId, });
+  const PodcastPlayerScreen({super.key, required this.podcastId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final podcast = ref.watch(podcastByIdProvider(podcastId));
     final audioUrl = podcast?.audioUrl;
+    debugPrint(audioUrl);
     TextTheme textTheme = Theme.of(context).textTheme;
     debugPrint('rebuild');
     return CreateScreen(
@@ -46,20 +45,31 @@ class PodcastPlayerScreen extends ConsumerWidget {
               SizedBox(height: 20.h),
               podcast != null
                   ? Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ClipRRect(
-                      borderRadius: BorderRadius.circular(6.r),
-                      child: Image.network(podcast.imageUrl,height: 256.h,width: 256.w,fit: BoxFit.cover,)),
-                  SizedBox(height: 24.h,),
-                  Text(podcast.hostName,style: textTheme.labelSmall,),
-                  SizedBox(height: 5.h,),
-                  Text(podcast.title,style: textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),),
-                  SizedBox(height: 24.h,),
-                  if (audioUrl != null)
-                    AudioPlayerWidget(audioUrl: audioUrl),
-                ],
-              )
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(6.r),
+                          child: Image.network(
+                            podcast.imageUrl,
+                            height: 256.h,
+                            width: 256.w,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        SizedBox(height: 24.h),
+                        Text(podcast.hostName, style: textTheme.labelSmall),
+                        SizedBox(height: 5.h),
+                        Text(
+                          podcast.title,
+                          style: textTheme.headlineSmall!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 24.h),
+                        if (audioUrl != null)
+                          AudioPlayerWidget(audioUrl: audioUrl),
+                      ],
+                    )
                   : Center(child: CircularProgressIndicator()),
             ],
           ),
