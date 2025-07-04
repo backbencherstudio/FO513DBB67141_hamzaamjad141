@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../core/theme/theme_extension/app_colors.dart';
 
@@ -72,22 +73,22 @@ class WeatherCard extends StatelessWidget {
                 Column(
                   spacing: 8.h,
                   children: [
-                    Text(weather.name.toUpperCase(), style: textTheme.titleMedium),
+                    Text(weather.station?.toUpperCase() ?? "", style: textTheme.titleMedium),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 2.h),
                       decoration: BoxDecoration(
                         color: Colors.yellow,
                         borderRadius: BorderRadius.circular(8.r)
                       ),
-                      child: Text(weather.code.toUpperCase(),style: textTheme.bodySmall?.copyWith(color: Color(0xff070707)),),
+                      child: Text(weather.station?.toUpperCase() ?? "",style: textTheme.bodySmall?.copyWith(color: Color(0xff070707)),),
                     )
                   ],
                 ),
                 Consumer(
                   builder: (_, ref, _) {
                     return CommonWidget.secondaryButton(
-                      child:  SvgPicture.asset( weather.isFavorite ? AppIcons.loveFill : AppIcons.love),
-                      onTap: ()=> ref.read(weatherProvider.notifier).onAddToFavouriteWeather(weather: weather),
+                      child:  SvgPicture.asset( true ? AppIcons.loveFill : AppIcons.love),
+                      onTap: ()=> ref.read(weatherProvider.notifier).addToFavouriteWeather(weather: weather),
                     );
                   }
                 ),
@@ -105,53 +106,53 @@ class WeatherCard extends StatelessWidget {
                       textTheme: textTheme,
                       svgIconPath: AppIcons.clockOutline,
                       title: "Time (EST):",
-                      body: weather.time,
+                      body: DateFormat('MM/dd/yyyy, hh:mm a0').format(DateTime.parse( weather.meta?['cache-timestamp'])),
                     ),
                     _customListTile(
                       textTheme: textTheme,
                       svgIconPath: AppIcons.airplaneTakeOff,
                       title: "Flight Rules",
-                      body: weather.flightRules,
+                      body: weather.flight_rules ?? "",
                     ),
                     _customListTile(
                       textTheme: textTheme,
                       svgIconPath: AppIcons.temperature,
                       title: "Temperature:",
-                      body: weather.temperature,
+                      body: "${weather.temperature?.value} °C",
                     ),
                     _customListTile(
                       textTheme: textTheme,
                       svgIconPath: AppIcons.dewPoint,
                       title: "Dewpoint:",
-                      body: weather.dewPoint,
+                      body: "${weather.dewpoint?.value} °C",
                     ),
                     _customListTile(
                       textTheme: textTheme,
                       svgIconPath: AppIcons.eyeOutline,
                       title: "Visibility:",
-                      body: weather.visibility,
+                      body: "${weather.visibility?.value} sm",
                     ),
                     _customListTile(
                       textTheme: textTheme,
                       svgIconPath: AppIcons.wind,
                       title: "Wind",
-                      body: weather.wind,
+                      body: "${weather.wind_direction?.value}° at ${weather.wind_speed?.value} kt",
                     ),
                     _customListTile(
                       textTheme: textTheme,
                       svgIconPath: AppIcons.clouds,
                       title: "Clouds",
-                      body: weather.clouds,
+                      body: "Few clouds at ${weather.clouds?[0].altitude}",
                     ),
                     _customListTile(
                       textTheme: textTheme,
                       svgIconPath: AppIcons.raw,
                       title: "Raw METAR",
-                      body: weather.rawMetar,
+                      body: weather.raw ?? "",
                     ),
                   ],
                 ),
-                SizedBox(height: 4.h),
+                SizedBox(height: 15.h),
                 PrimaryButton(bodyText: "Set As Home Base", onTap: () {}),
               ],
             )

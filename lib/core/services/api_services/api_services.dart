@@ -49,7 +49,7 @@ class ApiServices {
   /// http get request service
   Future<dynamic> getData({
     required String endPoint,
-    required Map<String, String> headers,
+    Map<String, String>? headers,
   }) async {
     try {
       final response = await http.get(
