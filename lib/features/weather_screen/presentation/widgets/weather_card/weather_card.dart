@@ -57,7 +57,6 @@ class WeatherCard extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(16.r),
         width: double.infinity,
-        // height: 466.h,
         decoration: BoxDecoration(
           color: AppColors.secondary,
           borderRadius: BorderRadius.circular(8.r),
@@ -152,20 +151,20 @@ class WeatherCard extends StatelessWidget {
                       _customListTile(
                         textTheme: textTheme,
                         svgIconPath: AppIcons.wind,
-                        title: "Wind",
+                        title: "Wind:",
                         body:
                             "${weather.wind_direction?.value}° at ${weather.wind_speed?.value} kt",
                       ),
                       _customListTile(
                         textTheme: textTheme,
                         svgIconPath: AppIcons.clouds,
-                        title: "Clouds",
+                        title: "Clouds:",
                         body: "Few clouds at ${weather.clouds?.first.altitude}",
                       ),
                       _customListTile(
                         textTheme: textTheme,
                         svgIconPath: AppIcons.raw,
-                        title: "Raw METAR",
+                        title: "Raw METAR:",
                         body: weather.raw ?? "",
                       ),
                     ],
@@ -179,11 +178,9 @@ class WeatherCard extends StatelessWidget {
                       final homeBaseButtonLoading = ref
                           .watch(weatherProvider)
                           .homeBaseButtonLoading;
-                      return
-                        homeBaseButtonLoading
+                      return homeBaseButtonLoading
                           ? const Center(child: CircularProgressIndicator())
-                          :
-                        PrimaryButton(
+                          : PrimaryButton(
                               bodyText: "Set As Home Base",
                               onTap: () async {
                                 await ref
