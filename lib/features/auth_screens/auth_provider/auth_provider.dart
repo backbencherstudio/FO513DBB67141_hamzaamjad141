@@ -57,11 +57,11 @@ class AuthProvider extends StateNotifier<AuthState> {
 
   //sign up code
 
-  Future<String?> loginWithEmailandPassword({
+  Future<String?> loginWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
-    state = state.copyWith(isloading: true);
+    state = state.copyWith(isLoading: true);
 
     try {
       final payload = {"email": email, "password": password};
@@ -73,10 +73,9 @@ class AuthProvider extends StateNotifier<AuthState> {
       );
       debugPrint("\n\n $response \n\n ");
       final success = response['success'].toString().toLowerCase() == "true";
-      final message = response['message'].toString().toLowerCase();
       if (success) {
         final token = response["token"];
-        final userjson = response["user"];
+        final userJson = response["user"];
         if (token != null) {
           await SharedPreferenceStorageService.saveString(
             SharedPreferencesKeyName.userToken,
@@ -84,34 +83,33 @@ class AuthProvider extends StateNotifier<AuthState> {
           );
         }
         state = state.copyWith(
-          isloading: false,
+          isLoading: false,
           userToken: token,
-          user: UserModel.fromJson(userjson),
+          user: UserModel.fromJson(userJson),
         );
-        debugPrint("\n\n\n\n $message \n\n\n\n");
         debugPrint("Login successful. User ID: ${state.user?.id}");
 
         return RouteName.weatherScreen;
       } else {
-        state = state.copyWith(isloading: false);
+        state = state.copyWith(isLoading: false);
 
         return null;
       }
     } catch (e) {
-      state = state.copyWith(isloading: false);
+      state = state.copyWith(isLoading: false);
 
       throw Exception(e);
     }
   }
 
-  // register with email,pass,spl,
-  Future<String?> signUPwithCredentials({
+  /// register with email,pass,spl,
+  Future<String?> signUpWithCredentials({
     required String name,
     required String email,
     required String license,
     required String password,
   }) async {
-    state = state.copyWith(isloading: true);
+    state = state.copyWith(isLoading: true);
     try {
       final payload = {
         "name": name,
@@ -127,17 +125,16 @@ class AuthProvider extends StateNotifier<AuthState> {
       );
 
       final success = response["success"].toString().toLowerCase() == "true";
-      final message = response["message"];
       if (success) {
-        state = state.copyWith(isloading: false, message: message);
+        state = state.copyWith(isLoading: false,);
         return '${RouteName.signUpOtpScreen}/${Uri.encodeComponent(email)}';
       } else {
-        state = state.copyWith(isloading: false);
+        state = state.copyWith(isLoading: false);
 
         return null;
       }
     } catch (e) {
-      state = state.copyWith(isloading: false);
+      state = state.copyWith(isLoading: false);
 
       throw Exception(e);
     }
@@ -149,7 +146,7 @@ class AuthProvider extends StateNotifier<AuthState> {
     required String email,
     required String otp,
   }) async {
-    state = state.copyWith(isloading: true);
+    state = state.copyWith(isLoading: true);
 
     try {
       final payload = {"email": email, "otp": otp};
@@ -164,15 +161,15 @@ class AuthProvider extends StateNotifier<AuthState> {
       final message = response["message"];
 
       if (success) {
-        state = state.copyWith(isloading: false);
+        state = state.copyWith(isLoading: false);
         debugPrint(message);
         return RouteName.acountCreatedScreen;
       } else {
-        state = state.copyWith(isloading: false);
+        state = state.copyWith(isLoading: false);
         return null;
       }
     } catch (e) {
-      state = state.copyWith(isloading: false);
+      state = state.copyWith(isLoading: false);
 
       throw Exception(e);
     }
@@ -181,7 +178,7 @@ class AuthProvider extends StateNotifier<AuthState> {
   //forgetpass Send otp
 
   Future<String?> sendOtp({required String email}) async {
-    state = state.copyWith(isloading: true);
+    state = state.copyWith(isLoading: true);
     try {
       final payload = {"email": email};
       final response = await ApiServices.instance.postData(
@@ -194,15 +191,15 @@ class AuthProvider extends StateNotifier<AuthState> {
       final message = response["message"];
 
       if (success) {
-        state = state.copyWith(isloading: false);
+        state = state.copyWith(isLoading: false);
         debugPrint(message);
         return RouteName.forgetOtpScreen;
       } else {
-        state = state.copyWith(isloading: false);
+        state = state.copyWith(isLoading: false);
         return null;
       }
     } catch (e) {
-      state = state.copyWith(isloading: false);
+      state = state.copyWith(isLoading: false);
 
       throw Exception(e);
     }

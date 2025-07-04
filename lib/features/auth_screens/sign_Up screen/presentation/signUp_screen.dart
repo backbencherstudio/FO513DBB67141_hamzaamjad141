@@ -15,17 +15,44 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
   @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
+
+  late final TextEditingController nameController;
+  late final TextEditingController licenseController;
+  late final TextEditingController emailController;
+  late final TextEditingController passwordController;
+  late final TextEditingController confirmPasswordController;
+
+
+  @override
+  void initState() {
+    nameController = TextEditingController();
+    licenseController = TextEditingController(text: "No License");
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    confirmPasswordController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    licenseController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController liscenceController = TextEditingController();
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
-    final TextEditingController confirmPasswordController =
-        TextEditingController();
     return CreateScreen(
       child: SingleChildScrollView(
         child: Column(
@@ -66,10 +93,8 @@ class SignupScreen extends StatelessWidget {
             ),
             SizedBox(height: 18.h),
             CustomAnimatedContainer(
-              text: 'Current License',
               icons: AppIcons.dropdown,
-              hintext: 'No License',
-              controller: liscenceController,
+              controller: licenseController,
               dropdownItems: ["No License", "SPL", "PPL", "CPL", "ATPL", "CH"],
             ),
             SizedBox(height: 18.h),
@@ -122,7 +147,7 @@ class SignupScreen extends StatelessWidget {
                           onTap: () async {
                             if (emailController.text.isEmpty ||
                                 nameController.text.isEmpty ||
-                                liscenceController.text.isEmpty ||
+                                licenseController.text.isEmpty ||
                                 passwordController.text.trim() !=
                                     confirmPasswordController.text.trim()) {
                               Fluttertoast.showToast(
@@ -137,16 +162,16 @@ class SignupScreen extends StatelessWidget {
                               return;
                             }
 
-                            final pathName = await ref
+                            final routeName = await ref
                                 .read(authProvider.notifier)
-                                .signUPwithCredentials(
+                                .signUpWithCredentials(
                                   name: nameController.text.trim(),
                                   email: emailController.text.trim(),
-                                  license: liscenceController.text.trim(),
+                                  license: licenseController.text.trim(),
                                   password: passwordController.text.trim(),
                                 );
-                            if (pathName != null && context.mounted) {
-                          context.push(pathName);
+                            if (routeName != null && context.mounted) {
+                          context.go(routeName);
 
                             } else {
                               Fluttertoast.showToast(

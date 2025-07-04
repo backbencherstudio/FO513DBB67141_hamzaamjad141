@@ -47,6 +47,7 @@ class CustomTextformfiled extends StatelessWidget {
             SizedBox(height: 2.h,),
             Expanded(
               child: TextFormField(
+                style: Theme.of(context).textTheme.bodyMedium,
                 obscureText: isobscure ?? false,
                 controller: controller,
                 decoration: InputDecoration(

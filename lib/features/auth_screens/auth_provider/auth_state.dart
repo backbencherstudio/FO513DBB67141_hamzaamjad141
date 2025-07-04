@@ -14,8 +14,7 @@ class AuthState {
     GoogleUserModel? googleUser,
     UserModel? user,
     String? userToken,
-    String? message,
-    bool? isloading,
+    bool? isLoading,
   }) {
     return AuthState(
       googleUser: googleUser ?? this.googleUser,
