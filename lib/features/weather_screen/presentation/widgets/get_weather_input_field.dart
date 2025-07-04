@@ -68,7 +68,11 @@ class GetWeatherInputField extends StatelessWidget {
             child: Consumer(
               builder: (_, ref, _) {
                 final weatherNotifier = ref.read(weatherProvider.notifier);
-                return PrimaryButton(
+                final isLoading = ref.watch(weatherProvider).searchButtonLoading;
+                return isLoading ?
+                Center(child: CircularProgressIndicator(),)
+                :
+                PrimaryButton(
                   bodyText: "Get Weather",
                   onTap: () {
                     if(textEditingController.text.isNotEmpty){
