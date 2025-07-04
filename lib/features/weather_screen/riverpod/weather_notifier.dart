@@ -82,7 +82,7 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
   Future<void> setHomeBase({required String homeBaseCode}) async {
     try{
       state = state.copyWith(homeBaseButtonLoading: true);
-      debugPrint("\n setting home base  : $homeBaseCode\n user token is : ${userToken}\n");
+      debugPrint("\n setting home base  : $homeBaseCode\n");
       final response = await ApiServices.instance.postData(
           endPoint: ApiEndPoints.setHomeBase,
           body: {"location":homeBaseCode.toString()},
@@ -91,7 +91,6 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
             "Content-Type": "application/json"
           }
       );
-      debugPrint("\nset Home base response : $response\n");
       if(response['success']){
         state = state.copyWith(homeBase: homeBaseCode,homeBaseButtonLoading: false);
         Fluttertoast.showToast(msg: "Home base set successfully",backgroundColor: Colors.green,textColor: Colors.white);
