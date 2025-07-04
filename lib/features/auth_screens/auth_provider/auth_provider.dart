@@ -33,7 +33,7 @@ class AuthProvider extends StateNotifier<AuthState> {
           headers: headers,
         );
         debugPrint("\nResponse : $response\n");
-         final UserModel user = UserModel.fromJson(response['user']);
+        final UserModel user = UserModel.fromJson(response['user']);
         final userToken = response['token'];
         await SharedPreferenceStorageService.saveString(
           SharedPreferencesKeyName.userToken,
@@ -41,8 +41,8 @@ class AuthProvider extends StateNotifier<AuthState> {
         );
         state = state.copyWith(
           googleUser: googleUserModel,
-           user: user,
-            userToken: userToken,
+          user: user,
+          userToken: userToken,
         );
         debugPrint("\nuser token : $userToken.\n");
         return RouteName.weatherScreen;
@@ -60,8 +60,7 @@ class AuthProvider extends StateNotifier<AuthState> {
   Future<String?> loginWithEmailAndPassword({
     required String email,
     required String password,
-  })
-  async {
+  }) async {
     state = state.copyWith(isLoading: true);
 
     try {
@@ -109,8 +108,7 @@ class AuthProvider extends StateNotifier<AuthState> {
     required String email,
     required String license,
     required String password,
-  })
-  async {
+  }) async {
     state = state.copyWith(isLoading: true);
     try {
       final payload = {
@@ -128,7 +126,7 @@ class AuthProvider extends StateNotifier<AuthState> {
 
       final success = response["success"].toString().toLowerCase() == "true";
       if (success) {
-        state = state.copyWith(isLoading: false,);
+        state = state.copyWith(isLoading: false);
         return '${RouteName.signUpOtpScreen}/${Uri.encodeComponent(email)}';
       } else {
         state = state.copyWith(isLoading: false);
@@ -147,8 +145,7 @@ class AuthProvider extends StateNotifier<AuthState> {
   Future<String?> signUpOtpVerification({
     required String email,
     required String otp,
-  })
-  async {
+  }) async {
     state = state.copyWith(isLoading: true);
 
     try {
@@ -180,8 +177,7 @@ class AuthProvider extends StateNotifier<AuthState> {
 
   //forgetpass Send otp
 
-  Future<String?> sendOtp({required String email})
-  async {
+  Future<String?> sendOtp({required String email}) async {
     state = state.copyWith(isLoading: true);
     try {
       final payload = {"email": email};
@@ -209,27 +205,26 @@ class AuthProvider extends StateNotifier<AuthState> {
     }
   }
 
+
+  /// Call this api during splash screen to initialize user
   Future<bool> initializeUser({required String userToken}) async {
-    try{
+    try {
       final response = await ApiServices.instance.getData(
-          endPoint: ApiEndPoints.initializeUser,
-        headers: {
-            "Authorization":userToken
-        }
+        endPoint: ApiEndPoints.initializeUser,
+        headers: {"Authorization": userToken},
       );
-      if(response["success"] == true){
+      if (response["success"] == true) {
         debugPrint("\nUser Initialized successful\n");
         state = state.copyWith(
           user: UserModel.fromJson(response["user"]),
-          userToken: userToken
+          userToken: userToken,
         );
         debugPrint("\nuser token after initializing : ${state.userToken}\n");
-      }
-      else{
+      } else {
         debugPrint("\nUser Initialized failed\n");
       }
       return response['success'];
-    }catch(error){
+    } catch (error) {
       return false;
     }
   }
