@@ -98,7 +98,7 @@ class AuthProvider extends StateNotifier<AuthState> {
         return null;
       }
     } catch (e) {
-              state = state.copyWith(isloading: false);
+      state = state.copyWith(isloading: false);
 
       throw Exception(e);
     }
@@ -137,7 +137,7 @@ class AuthProvider extends StateNotifier<AuthState> {
         return null;
       }
     } catch (e) {
-              state = state.copyWith(isloading: false);
+      state = state.copyWith(isloading: false);
 
       throw Exception(e);
     }
@@ -172,7 +172,37 @@ class AuthProvider extends StateNotifier<AuthState> {
         return null;
       }
     } catch (e) {
-              state = state.copyWith(isloading: false);
+      state = state.copyWith(isloading: false);
+
+      throw Exception(e);
+    }
+  }
+
+  //forgetpass Send otp
+
+  Future<String?> sendOtp({required String email}) async {
+    state = state.copyWith(isloading: true);
+    try {
+      final payload = {"email": email};
+      final response = await ApiServices.instance.postData(
+        endPoint: ApiEndPoints.sendOtp,
+        body: payload,
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      final success = response["success"].toString().toLowerCase() == "true";
+      final message = response["message"];
+
+      if (success) {
+        state = state.copyWith(isloading: false);
+        debugPrint(message);
+        return RouteName.forgetOtpScreen;
+      } else {
+        state = state.copyWith(isloading: false);
+        return null;
+      }
+    } catch (e) {
+      state = state.copyWith(isloading: false);
 
       throw Exception(e);
     }

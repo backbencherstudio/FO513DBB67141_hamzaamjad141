@@ -5,4 +5,5 @@ class ApiEndPoints {
   static const String login = 'users/login';
   static const String signUp = 'users/register';
   static const String signUpOtp = 'users/registerVerify';
+  static const String sendOtp = 'users/forgetPassword';
 }
