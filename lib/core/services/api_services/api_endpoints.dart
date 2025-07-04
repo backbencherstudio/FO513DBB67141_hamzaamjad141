@@ -1,6 +1,7 @@
 class ApiEndPoints {
 
-  static const String baseUrl = "http://192.168.4.3:3000";
+  //static const String baseUrl = "http://192.168.4.3:3000";
+  static const String baseUrl = "https://war-receives-location-grace.trycloudflare.com";
   static const String googleLogin = 'users/google-login';
   static const String login = 'users/login';
   static const String signUp = 'users/register';
