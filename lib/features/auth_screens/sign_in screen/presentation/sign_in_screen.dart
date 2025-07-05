@@ -91,24 +91,25 @@ class _SignInScreenState extends State<SignInScreen> {
                       : PrimaryButton(
                           bodyText: "Continue",
                           onTap: () async {
-                            final routeName = await ref
-                                .read(authProvider.notifier)
-                                .loginWithEmailandPassword(
-                                  email: emailController.text.trim(),
-                                  password: passwordController.text.trim(),
-                                );
+                            if (emailController.text.isNotEmpty &&
+                                passwordController.text.isNotEmpty) {
+                              final routeName = await ref
+                                  .read(authProvider.notifier)
+                                  .loginWithEmailAndPassword(
+                                    email: emailController.text.trim(),
+                                    password: passwordController.text.trim(),
+                                  );
 
-                            debugPrint(authData.userToken);
+                              if (routeName != null && context.mounted) {
+                                context.go(RouteName.weatherScreen);
+                              } else {
 
-                            if (routeName != null && context.mounted) {
-                              context.go(RouteName.weatherScreen);
-                            } else {
-                              if (mounted) {
-                                Fluttertoast.showToast(
-                                  msg: authData.message.toString(),
-                                  backgroundColor: Colors.red,
-                                  textColor: Colors.white,
-                                );
+                                  Fluttertoast.showToast(
+                                    msg: "Login failed",
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                  );
+
                               }
                             }
                           },

@@ -43,7 +43,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         WidgetsBinding.instance.addPostFrameCallback((_) async {
-          final routeName = await SplashProvider
+          final routeName = await ref
+              .read(splashProvider.notifier)
               .handleAppOpeningCount();
 
           if (mounted) {

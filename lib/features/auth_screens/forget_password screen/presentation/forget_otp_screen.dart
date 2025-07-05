@@ -1,6 +1,7 @@
 import 'package:aviation_app/core/constant/padding.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/core/theme/theme_extension/app_colors.dart';
+import 'package:aviation_app/core/utils/common_widget/primary_button/primary_button.dart';
 import 'package:aviation_app/core/utils/utils.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/resendtext.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
@@ -14,6 +15,7 @@ class ForgetOtpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController otpController = TextEditingController();
    return CreateScreen(
       child: SingleChildScrollView(
         child: Column(
@@ -46,6 +48,7 @@ class ForgetOtpScreen extends StatelessWidget {
             ),
             SizedBox(height: 48.h),
             PinCodeTextField(
+              controller: otpController,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               appContext: context,
             
@@ -72,9 +75,9 @@ class ForgetOtpScreen extends StatelessWidget {
             SizedBox(height: 36.h,),
             Padding(
               padding: AppPadding.screenHorizontal,
-              child: Utils.primaryButton(text: "Verify Now",
-              height: 54.h,
-              onPressed: () {context.push(RouteName.resetPassScreen);}),
+              child: PrimaryButton(
+              bodyText: "Verify Now",
+              onTap: () {context.push(RouteName.resetPassScreen);}),
             ),
             SizedBox(height: 16.h),
             Resendtext(),

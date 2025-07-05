@@ -27,9 +27,6 @@ class WeatherResult extends StatelessWidget {
                 builder: (_, ref, _) {
                   final weatherState = ref.watch(weatherProvider);
                   final weatherNotifier = ref.read(weatherProvider.notifier);
-                  debugPrint(
-                    "\nResult : ${weatherState.searchedWeather == null ? 'null' : 'not null'}\n",
-                  );
                   return PrimaryButton(
                     onTap: () {
                       weatherNotifier.onTabChange(0);
