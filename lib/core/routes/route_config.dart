@@ -130,20 +130,36 @@ class RouteConfig {
           return const MaterialPage(child: SuccessScreen());
         },
       ),
+     
       GoRoute(
-        name: RouteName.forgetOtpScreen,
-        path: RouteName.forgetOtpScreen,
-        pageBuilder: (context, state) {
-          return const MaterialPage(child: ForgetOtpScreen());
-        },
-      ),
-      GoRoute(
-        name: RouteName.resetPassScreen,
-        path: RouteName.resetPassScreen,
-        pageBuilder: (context, state) {
-          return const MaterialPage(child: ResetPassScreen());
-        },
-      ),
+  name: RouteName.forgetOtpScreen,
+  path: '${RouteName.forgetOtpScreen}/:email',
+  pageBuilder: (context, state) {
+    final email = state.pathParameters['email']!;  
+    return buildPageWithTransition(
+      context: context,
+      state: state,
+      transitionType: PageTransitionType.fade,
+      child: ForgetOtpScreen(email: email),
+    );
+  },
+),
+  
+ GoRoute(
+  name: RouteName.resetPassScreen,
+  path: '${RouteName.resetPassScreen}/:email',
+  pageBuilder: (context, state) {
+    final email = state.pathParameters['email']!;  
+    return buildPageWithTransition(
+      context: context,
+      state: state,
+      transitionType: PageTransitionType.fade,
+      child: ResetPassScreen(email: email),
+    );
+  },
+),
+
+
       GoRoute(
         name: RouteName.signupScreen,
         path: RouteName.signupScreen,
