@@ -1,16 +1,20 @@
+import 'package:aviation_app/core/theme/theme_extension/app_colors.dart';
 import 'package:aviation_app/core/utils/common_widget/common_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../../core/theme/theme_extension/app_colors.dart';
+import '../../data/chat_bot_provider/chat_bot_provider.dart';
 
-class BuildTextFiled extends HookWidget {
-  const BuildTextFiled({super.key});
+class BuildTextFiled extends HookConsumerWidget {
+  final TextEditingController? messageController;
+
+  const BuildTextFiled({super.key, this.messageController});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     TextTheme textTheme = Theme.of(context).textTheme;
 
     // Create an animation controller using hooks
@@ -23,7 +27,7 @@ class BuildTextFiled extends HookWidget {
       CurvedAnimation(parent: animationController, curve: Curves.easeInOut),
     );
 
-    // Start the animation when the widget mounts, and handle cleanup
+    // Start the animation when the widget mounts
     useEffect(() {
       animationController.forward();
       return null;
@@ -32,9 +36,9 @@ class BuildTextFiled extends HookWidget {
     return ScaleTransition(
       scale: scaleAnimation,
       child: Container(
-        padding: EdgeInsets.all(1),
+        padding: const EdgeInsets.all(1),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             colors: [
               Colors.white,
               Colors.transparent,
@@ -43,7 +47,7 @@ class BuildTextFiled extends HookWidget {
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            stops: const [0.0, 0.05, 0.7, 1.0],
+            stops: [0.0, 0.05, 0.7, 1.0],
           ),
           borderRadius: BorderRadius.circular(12.r),
         ),
@@ -58,24 +62,19 @@ class BuildTextFiled extends HookWidget {
               color: Colors.white10,
             ),
             child: Container(
-              height: 50.h, // Fixed height to match the image
+              height: 50.h,
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
                     AppColors.primary.withValues(alpha: 0.08),
-                    Color(0xff23293D).withValues(alpha: 0.7),
-                    Color(0xff23293D).withValues(alpha: 0.7),
+                    const Color(0xff23293D).withValues(alpha: 0.7),
+                    const Color(0xff23293D).withValues(alpha: 0.7),
                     AppColors.primary.withValues(alpha: 0.08),
                   ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  stops: const [
-                    0.0,
-                    0.25,
-                    0.75,
-                    1.0,
-                  ], // Gradual stops for smoothness
+                  stops: const [0.0, 0.25, 0.75, 1.0],
                 ),
                 borderRadius: BorderRadius.circular(12.r),
               ),
@@ -85,6 +84,7 @@ class BuildTextFiled extends HookWidget {
                 children: [
                   Expanded(
                     child: TextField(
+                      controller: messageController,
                       decoration: InputDecoration(
                         filled: false,
                         hintText: 'Type your question here...',
@@ -104,7 +104,14 @@ class BuildTextFiled extends HookWidget {
                   ),
                   SizedBox(width: 5.w),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      final message = messageController?.text.trim();
+                      if (message != null && message.isNotEmpty) {
+                        // Call the provider to send the message
+                        ref.read(voiceAiProvider.notifier).getGeminiResponse(message);
+                        messageController?.clear(); // Clear the text field
+                      }
+                    },
                     child: CommonWidget.secondaryButton(
                       child: SvgPicture.asset('assets/icons/send.svg'),
                     ),
