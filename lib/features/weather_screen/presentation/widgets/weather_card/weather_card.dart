@@ -96,9 +96,10 @@ class WeatherCard extends StatelessWidget {
                 ),
                 Consumer(
                   builder: (_, ref, _) {
+                    final bool isFavourite = ref.watch(weatherProvider).favouriteWeatherList.any((item)=>item.station == weather.station);
                     return CommonWidget.secondaryButton(
                       child: SvgPicture.asset(
-                        true ? AppIcons.loveFill : AppIcons.love,
+                        isFavourite ? AppIcons.loveFill : AppIcons.love,
                       ),
                       onTap: () => ref
                           .read(weatherProvider.notifier)
