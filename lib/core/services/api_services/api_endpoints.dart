@@ -19,5 +19,6 @@ class ApiEndPoints {
   static const String initializeUser = 'users/me';
   static const String forgetOtp = 'users/verify-top';
   static const String resetpass = 'users/change-password';
+  static const String addToFavoriteWeather = 'weather/add-favourite';
 
 }
