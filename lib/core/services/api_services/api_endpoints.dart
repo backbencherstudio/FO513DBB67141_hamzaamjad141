@@ -21,5 +21,10 @@ class ApiEndPoints {
   static const String resetpass = 'users/change-password';
   static const String addToFavoriteWeather = 'weather/add-favourite';
   static const String getFavouriteWeatherList = 'weather/get-favourite?page=1&item=10';
+  static const String findInstructor = "instructor/find?search=";
+  static const String setInstructor = "instructor/set-instructor/";
+  static const String getInstructor = "instructor/my-instructor";
+  static const String addLogBook = "addlog/add-addlog";
+  static const String getLogRequestList = "addlog/get-logbook?page=1&limit=10";
 
 }

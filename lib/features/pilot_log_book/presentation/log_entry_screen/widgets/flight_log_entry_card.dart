@@ -1,7 +1,10 @@
 import 'package:aviation_app/core/theme/theme_extension/app_colors.dart';
 import 'package:aviation_app/core/utils/common_widget/primary_button/primary_button.dart';
+import 'package:aviation_app/features/pilot_log_book/riverpod/log_book_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import 'flight_log_custom_text_form_field.dart';
 
@@ -83,7 +86,7 @@ class _FlightLogEntryCardState extends State<FlightLogEntryCard> {
               ),
               FlightLogCustomTextField(
                 controller: toEditingController,
-                label: "Ti",
+                label: "To",
                 hint: "Enter your to",
               ),
               FlightLogCustomTextField(
@@ -135,18 +138,47 @@ class _FlightLogEntryCardState extends State<FlightLogEntryCard> {
                 controller: takeOffsEditingController,
                 label: "Take Offs",
                 hint: "Enter your take offs",
+                keyboardType: TextInputType.number,
               ),
               FlightLogCustomTextField(
                 controller: landingsEditingController,
                 label: "Landings",
                 hint: "Enter your landings",
+                keyboardType: TextInputType.number,
               ),
 
             ],
           ),
         ),
         SizedBox(height: 18.h,),
-        PrimaryButton(bodyText: "Add Log", onTap: (){})
+        Consumer(
+          builder: (_ , ref, _) {
+            final isButtonLoading = ref.watch(logBookProvider).addLogButtonLoading;
+            return isButtonLoading ?
+            const  Center(child:  CircularProgressIndicator(),)
+            :
+            PrimaryButton(bodyText: "Add Log", onTap: () async {
+             final success = await ref.read(logBookProvider.notifier).addLogBook(
+                from : fromEditingController.text,
+                to : toEditingController.text,
+              aircrafttype : aircraftTypeEditingController.text,
+                 tailNumber : tailNumberEditingController.text,
+               flightTime : flightTimeEditingController.text,
+              pictime : picTimeEditingController.text,
+           dualrcv : dualReceivedEditingController.text,
+                daytime : dayTimeEditingController.text,
+               nightime : nightTimeEditingController.text,
+                ifrtime : ifrTimeEditingController.text,
+                crossCountry : crossCountryEditingController.text,
+             takeoffs : num.tryParse(takeOffsEditingController.text) ?? 0 ,
+                landings :  num.tryParse(landingsEditingController.text) ?? 0  ,
+              );
+             if(success == true && context.mounted){
+               context.pop();
+             }
+            });
+          }
+        )
       ],
     );
   }
