@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:aviation_app/features/auth_screens/auth_provider/auth_provider.dart';
 import 'package:aviation_app/features/ebook_screen/data/entity/ebook_api_model.dart';
@@ -46,11 +47,11 @@ class EbookNotifier extends StateNotifier<EbookState> {
   }
 
   Future<List<EBook>> loadEbooks({required int page, required int limit}) async {
-    print('\n\n fetching data start............');
+    debugPrint('\n\n fetching data start............');
     final newEbooksApi = await fetchEbooks(page: page, limit: limit);
 
     if (newEbooksApi.isNotEmpty) {
-      print('\n\n fetched: ${newEbooksApi.first}');
+      debugPrint('\n\n fetched: ${newEbooksApi.first}');
       List<EBook> newEbooks = newEbooksApi.map((api) => EbookMapping.toEbook(api)).toList();
 
       state = state.copyWith(
@@ -61,7 +62,7 @@ class EbookNotifier extends StateNotifier<EbookState> {
       return newEbooks;
     }
 
-    print('\n\n No ebooks fetched');
+    debugPrint('\n\n No ebooks fetched');
     state = state.copyWith(hasMore: false);
     return [];
   }

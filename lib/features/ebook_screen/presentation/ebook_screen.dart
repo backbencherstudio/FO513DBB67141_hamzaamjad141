@@ -16,12 +16,33 @@ class EbookScreen extends ConsumerStatefulWidget {
 }
 
 class _EbookScreenState extends ConsumerState<EbookScreen> {
+  late ScrollController _scrollController;
+
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController()..addListener(_onScroll);
     Future.microtask(() {
       ref.read(ebookApiProvider.notifier).loadEbooks(page: 1, limit: 10);
     });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    final notifier = ref.read(ebookApiProvider.notifier);
+    final state = ref.read(ebookApiProvider);
+
+    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
+      if (!state.isFetching && state.hasMore) {
+        notifier.loadMoreEbooks(limit: 10);
+      }
+    }
   }
 
   @override
@@ -41,6 +62,7 @@ class _EbookScreenState extends ConsumerState<EbookScreen> {
                   : ebookState.error != null
                   ? Center(child: Text('Error: ${ebookState.error}', style: const TextStyle(color: Colors.red)))
                   : SingleChildScrollView(
+                controller: _scrollController,
                 child: Column(
                   children: [
                     SizedBox(height: 10.h),
@@ -62,17 +84,11 @@ class _EbookScreenState extends ConsumerState<EbookScreen> {
                         return BookCard(book: book);
                       },
                     ),
-                    if (ebookState.hasMore && !ebookState.isFetching)
-                      ElevatedButton(
-                        onPressed: () {
-                          ref.read(ebookApiProvider.notifier).loadMoreEbooks(limit: 10);
-                        },
-                        child: const Text('Load More'),
+                    if (ebookState.isFetching)
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: CircularProgressIndicator(),
                       ),
-                    if (ebookState.isFetching) const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: CircularProgressIndicator(),
-                    ),
                     SizedBox(height: 100.h),
                   ],
                 ),
