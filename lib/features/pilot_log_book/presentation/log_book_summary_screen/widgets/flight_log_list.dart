@@ -21,7 +21,13 @@ class FlightLogList extends StatelessWidget{
           itemCount: flightLogRequestList.length,
             itemBuilder: (_, index){
             final flightLogRequest = flightLogRequestList[index];
-            return FlightLogCard(logRequestModel: flightLogRequest,);
+            final isLoading = ref.watch(logBookProvider).deleteButtonLoadingButtonIndex == index;
+            return FlightLogCard(logRequestModel: flightLogRequest,
+            isLoading: isLoading,
+            onDelete: () async{
+              await ref.read(logBookProvider.notifier).deleteLogRequest( id:  flightLogRequest.id, index: index);
+            },
+            );
             }
         )
         :

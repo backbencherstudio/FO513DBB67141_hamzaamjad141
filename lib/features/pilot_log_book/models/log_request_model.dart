@@ -4,7 +4,7 @@ part 'log_request_model.g.dart';
 
 @JsonSerializable()
 class LogRequestModel {
-  final num id;
+  final String id;
   final String date;
   final String from;
   final String to;
