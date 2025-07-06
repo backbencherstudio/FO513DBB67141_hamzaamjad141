@@ -8,12 +8,14 @@ class CustomTextField extends StatelessWidget {
     required this.textTheme,
     required this.labelName,
     this.controller, required this.hintText,
+    this.enabled = true,
   });
 
   final TextTheme textTheme;
   final String labelName;
   final String hintText;
   final TextEditingController? controller;
+  final bool enabled;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,6 +34,7 @@ class CustomTextField extends StatelessWidget {
             ),
           ),
           TextFormField(
+            enabled: enabled,
             controller: controller,
             decoration: InputDecoration(
               border: OutlineInputBorder(),

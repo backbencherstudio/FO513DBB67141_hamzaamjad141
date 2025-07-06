@@ -42,54 +42,55 @@ class EditProfileScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         spacing: 12.h,
                         children: [
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: SvgPicture.asset(
-                              AppIcons.editProfile,
-                            ),
-                          ),
+                          // Align(
+                          //   alignment: Alignment.centerRight,
+                          //   child: SvgPicture.asset(
+                          //     AppIcons.editProfile,
+                          //   ),
+                          // ),
                           CustomTextField(
                             textTheme: textTheme,
-                            labelName: 'Fast Name',
+                            labelName: 'Full Name',
                             hintText: 'Enter your fast name',
                           ),
                           CustomTextField(
-                            textTheme: textTheme,
-                            labelName: 'Last Name',
-                            hintText: 'Enter your last name',
-                          ),
-                          CustomTextField(
+                            enabled: false,
                             textTheme: textTheme,
                             labelName: 'Email',
                             hintText: 'Enter your email',
                           ),
-                          CustomTextField(
-                            textTheme: textTheme,
-                            labelName: 'Old Password',
-                            hintText: 'Enter old password',
-                          ),
-                          CustomTextField(
-                            textTheme: textTheme,
-                            labelName: 'New Password',
-                            hintText: 'Enter your new password',
-                          ),
-                          CustomTextField(
-                            textTheme: textTheme,
-                            labelName: 'Confirm Password',
-                            hintText: 'Enter your new password',
-                          ),
-                          Utils.primaryButton(
-                            onPressed: () {},
-                            text: 'Save Change',
-                          ),
-                          Utils.primaryButton(
-                            onPressed: () {},
-                            backgroundColor: AppColors.surface,
-                            text: 'Delete my account ',
-                          ),
+                          // CustomTextField(
+                          //   textTheme: textTheme,
+                          //   labelName: 'Old Password',
+                          //   hintText: 'Enter old password',
+                          // ),
+                          // CustomTextField(
+                          //   textTheme: textTheme,
+                          //   labelName: 'New Password',
+                          //   hintText: 'Enter your new password',
+                          // ),
+                          // CustomTextField(
+                          //   textTheme: textTheme,
+                          //   labelName: 'Confirm Password',
+                          //   hintText: 'Enter your new password',
+                          // ),
+
                         ],
                       ),
                     ),
+
+                    SizedBox(height: 24.h),
+                    Utils.primaryButton(
+                      onPressed: () {},
+                      text: 'Save Change',
+                    ),
+                    SizedBox(height: 18.h),
+                    Utils.primaryButton(
+                      onPressed: () {},
+                      backgroundColor: AppColors.surface,
+                      text: 'Delete my account ',
+                    ),
+
                     SizedBox(height: 40.h),
                   ],
                 ),
