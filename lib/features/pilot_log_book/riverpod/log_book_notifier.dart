@@ -121,7 +121,8 @@ class LogBookNotifier extends StateNotifier<LogBookState> {
     required String crossCountry,
     required num takeoffs,
     required num landings,
-  }) async {
+  }) async
+  {
     try {
       state = state.copyWith(addLogButtonLoading: true);
       final body = {
@@ -155,6 +156,7 @@ class LogBookNotifier extends StateNotifier<LogBookState> {
           backgroundColor: Colors.green,
           textColor: Colors.white,
         );
+        getLogsList();
         return true;
       }
       Fluttertoast.showToast(
@@ -195,7 +197,8 @@ class LogBookNotifier extends StateNotifier<LogBookState> {
   Future<void> deleteLogRequest({
     required String id,
     required int index,
-  }) async {
+  }) async
+  {
     try {
       state = state.copyWith(deleteButtonLoadingButtonIndex: index);
       final response = await ApiServices.instance.deleteData(

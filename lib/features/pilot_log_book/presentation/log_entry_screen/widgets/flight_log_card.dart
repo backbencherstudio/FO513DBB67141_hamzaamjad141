@@ -3,6 +3,7 @@ import 'package:aviation_app/core/utils/common_widget/primary_button/primary_but
 import 'package:aviation_app/features/pilot_log_book/models/log_request_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 class FlightLogCard extends StatelessWidget {
 
@@ -68,7 +69,7 @@ class FlightLogCard extends StatelessWidget {
           ),
           SizedBox(height: 6.h),
           Text(
-            logRequestModel.date,
+            DateFormat('dd MMM, yyyy').format(DateTime.parse(logRequestModel.date)) ,
             style: textTheme.bodySmall?.copyWith(
               color: AppColors.secondaryTextColor,
             ),
