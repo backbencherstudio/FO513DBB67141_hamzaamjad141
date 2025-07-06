@@ -42,7 +42,13 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
         );
         debugPrint("\nweather : ${response['data']}\n");
       } else {
-        state = state.clearWeather(searchCommand: searchCommand);
+        // state = state.copyWith(
+        //   searchCommand: searchCommand,
+        //   isWeatherFound: false,
+        //   searchedWeather: null,
+        //   searchButtonLoading: false,
+        // );
+        state = state.clearWeather(searchCommand: searchCommand,);
       }
     } catch (error) {
       state = state.clearWeather(searchCommand: searchCommand);
@@ -104,6 +110,14 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
     }catch(error){
       state = state.copyWith(homeBaseButtonLoading: false);
       throw Exception('\nError while setting Home Base : $error\n');
+    }
+  }
+
+  Future<void> getHomeBase() async {
+    try{
+
+    }catch(error){
+      throw Exception('\nException while getting home-base : $error\n');
     }
   }
 }

@@ -146,7 +146,7 @@ class WeatherCard extends StatelessWidget {
                         textTheme: textTheme,
                         svgIconPath: AppIcons.eyeOutline,
                         title: "Visibility:",
-                        body: "${weather.visibility?.value} sm",
+                        body: "${weather.visibility?.value ?? ""} sm",
                       ),
                       _customListTile(
                         textTheme: textTheme,
@@ -159,7 +159,7 @@ class WeatherCard extends StatelessWidget {
                         textTheme: textTheme,
                         svgIconPath: AppIcons.clouds,
                         title: "Clouds:",
-                        body: "Few clouds at ${weather.clouds?.first.altitude}",
+                        body: "Few clouds at ${weather.clouds!.isNotEmpty ? weather.clouds!.first.altitude : ""}",
                       ),
                       _customListTile(
                         textTheme: textTheme,
