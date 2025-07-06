@@ -12,21 +12,23 @@ import 'package:http/http.dart';
 
 import '../model/weather_model.dart';
 
-final weatherProvider = StateNotifierProvider<WeatherNotifier, WeatherState>(
-  (ref)  {
-    final userToken = ref.watch(authProvider).userToken ?? "";
-    return WeatherNotifier(userToken);
-    },
-);
+final weatherProvider = StateNotifierProvider<WeatherNotifier, WeatherState>((
+  ref,
+) {
+  final userToken = ref.watch(authProvider).userToken ?? "";
+  return WeatherNotifier(userToken);
+});
 
 class WeatherNotifier extends StateNotifier<WeatherState> {
   final String userToken;
-  WeatherNotifier(this.userToken) : super(WeatherState());
+  WeatherNotifier(this.userToken) : super(WeatherState()) {
+    getHomeBase();
+  }
 
   /// search weather by code
   Future<void> onGetWeather({required String searchCommand}) async {
     try {
-      state = state.copyWith(searchButtonLoading: true,);
+      state = state.copyWith(searchButtonLoading: true);
       final response = await ApiServices.instance.getData(
         endPoint: "${ApiEndPoints.getWeather}/${searchCommand.toUpperCase()}",
       );
@@ -48,7 +50,7 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
         //   searchedWeather: null,
         //   searchButtonLoading: false,
         // );
-        state = state.clearWeather(searchCommand: searchCommand,);
+        state = state.clearWeather(searchCommand: searchCommand);
       }
     } catch (error) {
       state = state.clearWeather(searchCommand: searchCommand);
@@ -64,15 +66,18 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
   }
 
   Future<void> addToFavouriteWeather({required WeatherModel weather}) async {
-    try{
-      if(state.favouriteWeatherList.map((value)=> value.station == weather.station).toList().isEmpty){
-        state = state.copyWith(favouriteWeatherList: [...state.favouriteWeatherList, weather]);
+    try {
+      if (state.favouriteWeatherList
+          .map((value) => value.station == weather.station)
+          .toList()
+          .isEmpty) {
+        state = state.copyWith(
+          favouriteWeatherList: [...state.favouriteWeatherList, weather],
+        );
+      } else {
+        //  List<WeatherModel> newFavoriteList = state.favouriteWeatherList.remove((map)=>map.station ==weather.station);
       }
-      else{
-      //  List<WeatherModel> newFavoriteList = state.favouriteWeatherList.remove((map)=>map.station ==weather.station);
-      }
-
-    }catch(e){
+    } catch (e) {
       throw Exception("Exception while adding to favourite : $e\n");
     }
   }
@@ -84,39 +89,68 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
     }
     state = state.copyWith(expandedIndex: index);
   }
-  
+
   Future<void> setHomeBase({required String homeBaseCode}) async {
-    try{
+    try {
+      if (state.homeBase == homeBaseCode) {
+        Fluttertoast.showToast(
+          msg: "Home base already set",
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+        );
+        return;
+      }
       state = state.copyWith(homeBaseButtonLoading: true);
       debugPrint("\n setting home base  : $homeBaseCode\n");
       final response = await ApiServices.instance.postData(
-          endPoint: ApiEndPoints.setHomeBase,
-          body: {"location":homeBaseCode.toString()},
-          headers: {
-            "Authorization": userToken,
-            "Content-Type": "application/json"
-          }
+        endPoint: ApiEndPoints.setHomeBase,
+        body: {"location": homeBaseCode.toString()},
+        headers: {
+          "Authorization": userToken,
+          "Content-Type": "application/json",
+        },
       );
-      if(response['success']){
-        state = state.copyWith(homeBase: homeBaseCode,homeBaseButtonLoading: false);
-        Fluttertoast.showToast(msg: "Home base set successfully",backgroundColor: Colors.green,textColor: Colors.white);
-      }
-      else{
+      if (response['success']) {
+        state = state.copyWith(
+          homeBase: homeBaseCode,
+          homeBaseButtonLoading: false,
+        );
+        Fluttertoast.showToast(
+          msg: "Home base set successfully",
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+        );
+      } else {
         state = state.copyWith(homeBase: "", homeBaseButtonLoading: false);
-        Fluttertoast.showToast(msg: "Something went wrong"
-            ,backgroundColor: Colors.red,textColor: Colors.white);
+        Fluttertoast.showToast(
+          msg: "Something went wrong",
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+        );
       }
-
-    }catch(error){
+    } catch (error) {
       state = state.copyWith(homeBaseButtonLoading: false);
       throw Exception('\nError while setting Home Base : $error\n');
     }
   }
 
   Future<void> getHomeBase() async {
-    try{
-
-    }catch(error){
+    try {
+      final response = await ApiServices.instance.getData(
+        endPoint: ApiEndPoints.getHomeBase,
+        headers: {"Authorization": userToken},
+      );
+      if (response['success'] == true) {
+        state = state.copyWith(
+          searchedWeather: WeatherModel.fromJson(
+            response['data']['weatherData'],
+          ),
+          isWeatherFound: true,
+          searchCommand: response['data']['location'],
+          homeBase: response['data']['location'],
+        );
+      }
+    } catch (error) {
       throw Exception('\nException while getting home-base : $error\n');
     }
   }
