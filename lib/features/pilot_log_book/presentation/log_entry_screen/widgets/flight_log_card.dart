@@ -7,9 +7,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class FlightLogCard extends StatelessWidget {
 
   final LogRequestModel logRequestModel;
+  final Function onDelete;
+  final bool isLoading;
   const FlightLogCard({
     super.key,
     required this.logRequestModel,
+    required this.onDelete,
+     this.isLoading = false,
   });
 
   Widget customRichText(TextTheme textTheme, String key, String value) {
@@ -87,13 +91,18 @@ class FlightLogCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: 16.h),
+          if(!isLoading)
           PrimaryButton(
             bodyText: "Delete",
-            onTap: () {},
+            onTap: () async{
+              await onDelete();
+            },
             backgroundColor: Colors.red,
             dots: false,
             borderColor: Colors.transparent,
           )
+          else
+            const Center(child: CircularProgressIndicator(),)
         ],
       ),
     );

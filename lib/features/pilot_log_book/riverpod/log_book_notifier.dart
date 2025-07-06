@@ -178,19 +178,58 @@ class LogBookNotifier extends StateNotifier<LogBookState> {
         endPoint: ApiEndPoints.getLogRequestList,
         headers: {"Authorization": userToken},
       );
-      if (response['success'] == true &&
-          response['data']['logs'].isNotEmpty) {
+      if (response['success'] == true && response['data']['logs'].isNotEmpty) {
         final List<LogRequestModel> logRequestList =
             (response['data']['logs'] as List<dynamic>)
                 .map((item) => LogRequestModel.fromJson(item))
                 .toList();
         state = state.copyWith(logRequestList: logRequestList);
-      }
-      else{
+      } else {
         debugPrint("\nLog request list is empty\n");
       }
     } catch (error) {
       throw Exception('Failed to get log request list: $error');
+    }
+  }
+
+  Future<void> deleteLogRequest({
+    required String id,
+    required int index,
+  }) async {
+    try {
+      state = state.copyWith(deleteButtonLoadingButtonIndex: index);
+      final response = await ApiServices.instance.deleteData(
+        endPoint: "${ApiEndPoints.deleteLogRequest}$id",
+        headers: {"Authorization": userToken},
+      );
+      if (response['success'] == true) {
+        Fluttertoast.showToast(
+          msg: response['message'],
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+        );
+        final logRequestList = state.logRequestList;
+        logRequestList!.removeWhere((element) => element.id == id);
+        state = state.copyWith(
+          logRequestList: logRequestList,
+          deleteButtonLoadingButtonIndex: -1,
+        );
+      } else {
+        Fluttertoast.showToast(
+          msg: response['message'],
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+        );
+        state = state.copyWith(deleteButtonLoadingButtonIndex: -1);
+      }
+    } catch (error) {
+      Fluttertoast.showToast(
+        msg: "Failed to delete",
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+      state = state.copyWith(deleteButtonLoadingButtonIndex: -1);
+      throw Exception('Failed to delete log request: $error');
     }
   }
 }

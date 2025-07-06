@@ -79,4 +79,19 @@ class ApiServices {
       throw Exception("Failed to send data: $e");
     }
   }
+
+  Future<dynamic> deleteData({
+    required String endPoint,
+    required Map<String, String> headers,
+}) async {
+    try {
+      final response = await http.delete(
+        Uri.parse('${ApiEndPoints.baseUrl}/$endPoint'),
+        headers: headers,
+      );
+      return _handleResponse(response);
+    } catch (e) {
+      throw Exception("Failed to send data: $e");
+    }
+  }
 }

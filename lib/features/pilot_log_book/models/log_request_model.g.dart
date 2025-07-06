@@ -8,7 +8,7 @@ part of 'log_request_model.dart';
 
 LogRequestModel _$LogRequestModelFromJson(Map<String, dynamic> json) =>
     LogRequestModel(
-      id: json['id'] as num,
+      id: json['id'] as String,
       date: json['date'] as String,
       from: json['from'] as String,
       to: json['to'] as String,
