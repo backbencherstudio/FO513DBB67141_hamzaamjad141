@@ -23,6 +23,7 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
   final String userToken;
   WeatherNotifier(this.userToken) : super(WeatherState()) {
     getHomeBase();
+    getFavouriteWeatherList();
   }
 
   /// search weather by code
@@ -70,9 +71,21 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
     try {
       //  BackgroundIsolateBinaryMessenger.ensureInitialized();
 
+      final bool alreadyExist = state.favouriteWeatherList.any(
+        (item) => item.station == weather.station,
+      );
+      if (alreadyExist) {
+        Fluttertoast.showToast(
+          msg: "Already added to favourite list",
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+        );
+        return;
+      }
       state = state.copyWith(
         favouriteWeatherList: [...state.favouriteWeatherList, weather],
       );
+
       ReceivePort receivePort = ReceivePort();
       /*     SendPort sendPort = args['sendPort'];
       final location = args['location'];
@@ -108,6 +121,32 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
       });
     } catch (e) {
       throw Exception("Exception while adding to favourite : $e\n");
+    }
+  }
+
+  /// get favorite weather list
+  Future<void> getFavouriteWeatherList() async {
+    try {
+      final response = await ApiServices.instance.getData(
+        endPoint: ApiEndPoints.getFavouriteWeatherList,
+        headers: {"Authorization": userToken},
+      );
+      if (response['success'] == true) {
+        // final List<dynamic>? favouriteWeatherList = response['data'].map((item)
+        // =>WeatherModel.fromJson(item['weatherData'])).toList();
+
+        final List<WeatherModel> favouriteWeatherList =
+            (response['data'] as List<dynamic>)
+                .map((item) => WeatherModel.fromJson(item['weatherData']))
+                .toList();
+        if (favouriteWeatherList.isNotEmpty) {
+          state = state.copyWith(favouriteWeatherList: favouriteWeatherList);
+        }
+      } else {
+        debugPrint("\n Failed to fetch favourite weather list\n");
+      }
+    } catch (error) {
+      throw Exception('Exception while fetching favourite list : $error');
     }
   }
 
