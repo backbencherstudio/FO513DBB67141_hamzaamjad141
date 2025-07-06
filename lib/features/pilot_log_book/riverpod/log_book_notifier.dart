@@ -4,6 +4,7 @@ import 'package:aviation_app/core/services/api_services/api_endpoints.dart';
 import 'package:aviation_app/core/services/api_services/api_services.dart';
 import 'package:aviation_app/features/auth_screens/auth_provider/auth_provider.dart';
 import 'package:aviation_app/features/pilot_log_book/models/instructor_model.dart';
+import 'package:aviation_app/features/pilot_log_book/models/log_request_model.dart';
 import 'package:aviation_app/features/pilot_log_book/riverpod/log_book_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,6 +21,7 @@ class LogBookNotifier extends StateNotifier<LogBookState> {
   final String userToken;
   LogBookNotifier(this.userToken) : super(LogBookState()) {
     getDefaultInstructor();
+    getLogsList();
   }
 
   final List<Map<String, dynamic>> userLogBookSummaryList = const [
@@ -86,6 +88,7 @@ class LogBookNotifier extends StateNotifier<LogBookState> {
     }
   }
 
+  /// Get default instructor
   Future<void> getDefaultInstructor() async {
     try {
       final response = await ApiServices.instance.getData(
@@ -100,6 +103,94 @@ class LogBookNotifier extends StateNotifier<LogBookState> {
       }
     } catch (error) {
       throw Exception('Failed to get default instructor: $error');
+    }
+  }
+
+  /// add log book
+  Future<bool?> addLogBook({
+    required String from,
+    required String to,
+    required String aircrafttype,
+    required String tailNumber,
+    required String flightTime,
+    required String pictime,
+    required String dualrcv,
+    required String daytime,
+    required String nightime,
+    required String ifrtime,
+    required String crossCountry,
+    required num takeoffs,
+    required num landings,
+  }) async {
+    try {
+      state = state.copyWith(addLogButtonLoading: true);
+      final body = {
+        "from": from,
+        "to": to,
+        "aircrafttype": aircrafttype,
+        "tailNumber": tailNumber,
+        "flightTime": flightTime,
+        "pictime": pictime,
+        "dualrcv": dualrcv,
+        "daytime": daytime,
+        "nightime": nightime,
+        "ifrtime": ifrtime,
+        "crossCountry": crossCountry,
+        "takeoffs": takeoffs,
+        "landings": landings,
+      };
+      // debugPrint("\nadd log body : $body\n");
+      final response = await ApiServices.instance.postData(
+        endPoint: ApiEndPoints.addLogBook,
+        body: body,
+        headers: {
+          "Authorization": userToken,
+          'Content-type': "Application/json",
+        },
+      );
+      state = state.copyWith(addLogButtonLoading: false);
+      if (response['success'] == true) {
+        Fluttertoast.showToast(
+          msg: response['message'],
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+        );
+        return true;
+      }
+      Fluttertoast.showToast(
+        msg: response['message'],
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+
+      return false;
+    } catch (error) {
+      state = state.copyWith(addLogButtonLoading: false);
+      throw Exception('Failed to add log book: $error');
+      return null;
+    }
+  }
+
+  /// get log request list
+  Future<void> getLogsList() async {
+    try {
+      final response = await ApiServices.instance.getData(
+        endPoint: ApiEndPoints.getLogRequestList,
+        headers: {"Authorization": userToken},
+      );
+      if (response['success'] == true &&
+          response['data']['logs'].isNotEmpty) {
+        final List<LogRequestModel> logRequestList =
+            (response['data']['logs'] as List<dynamic>)
+                .map((item) => LogRequestModel.fromJson(item))
+                .toList();
+        state = state.copyWith(logRequestList: logRequestList);
+      }
+      else{
+        debugPrint("\nLog request list is empty\n");
+      }
+    } catch (error) {
+      throw Exception('Failed to get log request list: $error');
     }
   }
 }

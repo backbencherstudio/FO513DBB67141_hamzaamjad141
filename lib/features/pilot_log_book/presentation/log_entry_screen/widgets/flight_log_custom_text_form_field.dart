@@ -9,12 +9,14 @@ class FlightLogCustomTextField extends StatelessWidget{
   final TextEditingController controller;
   final FocusNode? focusNode;
   final Widget? suffixIcon;
+  final TextInputType? keyboardType;
   const FlightLogCustomTextField({super.key,
   required this.label,
     required this.hint,
     required this.controller,
     this.focusNode,
-    this.suffixIcon
+    this.suffixIcon,
+    this.keyboardType,
   });
 
   @override
@@ -36,6 +38,7 @@ class FlightLogCustomTextField extends StatelessWidget{
             ),
           ),
           TextFormField(
+            keyboardType: keyboardType,
             style: textTheme.bodySmall,
             controller: controller,
             focusNode: focusNode,
