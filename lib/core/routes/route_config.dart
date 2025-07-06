@@ -68,19 +68,19 @@ class RouteConfig {
           return const MaterialPage(child: SplashScreen());
         },
       ),
-     GoRoute(
-  name: RouteName.signUpOtpScreen,
-  path: '${RouteName.signUpOtpScreen}/:email',
-  pageBuilder: (context, state) {
-    final email = state.pathParameters['email']!;  
-    return buildPageWithTransition(
-      context: context,
-      state: state,
-      transitionType: PageTransitionType.fade,
-      child: SignUpOtpScreen(email: email),
-    );
-  },
-),
+      GoRoute(
+        name: RouteName.signUpOtpScreen,
+        path: '${RouteName.signUpOtpScreen}/:email',
+        pageBuilder: (context, state) {
+          final email = state.pathParameters['email']!;
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.fade,
+            child: SignUpOtpScreen(email: email),
+          );
+        },
+      ),
       GoRoute(
         name: RouteName.paymentSelection,
         path: RouteName.paymentSelection,
@@ -130,20 +130,35 @@ class RouteConfig {
           return const MaterialPage(child: SuccessScreen());
         },
       ),
+
       GoRoute(
         name: RouteName.forgetOtpScreen,
-        path: RouteName.forgetOtpScreen,
+        path: '${RouteName.forgetOtpScreen}/:email',
         pageBuilder: (context, state) {
-          return const MaterialPage(child: ForgetOtpScreen());
+          final email = state.pathParameters['email']!;
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.fade,
+            child: ForgetOtpScreen(email: email),
+          );
         },
       ),
+
       GoRoute(
         name: RouteName.resetPassScreen,
-        path: RouteName.resetPassScreen,
+        path: '${RouteName.resetPassScreen}/:email',
         pageBuilder: (context, state) {
-          return const MaterialPage(child: ResetPassScreen());
+          final email = state.pathParameters['email']!;
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.fade,
+            child: ResetPassScreen(email: email),
+          );
         },
       ),
+
       GoRoute(
         name: RouteName.signupScreen,
         path: RouteName.signupScreen,

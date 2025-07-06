@@ -70,7 +70,7 @@ class ForgetPasScreen extends StatelessWidget {
                                 .sendOtp(email: emailController.text.trim());
 
                             if (path != null && context.mounted) {
-                              context.push(RouteName.forgetOtpScreen);
+                              context.push(path);
                             }else{
                               Fluttertoast.showToast(
                                   msg: otpStatus.message.toString(),

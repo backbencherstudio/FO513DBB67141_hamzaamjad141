@@ -193,7 +193,7 @@ class AuthProvider extends StateNotifier<AuthState> {
       if (success) {
         state = state.copyWith(isLoading: false);
         debugPrint(message);
-        return RouteName.forgetOtpScreen;
+        return "${RouteName.forgetOtpScreen}/${Uri.encodeComponent(email)}";
       } else {
         state = state.copyWith(isLoading: false);
         return null;
@@ -205,6 +205,74 @@ class AuthProvider extends StateNotifier<AuthState> {
     }
   }
 
+  //forget otp call
+
+  Future<String?> forgetOtpVerification({
+    required String email,
+    required String otp,
+  }) async {
+    state = state.copyWith(isLoading: true);
+
+    try {
+      final payload = {"email": email, "otp": otp};
+
+      final response = await ApiServices.instance.postData(
+        endPoint: ApiEndPoints.forgetOtp,
+        body: payload,
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      // final success = response["success"].toString().toLowerCase() == "true";
+      final message = response["message"];
+      debugPrint("\n\n$response\n\n");
+      if (message == "OTP verified successfully") {
+        state = state.copyWith(isLoading: false);
+        debugPrint(message);
+        return "${RouteName.resetPassScreen}/${Uri.encodeComponent(email)}";
+      } else {
+        state = state.copyWith(isLoading: false);
+        return null;
+      }
+    } catch (e) {
+      state = state.copyWith(isLoading: false);
+
+      throw Exception(e);
+    }
+  }
+
+  // reset password
+
+  Future<String?> resetpassCall({
+    required String email,
+    required String password,
+  }) async {
+    state = state.copyWith(isLoading: true);
+
+    try {
+      final payload = {"email": email, "newPassword": password};
+
+      final response = await ApiServices.instance.putData(
+        endPoint: ApiEndPoints.resetpass,
+        body: payload,
+        headers: {'Content-Type': 'application/json'},
+      );
+      final message = response["message"];
+
+      if (message == "Password changed successfully") {
+        state = state.copyWith(isLoading: false);
+
+        return RouteName.successScreen;
+      } else {
+        state = state.copyWith(isLoading: false);
+
+        return null;
+      }
+    } catch (e) {
+      state = state.copyWith(isLoading: false);
+
+      throw Exception(e);
+    }
+  }
 
   /// Call this api during splash screen to initialize user
   Future<bool> initializeUser({required String userToken}) async {
