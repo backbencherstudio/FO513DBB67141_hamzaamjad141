@@ -1,10 +1,7 @@
-import 'package:aviation_app/core/utils/common_widget/common_widget.dart';
 import 'package:aviation_app/features/weather_screen/riverpod/weather_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive_flutter/adapters.dart';
-
 import '../../../../../core/theme/theme_extension/app_colors.dart';
 import '../../../../../core/utils/common_widget/primary_button/primary_button.dart';
 import '../favourite_weather/favourite_weather_list.dart';
