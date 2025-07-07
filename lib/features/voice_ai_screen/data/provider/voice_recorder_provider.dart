@@ -25,10 +25,11 @@ class RecorderState {
 }
 
 class RecorderNotifier extends StateNotifier<RecorderState> {
-  late final FlutterSoundRecorder _audioRecorder;
+  //late final FlutterSoundRecorder _audioRecorder;
 
   RecorderNotifier(Ref ref)
-    : _audioRecorder = FlutterSoundRecorder(),
+    :
+        //_audioRecorder = FlutterSoundRecorder(),
       super(RecorderState(isRecording: false, errorMessage: null)) {
     _initializeRecorder();
   }
@@ -36,9 +37,9 @@ class RecorderNotifier extends StateNotifier<RecorderState> {
   // Initialize recorder
   Future<void> _initializeRecorder() async {
     try {
-      await _audioRecorder.openRecorder();
+      //await _audioRecorder.openRecorder();
     } catch (e) {
-      state = state.copyWith(errorMessage: 'Failed to initialize recorder: $e');
+     // state = state.copyWith(errorMessage: 'Failed to initialize recorder: $e');
     }
   }
 
@@ -65,8 +66,8 @@ class RecorderNotifier extends StateNotifier<RecorderState> {
     if (!await _requestPermissions()) return;
 
     try {
-      final path = await _getFilePath();
-      await _audioRecorder.startRecorder(toFile: path);
+      //final path = await _getFilePath();
+     // await _audioRecorder.startRecorder(toFile: path);
       state = state.copyWith(isRecording: true, errorMessage: null);
       if (state.isRecording) {
         for(int i = 0; i<i+1; i++){
@@ -89,7 +90,7 @@ class RecorderNotifier extends StateNotifier<RecorderState> {
     if (!state.isRecording) return;
 
     try {
-      await _audioRecorder.stopRecorder();
+      //await _audioRecorder.stopRecorder();
       state = state.copyWith(isRecording: false, errorMessage: null);
     } catch (e) {
       state = state.copyWith(errorMessage: 'Failed to stop recording: $e');
@@ -98,7 +99,7 @@ class RecorderNotifier extends StateNotifier<RecorderState> {
 
   @override
   void dispose() {
-    _audioRecorder.closeRecorder();
+   // _audioRecorder.closeRecorder();
     super.dispose();
   }
 }

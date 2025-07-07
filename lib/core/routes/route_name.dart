@@ -25,5 +25,6 @@ class RouteName {
   static const String profileScreen = '/profileScreen';
   static const String podcastPlayerScreen = "/podcast-player-screen";
   static const String editProfileScreen = '/edit-profile-screen';
+  static const String dummyScreen = '/dummy-screen';
 
 }

@@ -268,6 +268,19 @@ class RouteConfig {
           );
         },
       ),
+
+      GoRoute(
+        name: RouteName.dummyScreen,
+        path: RouteName.dummyScreen,
+        pageBuilder: (context, state) {
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.slideRightToLeft,
+            child: Dummy(),
+          );
+        },
+      ),
     ],
   );
 }
