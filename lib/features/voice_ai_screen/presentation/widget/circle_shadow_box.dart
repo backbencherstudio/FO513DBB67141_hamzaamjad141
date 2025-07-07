@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 import '../../../../core/theme/theme_extension/app_colors.dart';
+import '../../data/provider/chat_bot_provider/chat_bot_provider.dart';
 import '../../data/provider/circle_shadow_box_provider.dart';
 
 class CircleShadowBox extends HookConsumerWidget {
@@ -17,29 +19,55 @@ class CircleShadowBox extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isHolding = useState(false); // Local gesture state
+    final isHolding = useState(false);
+    final SpeechToText speechToText = SpeechToText();
 
-    // Sync with global Riverpod state
+    /// Sync with global Riverpod state
     final holdController = ref.read(circleHoldProvider.notifier);
+
+    /// State to manage the speech recognition result
+    final speechText = useState('');
+
+    /// Function to start listening
+    Future<void> startListening() async {
+      bool available = await speechToText.initialize();
+      if (available) {
+        speechToText.listen(onResult: (result) {
+          speechText.value = result.recognizedWords;
+          debugPrint(speechText.value);
+        });
+      } else {
+        debugPrint("Speech recognition is not available.");
+      }
+    }
+
+    /// Function to stop listening
+    Future<void> stopListening() async {
+      speechToText.stop();
+    }
 
     return GestureDetector(
       onLongPressStart: (_) {
         isHolding.value = true;
         holdController.hold(true);
+        startListening(); /// Start listening on long press start
       },
-      onLongPressEnd: (_) {
+      onLongPressEnd: (_)async {
+        await Future.delayed(Duration(seconds: 2));
         isHolding.value = false;
         holdController.hold(false);
+        stopListening(); /// Stop listening on long press end
+        ref.read(voiceAiProvider.notifier).getGeminiResponse(speechText.value);
       },
       behavior: HitTestBehavior.translucent,
       child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300), // Animation duration
+        duration: const Duration(milliseconds: 300),
         transitionBuilder: (Widget child, Animation<double> animation) {
           return ScaleTransition(
             scale: Tween<double>(begin: 0.8, end: 1.0).animate(
               CurvedAnimation(
                 parent: animation,
-                curve: Curves.easeInOut, // Smooth easing curve
+                curve: Curves.easeInOut,
               ),
             ),
             child: FadeTransition(

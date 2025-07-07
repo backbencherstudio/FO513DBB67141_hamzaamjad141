@@ -9,7 +9,7 @@ plugins {
 android {
     namespace = "com.example.aviation_app"
     compileSdk = 35
-    ndkVersion = "27.0.12077973"
+    ndkVersion = "29.0.13113456"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -48,4 +48,5 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.16.0"))
     implementation("com.google.firebase:firebase-auth:21.0.1") // Firebase Authentication
     implementation("com.google.android.gms:play-services-auth:20.4.0") // Google Play Services Auth
+    implementation("com.stripe:stripe-android:20.8.0")
 }

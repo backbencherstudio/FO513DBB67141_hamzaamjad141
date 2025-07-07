@@ -4,14 +4,13 @@ import 'package:aviation_app/core/theme/theme_extension/app_colors.dart';
 import 'package:aviation_app/core/utils/common_widget/common_widget.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:aviation_app/features/voice_ai_screen/presentation/widget/build_text_filed.dart';
-import 'package:aviation_app/features/voice_ai_screen/presentation/widget/chat_history.dart';
+import 'package:aviation_app/features/voice_ai_screen/presentation/widget/chat_history_widget/chat_history.dart';
 import 'package:aviation_app/features/voice_ai_screen/presentation/widget/circle_shadow_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
-import '../data/chat_bot_provider/chat_bot_provider.dart';
+import '../data/provider/chat_bot_provider/chat_bot_provider.dart';
 import 'widget/ai_voice_recording_widget.dart';
 import '../data/provider/text_filed_to_voice.dart';
 
@@ -57,14 +56,22 @@ class _VoiceAiScreenState extends ConsumerState<VoiceAiScreen> {
                       child: SvgPicture.asset(AppIcons.keyboardStroke),
                     ),
                   ),
-                  SizedBox(height: 30),
                   Center(
-                    child: Text(
-                      'Ask me anything about aviation!',
-                      style: textTheme.headlineMedium!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
+                    child: Consumer(
+                      builder: (context, ref,child) {
+                        return voiceAiState.messages.isEmpty?Column(
+                          children: [
+                            SizedBox(height: 30),
+                            Text(
+                              'Ask me anything about aviation!',
+                              style: textTheme.headlineMedium!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ):SizedBox();
+                      }
                     ),
                   ),
                   SizedBox(height: 20.h),
@@ -91,7 +98,7 @@ class _VoiceAiScreenState extends ConsumerState<VoiceAiScreen> {
                             ),
                           );
                         },
-                    child: !showTextField
+                    child: showTextField
                         ? BuildTextFiled(
                             key: const ValueKey('textField'),
                             messageController: messageController,
@@ -111,7 +118,7 @@ class _VoiceAiScreenState extends ConsumerState<VoiceAiScreen> {
                   SizedBox(height: 20),
                   Center(
                     child: Text(
-                      !showTextField ? 'Type your question' : 'Hold to Speak',
+                      showTextField ? 'Type your question' : 'Hold to Speak',
                       style: textTheme.bodyMedium!.copyWith(
                         color: AppColors.secondaryTextColor,
                       ),
@@ -128,4 +135,3 @@ class _VoiceAiScreenState extends ConsumerState<VoiceAiScreen> {
     );
   }
 }
-
