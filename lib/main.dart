@@ -10,11 +10,11 @@ import 'core/theme/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await StripeServices.instance.initialize();
+ // await StripeServices.instance.initialize();
 
   await Firebase.initializeApp();
 
-  await HiveSecureStorageService.init();
+  //await HiveSecureStorageService.init();
 
   ///set device orientation to portraitUp during app running for better user experience of the UI
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

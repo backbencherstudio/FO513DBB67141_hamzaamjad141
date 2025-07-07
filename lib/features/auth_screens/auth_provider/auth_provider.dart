@@ -60,7 +60,8 @@ class AuthProvider extends StateNotifier<AuthState> {
   Future<String?> loginWithEmailAndPassword({
     required String email,
     required String password,
-  }) async {
+  }) async
+  {
     state = state.copyWith(isLoading: true);
 
     try {
@@ -108,7 +109,8 @@ class AuthProvider extends StateNotifier<AuthState> {
     required String email,
     required String license,
     required String password,
-  }) async {
+  }) async
+  {
     state = state.copyWith(isLoading: true);
     try {
       final payload = {
@@ -145,7 +147,8 @@ class AuthProvider extends StateNotifier<AuthState> {
   Future<String?> signUpOtpVerification({
     required String email,
     required String otp,
-  }) async {
+  }) async
+  {
     state = state.copyWith(isLoading: true);
 
     try {
@@ -177,7 +180,8 @@ class AuthProvider extends StateNotifier<AuthState> {
 
   //forgetpass Send otp
 
-  Future<String?> sendOtp({required String email}) async {
+  Future<String?> sendOtp({required String email}) async
+  {
     state = state.copyWith(isLoading: true);
     try {
       final payload = {"email": email};
@@ -210,7 +214,8 @@ class AuthProvider extends StateNotifier<AuthState> {
   Future<String?> forgetOtpVerification({
     required String email,
     required String otp,
-  }) async {
+  }) async
+  {
     state = state.copyWith(isLoading: true);
 
     try {
@@ -245,7 +250,8 @@ class AuthProvider extends StateNotifier<AuthState> {
   Future<String?> resetpassCall({
     required String email,
     required String password,
-  }) async {
+  }) async
+  {
     state = state.copyWith(isLoading: true);
 
     try {
@@ -296,4 +302,16 @@ class AuthProvider extends StateNotifier<AuthState> {
       return false;
     }
   }
+
+
+  Future<bool?> signOut() async {
+    try{
+      await GoogleAccountService().signOut();
+      await SharedPreferenceStorageService.delete(SharedPreferencesKeyName.userToken);
+      return true;
+    }catch(error){
+      return false;
+    }
+  }
+
 }
