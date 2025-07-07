@@ -68,6 +68,8 @@ dependencies:
   path_provider: ^2.1.3
   syncfusion_flutter_pdfviewer: ^30.1.38
   flutter_animate: ^4.5.2
+  speech_to_text: ^7.1.0
+  flutter_stripe: ^11.5.0
 
 
 

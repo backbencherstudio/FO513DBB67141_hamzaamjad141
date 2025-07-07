@@ -6,7 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../data/chat_bot_provider/chat_bot_provider.dart';
+import '../../data/provider/chat_bot_provider/chat_bot_provider.dart';
+
 
 class BuildTextFiled extends HookConsumerWidget {
   final TextEditingController? messageController;
@@ -107,7 +108,7 @@ class BuildTextFiled extends HookConsumerWidget {
                     onTap: () {
                       final message = messageController?.text.trim();
                       if (message != null && message.isNotEmpty) {
-                        // Call the provider to send the message
+                        /// Call the provider to send the message
                         ref.read(voiceAiProvider.notifier).getGeminiResponse(message);
                         messageController?.clear(); // Clear the text field
                       }
