@@ -101,7 +101,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                   );
 
                               if (routeName != null && context.mounted) {
-                                context.go(RouteName.weatherScreen);
+                               // context.go(RouteName.weatherScreen);
+                                context.go(routeName);
                               } else {
 
                                   Fluttertoast.showToast(

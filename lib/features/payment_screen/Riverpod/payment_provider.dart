@@ -1,0 +1,62 @@
+import 'package:aviation_app/core/services/api_services/api_endpoints.dart';
+import 'package:aviation_app/core/services/api_services/api_services.dart';
+import 'package:aviation_app/features/auth_screens/auth_provider/auth_provider.dart';
+import 'package:aviation_app/features/payment_screen/Riverpod/payment_state.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+import '../../../core/services/payment_services/stripe_services.dart';
+
+final selectionProvider = StateProvider<String?>((ref) {
+  return null;
+});
+
+final paymentProvider = StateNotifierProvider<PaymentProvider, PaymentState>((
+  ref,
+) {
+  final userToken = ref.watch(authProvider).userToken ?? "";
+  return PaymentProvider(userToken);
+});
+
+class PaymentProvider extends StateNotifier<PaymentState> {
+  final String userToken;
+  PaymentProvider(this.userToken) : super(PaymentState());
+  Future<bool?> makePayment() async {
+    try {
+      state = state.copyWith(isLoading: true);
+      final paymentId = await StripeServices.instance.createPaymentMethod();
+      final body = {"paymentMethodId": paymentId};
+      final headers = {
+        "Authorization": userToken,
+        "Content-Type": "application/json",
+      };
+      final response = await ApiServices.instance.postData(
+        endPoint: ApiEndPoints.payment,
+        body: body,
+        headers: headers,
+      );
+      if (response["success"]) {
+        Fluttertoast.showToast(
+          msg: "Payment Successful",
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+        );
+        state = state.copyWith(isLoading: false);
+        return true;
+      } else {
+        Fluttertoast.showToast(
+          msg: response["message"],
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+        );
+        state = state.copyWith(isLoading: false);
+        return false;
+      }
+
+    } catch (error) {
+      state = state.copyWith(isLoading: false);
+      throw Exception("Failed to make payment : $error");
+    }
+  }
+}

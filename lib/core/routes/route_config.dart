@@ -82,10 +82,15 @@ class RouteConfig {
         },
       ),
       GoRoute(
-        name: RouteName.paymentSelection,
-        path: RouteName.paymentSelection,
+        name: RouteName.payment,
+        path: RouteName.payment,
         pageBuilder: (context, state) {
-          return const MaterialPage(child: PaymentSelection());
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.slideRightToLeft,
+            child: PaymentScreen(),
+          );
         },
       ),
       GoRoute(
@@ -265,19 +270,6 @@ class RouteConfig {
             state: state,
             transitionType: PageTransitionType.slideRightToLeft,
             child: EditProfileScreen(),
-          );
-        },
-      ),
-
-      GoRoute(
-        name: RouteName.dummyScreen,
-        path: RouteName.dummyScreen,
-        pageBuilder: (context, state) {
-          return buildPageWithTransition(
-            context: context,
-            state: state,
-            transitionType: PageTransitionType.slideRightToLeft,
-            child: Dummy(),
           );
         },
       ),

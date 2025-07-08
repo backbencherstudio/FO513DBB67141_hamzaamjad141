@@ -4,16 +4,47 @@ import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/core/theme/theme_extension/app_colors.dart';
 import 'package:aviation_app/core/utils/common_widget/common_widget.dart';
 import 'package:aviation_app/core/utils/utils.dart';
+import 'package:aviation_app/features/auth_screens/auth_provider/auth_provider.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:aviation_app/features/profile_screen/presentation/widgets/profile_screen_header.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'widget/custom_text_field.dart';
 
-class EditProfileScreen extends StatelessWidget {
+class EditProfileScreen extends ConsumerStatefulWidget {
   const EditProfileScreen({super.key});
+
+  @override
+  ConsumerState<EditProfileScreen> createState() => _EditProfileScreenState();
+}
+
+class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
+
+
+  late final TextEditingController fullNameEditingController;
+  late final TextEditingController emailEditingController;
+
+  @override
+  void initState() {
+    fullNameEditingController = TextEditingController();
+    emailEditingController = TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_)async{
+      final user = ref.watch(authProvider).user;
+      fullNameEditingController.text = user?.name ?? "";
+      emailEditingController.text =  user?.email ?? "";
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    fullNameEditingController.dispose();
+    emailEditingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +80,13 @@ class EditProfileScreen extends StatelessWidget {
                           //   ),
                           // ),
                           CustomTextField(
+                            controller: fullNameEditingController,
                             textTheme: textTheme,
                             labelName: 'Full Name',
-                            hintText: 'Enter your fast name',
+                            hintText: 'Enter your full name',
                           ),
                           CustomTextField(
+                            controller: emailEditingController,
                             enabled: false,
                             textTheme: textTheme,
                             labelName: 'Email',

@@ -30,10 +30,12 @@ class SplashProvider extends StateNotifier<SplashState>{
         debugPrint("\nuser token : $userToken,\n returning to weather screen...\n");
         final bool success = await authNotifier.initializeUser(userToken: userToken);
         if(success){
+        //  return RouteName.paymentIntro;
           return RouteName.weatherScreen;
         }
       }
       debugPrint("\nuser token : is null,\n returning to sign in screen...\n");
+
       return RouteName.signInScreen;
     }
   }

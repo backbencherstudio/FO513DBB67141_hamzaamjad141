@@ -45,7 +45,8 @@ class AuthProvider extends StateNotifier<AuthState> {
           userToken: userToken,
         );
         debugPrint("\nuser token : $userToken.\n");
-        return RouteName.weatherScreen;
+        return RouteName.paymentIntro;
+      //  return RouteName.weatherScreen;
       }
       return RouteName.signInScreen;
     } catch (error) {
@@ -90,7 +91,8 @@ class AuthProvider extends StateNotifier<AuthState> {
         );
         debugPrint("Login successful. User ID: ${state.user?.id}");
 
-        return RouteName.weatherScreen;
+        return RouteName.paymentIntro;
+       // return RouteName.weatherScreen;
       } else {
         state = state.copyWith(isLoading: false);
 
