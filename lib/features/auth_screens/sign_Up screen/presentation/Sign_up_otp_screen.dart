@@ -44,7 +44,7 @@ class SignUpOtpScreen extends StatelessWidget {
               ),
             ),
             Text(
-              "enamulhaque@gmail.com",
+              email,
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
                 fontWeight: FontWeight.w400,
                 color: Color(0xffffffff),
@@ -79,7 +79,7 @@ class SignUpOtpScreen extends StatelessWidget {
               child: Consumer(
                 builder: (context, ref, _) {
                   final auth = ref.watch(authProvider);
-                  return auth.isloading == true
+                  return auth.isLoading == true
                       ? CircularProgressIndicator()
                       : PrimaryButton(
                           bodyText: "Verify Now",
@@ -92,7 +92,7 @@ class SignUpOtpScreen extends StatelessWidget {
                                   otp: otpController.text.trim(),
                                 );
                             if (path != null && context.mounted) {
-                              context.push(path);
+                              context.pushReplacement(path);
                             }else {
                               Fluttertoast.showToast(
                                 msg: "${auth.message} Please try again.",

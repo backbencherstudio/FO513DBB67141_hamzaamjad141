@@ -86,8 +86,8 @@ class _SignInScreenState extends State<SignInScreen> {
                 builder: (context, ref, _) {
                   final authData = ref.watch(authProvider);
 
-                  return authData.isloading == true
-                      ? CircularProgressIndicator()
+                  return authData.isLoading == true
+                      ? const Center(child: CircularProgressIndicator())
                       : PrimaryButton(
                           bodyText: "Continue",
                           onTap: () async {
