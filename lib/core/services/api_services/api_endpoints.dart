@@ -30,5 +30,6 @@ class ApiEndPoints {
   static const String payment = 'subscription/pay';
   static const String promoCode = 'subscription/subscribe-with-promo';
   static const String logBookSummary = 'addlog/get-logsummary';
+  static const String editProfile = 'users/update-user';
 
 }

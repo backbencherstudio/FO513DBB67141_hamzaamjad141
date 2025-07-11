@@ -2,6 +2,7 @@ import 'package:aviation_app/core/constant/icons.dart';
 import 'package:aviation_app/core/constant/images.dart';
 import 'package:aviation_app/core/theme/theme_extension/app_colors.dart';
 import 'package:aviation_app/features/auth_screens/auth_provider/auth_provider.dart';
+import 'package:aviation_app/features/profile_screen/riverpod/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -44,8 +45,16 @@ class ProfileScreenHeader extends StatelessWidget {
               Consumer(
                 builder: (_, ref, _) {
                   final userImage = ref.watch(authProvider).user!.image;
+                  final temporaryImage = ref.watch(profileProvider).temporaryProfilePicture;
                   return   ClipOval(
-                    child: Image.network(
+                    child: temporaryImage != null ?
+
+                     Image.file(
+                       temporaryImage,
+                    fit: BoxFit.cover,
+                  )
+                    :
+                    Image.network(
                       userImage?? "",
                       fit: BoxFit.cover,
                       loadingBuilder: (context, child, loadingProgress) {
@@ -74,9 +83,15 @@ class ProfileScreenHeader extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.bottomRight,
-                child: GestureDetector(
-                  onTap: () {},
-                  child: SvgPicture.asset(AppIcons.edit),
+                child: Consumer(
+                  builder: (_ ,ref, _) {
+                    return GestureDetector(
+                      onTap: () async {
+                       await ref.read(profileProvider.notifier).pickFromGallery();
+                      },
+                      child: SvgPicture.asset(AppIcons.edit),
+                    );
+                  }
                 ),
               ),
             ],
