@@ -322,4 +322,13 @@ class AuthProvider extends StateNotifier<AuthState> {
       return false;
     }
   }
+
+  Future<bool?> updateUserModel() async {
+    try{
+    await  initializeUser(userToken: state.userToken ?? "");
+    return true;
+    }catch(error){
+      throw Exception('Error while updating profile : $error');
+    }
+  }
 }

@@ -7,10 +7,12 @@ import 'package:aviation_app/core/utils/utils.dart';
 import 'package:aviation_app/features/auth_screens/auth_provider/auth_provider.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:aviation_app/features/profile_screen/presentation/widgets/profile_screen_header.dart';
+import 'package:aviation_app/features/profile_screen/riverpod/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 import 'widget/custom_text_field.dart';
 
@@ -113,9 +115,16 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                     ),
 
                     SizedBox(height: 24.h),
-                    Utils.primaryButton(
-                      onPressed: () {},
-                      text: 'Save Change',
+                    Consumer(
+                      builder: (_, ref, _) {
+                        return Utils.primaryButton(
+                          onPressed: () async {
+                            await ref.read(profileProvider.notifier).onSubmit(name: fullNameEditingController.text);
+                          context.pop();
+                            },
+                          text: 'Save Change',
+                        );
+                      }
                     ),
                     SizedBox(height: 18.h),
                     Utils.primaryButton(

@@ -66,6 +66,7 @@ dependencies:
   flutter_stripe: ^11.5.0
   csv: ^6.0.0
   flutter_tts: ^4.2.3
+  image_picker: ^1.1.2
 
 
 dev_dependencies:
