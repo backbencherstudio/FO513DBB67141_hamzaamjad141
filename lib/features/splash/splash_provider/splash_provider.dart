@@ -33,8 +33,7 @@ class SplashProvider extends StateNotifier<SplashState>{
         if(user != null){
         //
           if(user.premium == true){
-          //  return RouteName.weatherScreen;
-            return RouteName.paymentIntro;
+            return RouteName.weatherScreen;
           }
           return RouteName.paymentIntro;
 

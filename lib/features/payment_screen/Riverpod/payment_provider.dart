@@ -61,4 +61,42 @@ class PaymentProvider extends StateNotifier<PaymentState> {
       throw Exception("Failed to make payment : $error");
     }
   }
+  
+  
+  Future<bool?> onPromoCodeSubmit({required String promoCode}) async {
+    try{
+      state = state.copyWith(isLoading: true);
+      final response = await ApiServices.instance.postData(
+          endPoint: ApiEndPoints.promoCode,
+          body: {
+            "promoCode" : promoCode
+          },
+          headers: {
+            "Authorization" : userToken,
+            "Content-Type" : "application/json"
+          }
+      );
+      state = state.copyWith(isLoading: false);
+      if(response['success']){
+        Fluttertoast.showToast(
+          msg: "Promo Code Applied",
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+        );
+
+        return true;
+      }else{
+        Fluttertoast.showToast(
+          msg: response['message'],
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+        );
+
+      }
+      return false;
+    }catch(error){
+      state = state.copyWith(isLoading: false);
+      throw Exception('Failed to submit promo code : $error');
+    }
+  }
 }
