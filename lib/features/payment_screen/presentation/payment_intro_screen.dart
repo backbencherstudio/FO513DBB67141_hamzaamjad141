@@ -15,11 +15,11 @@ class PaymentIntroScreen extends StatelessWidget {
         padding: AppPadding.screenHorizontal,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Pricing",
-              style: style.headlineSmall!.copyWith(fontWeight: FontWeight.w500),
+              "Promo Code",
+              style: style.headlineSmall,
             ),
             SizedBox(height: 18.h),
             Text(

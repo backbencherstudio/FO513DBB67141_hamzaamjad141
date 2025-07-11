@@ -16,16 +16,18 @@ final paymentProvider = StateNotifierProvider<PaymentProvider, PaymentState>((
   ref,
 ) {
   final userToken = ref.watch(authProvider).userToken ?? "";
-  return PaymentProvider(userToken);
+  final userEmail = ref.watch(authProvider).user?.email ?? "";
+  return PaymentProvider(userToken: userToken, userEmail: userEmail);
 });
 
 class PaymentProvider extends StateNotifier<PaymentState> {
   final String userToken;
-  PaymentProvider(this.userToken) : super(PaymentState());
+  final String userEmail;
+  PaymentProvider({required this.userToken, required this.userEmail}) : super(PaymentState());
   Future<bool?> makePayment() async {
     try {
       state = state.copyWith(isLoading: true);
-      final paymentId = await StripeServices.instance.createPaymentMethod();
+      final paymentId = await StripeServices.instance.createPaymentMethod(email: userEmail);
       final body = {"paymentMethodId": paymentId};
       final headers = {
         "Authorization": userToken,
