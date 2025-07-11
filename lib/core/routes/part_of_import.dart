@@ -1,11 +1,7 @@
 import 'package:aviation_app/core/routes/build_page_with_transition.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
-import 'package:aviation_app/features/auth_screens/payment%20screen/presentation/payment_intro_screen.dart';
-import 'package:aviation_app/features/auth_screens/payment%20screen/presentation/payment_selection.dart';
-import 'package:aviation_app/features/dummy.dart';
-
+import 'package:aviation_app/features/payment_screen/presentation/payment_intro_screen.dart';
 import 'package:aviation_app/features/ebook_screen/presentation/ebook_play.dart';
-
 import 'package:aviation_app/features/auth_screens/forget_password%20screen/presentation/forget_otp_screen.dart';
 import 'package:aviation_app/features/auth_screens/forget_password%20screen/presentation/forget_pas_screen.dart';
 import 'package:aviation_app/features/auth_screens/forget_password%20screen/presentation/reset_pass_screen.dart';
@@ -26,6 +22,7 @@ import 'package:aviation_app/features/weather_screen/presentation/weather_screen
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
+import '../../features/payment_screen/presentation/payment_screen.dart';
 import '../../features/pilot_log_book/presentation/log_book_summary_screen/pilot_log_book_screen.dart';
 import '../../features/podcast_screen/presentation/podcast_screen.dart';
 import '../../features/splash/presentation/splash_screen.dart';

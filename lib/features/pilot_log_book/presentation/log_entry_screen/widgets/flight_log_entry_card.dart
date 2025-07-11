@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 import 'flight_log_custom_text_form_field.dart';
 
@@ -55,7 +56,6 @@ class _FlightLogEntryCardState extends State<FlightLogEntryCard> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -75,6 +75,18 @@ class _FlightLogEntryCardState extends State<FlightLogEntryCard> {
             children: [
               Text("Add Flight Log", style: textTheme.titleMedium),
               FlightLogCustomTextField(
+                enabled: false,
+                onTap: () async {
+                  final datePicker = await showDatePicker(
+                    context: context,
+                    firstDate: DateTime(DateTime.now().year),
+                    lastDate: DateTime(DateTime.now().year + 50),
+                  );
+                  if(datePicker!= null){
+                    dateEditingController.text = DateFormat('dd MMM, yyyy').format(datePicker);
+
+                  }
+                },
                 controller: dateEditingController,
                 label: "Date",
                 hint: "mm/dd/yyyy",
@@ -146,39 +158,48 @@ class _FlightLogEntryCardState extends State<FlightLogEntryCard> {
                 hint: "Enter your landings",
                 keyboardType: TextInputType.number,
               ),
-
             ],
           ),
         ),
-        SizedBox(height: 18.h,),
+        SizedBox(height: 18.h),
         Consumer(
-          builder: (_ , ref, _) {
-            final isButtonLoading = ref.watch(logBookProvider).addLogButtonLoading;
-            return isButtonLoading ?
-            const  Center(child:  CircularProgressIndicator(),)
-            :
-            PrimaryButton(bodyText: "Add Log", onTap: () async {
-             final success = await ref.read(logBookProvider.notifier).addLogBook(
-                from : fromEditingController.text,
-                to : toEditingController.text,
-              aircrafttype : aircraftTypeEditingController.text,
-                 tailNumber : tailNumberEditingController.text,
-               flightTime : flightTimeEditingController.text,
-              pictime : picTimeEditingController.text,
-           dualrcv : dualReceivedEditingController.text,
-                daytime : dayTimeEditingController.text,
-               nightime : nightTimeEditingController.text,
-                ifrtime : ifrTimeEditingController.text,
-                crossCountry : crossCountryEditingController.text,
-             takeoffs : num.tryParse(takeOffsEditingController.text) ?? 0 ,
-                landings :  num.tryParse(landingsEditingController.text) ?? 0  ,
-              );
-             if(success == true && context.mounted){
-               context.pop();
-             }
-            });
-          }
-        )
+          builder: (_, ref, _) {
+            final isButtonLoading = ref
+                .watch(logBookProvider)
+                .addLogButtonLoading;
+            return isButtonLoading
+                ? const Center(child: CircularProgressIndicator())
+                : PrimaryButton(
+                    bodyText: "Add Log",
+                    onTap: () async {
+                      final success = await ref
+                          .read(logBookProvider.notifier)
+                          .addLogBook(
+                            from: fromEditingController.text,
+                            to: toEditingController.text,
+                            aircrafttype: aircraftTypeEditingController.text,
+                            tailNumber: tailNumberEditingController.text,
+                            flightTime: flightTimeEditingController.text,
+                            pictime: picTimeEditingController.text,
+                            dualrcv: dualReceivedEditingController.text,
+                            daytime: dayTimeEditingController.text,
+                            nightime: nightTimeEditingController.text,
+                            ifrtime: ifrTimeEditingController.text,
+                            crossCountry: crossCountryEditingController.text,
+                            takeoffs:
+                                num.tryParse(takeOffsEditingController.text) ??
+                                0,
+                            landings:
+                                num.tryParse(landingsEditingController.text) ??
+                                0,
+                          );
+                      if (success == true && context.mounted) {
+                        context.pop();
+                      }
+                    },
+                  );
+          },
+        ),
       ],
     );
   }

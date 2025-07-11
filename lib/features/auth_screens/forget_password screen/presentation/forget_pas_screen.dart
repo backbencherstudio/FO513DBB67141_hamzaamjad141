@@ -60,7 +60,7 @@ class ForgetPasScreen extends StatelessWidget {
                 builder: (context, ref, _) {
                   final otpStatus = ref.watch(authProvider);
 
-                  return otpStatus.isloading == true
+                  return otpStatus.isLoading == true
                       ? CircularProgressIndicator()
                       : PrimaryButton(
                           bodyText: "Continue",

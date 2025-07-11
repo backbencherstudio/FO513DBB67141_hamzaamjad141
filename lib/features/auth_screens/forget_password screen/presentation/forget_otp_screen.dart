@@ -79,7 +79,7 @@ class ForgetOtpScreen extends StatelessWidget {
                 builder: (context, ref, _) {
                   final data = ref.watch(authProvider);
 
-                  return data.isloading == true
+                  return data.isLoading == true
                       ? CircularProgressIndicator()
                       : PrimaryButton(
                           bodyText: "Verify Now",

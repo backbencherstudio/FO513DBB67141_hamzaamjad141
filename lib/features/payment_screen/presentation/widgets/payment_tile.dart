@@ -132,7 +132,7 @@ class PaymentTile extends StatelessWidget {
         ),
         SizedBox(height:30.h ,),
         Utils.primaryButton(onPressed: (){
-        context.push(RouteName.paymentSelection);
+        context.push(RouteName.payment);
         }, text:"Get Fet Full Access",
         height: 54.h, width: 280.w
         )

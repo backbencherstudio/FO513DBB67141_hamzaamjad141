@@ -19,7 +19,7 @@ class RouteName {
   static const String ebookPlay = '/e-book-play';
   static const String aiAssistant = '/ai-assistant';
   static const String paymentIntro = '/PaymentIntroScreen';
-  static const String paymentSelection = '/PaymentSelection';
+  static const String payment = '/payment';
   static const String logEntryScreen = '/logEntryScreen';
   static const String instructorEntryScreen = "/instructorEntryScreen";
   static const String profileScreen = '/profileScreen';

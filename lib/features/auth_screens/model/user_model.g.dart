@@ -13,6 +13,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
   image: json['image'] as String?,
   role: json['role'] as String,
   license: json['license'] as String?,
+  premium: json['premium'] as bool,
   createdAt: json['createdAt'] as String,
   updatedAt: json['updatedAt'] as String?,
 );
@@ -24,6 +25,7 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
   'image': instance.image,
   'role': instance.role,
   'license': instance.license,
+  'premium': instance.premium,
   'createdAt': instance.createdAt,
   'updatedAt': instance.updatedAt,
 };

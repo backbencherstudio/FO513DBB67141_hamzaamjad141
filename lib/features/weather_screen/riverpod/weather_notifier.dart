@@ -26,10 +26,14 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
     getFavouriteWeatherList();
   }
 
+
   /// search weather by code
   Future<void> onGetWeather({required String searchCommand}) async {
     try {
+
       state = state.copyWith(searchButtonLoading: true);
+
+
       final response = await ApiServices.instance.getData(
         endPoint: "${ApiEndPoints.getWeather}/${searchCommand.toUpperCase()}",
       );
@@ -45,12 +49,6 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
         );
         debugPrint("\nweather : ${response['data']}\n");
       } else {
-        // state = state.copyWith(
-        //   searchCommand: searchCommand,
-        //   isWeatherFound: false,
-        //   searchedWeather: null,
-        //   searchButtonLoading: false,
-        // );
         state = state.clearWeather(searchCommand: searchCommand);
       }
     } catch (error) {

@@ -2,7 +2,7 @@ class ApiEndPoints {
 
   // static const String baseUrl = "http://192.168.4.35:3000";
   
-  static const String baseUrl = "https://war-receives-location-grace.trycloudflare.com";
+  static const String baseUrl = "https://hamzaamjad.signalsmind.com";
   
   static const String googleLogin = 'users/google-login';
   static const String login = 'users/login';
@@ -27,5 +27,6 @@ class ApiEndPoints {
   static const String addLogBook = "addlog/add-addlog";
   static const String getLogRequestList = "addlog/get-logbook?page=1&limit=10";
   static const String deleteLogRequest = 'addlog/delete-log/';
+  static const String payment = 'subscription/pay';
 
 }
