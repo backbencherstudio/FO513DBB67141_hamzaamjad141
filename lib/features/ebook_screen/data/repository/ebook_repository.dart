@@ -8,18 +8,19 @@ class EbookRepository {
   Future<List<EbookApiModel>> getEbookApi({
     required int page,
     required int limit,
+    String? query,
     required String authToken,
   }) async {
     try {
       final headers = {
-        'Authorization': 'Bearer $authToken',
+        'Authorization': authToken,
         'Content-Type': 'application/json',
       };
 
       debugPrint('Headers: $headers');
 
       final response = await _apiServices.getData(
-        endPoint: 'ebook/all?page=$page&limit=$limit',
+        endPoint: 'ebook/all?page=$page&limit=$limit&search=${query??''}',
         headers: headers,
       );
 
