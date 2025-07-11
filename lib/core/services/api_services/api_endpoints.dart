@@ -2,7 +2,7 @@ class ApiEndPoints {
 
   // static const String baseUrl = "http://192.168.4.35:3000";
   
-  static const String baseUrl = "https://person-searches-exceptional-equipment.trycloudflare.com";
+  static const String baseUrl = "https://hamzaamjad.signalsmind.com";
   
   static const String googleLogin = 'users/google-login';
   static const String login = 'users/login';
