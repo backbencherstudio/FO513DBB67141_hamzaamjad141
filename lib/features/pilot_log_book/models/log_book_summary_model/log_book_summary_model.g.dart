@@ -8,15 +8,15 @@ part of 'log_book_summary_model.dart';
 
 LogBookSummaryModel _$LogBookSummaryModelFromJson(Map<String, dynamic> json) =>
     LogBookSummaryModel(
-      totalFlights: json['totalFlights'] as num,
-      totalHours: json['totalHours'] as num,
-      picHours: json['picHours'] as num,
-      dayHours: json['dayHours'] as num,
-      nightHours: json['nightHours'] as num,
-      ifrHours: json['ifrHours'] as num,
-      totalTakeoffs: json['totalTakeoffs'] as num,
-      totalLandings: json['totalLandings'] as num,
-      crossCountry: json['crossCountry'] as num,
+      totalFlights: json['totalFlights'] as num? ?? 0,
+      totalHours: json['totalHours'] as num? ?? 0,
+      picHours: json['picHours'] as num? ?? 0,
+      dayHours: json['dayHours'] as num? ?? 0,
+      nightHours: json['nightHours'] as num? ?? 0,
+      ifrHours: json['ifrHours'] as num? ?? 0,
+      totalTakeoffs: json['totalTakeoffs'] as num? ?? 0,
+      totalLandings: json['totalLandings'] as num? ?? 0,
+      crossCountry: json['crossCountry'] as num? ?? 0,
     );
 
 Map<String, dynamic> _$LogBookSummaryModelToJson(

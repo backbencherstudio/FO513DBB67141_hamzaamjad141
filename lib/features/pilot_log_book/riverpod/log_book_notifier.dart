@@ -9,6 +9,9 @@ import 'package:aviation_app/features/pilot_log_book/riverpod/log_book_state.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
+
+import 'log_book_summary_provider.dart';
 
 final logBookProvider = StateNotifierProvider<LogBookNotifier, LogBookState>((
   ref,
@@ -24,6 +27,21 @@ class LogBookNotifier extends StateNotifier<LogBookState> {
     getLogsList();
   }
 
+  Future<void> onRefresh({required WidgetRef ref}) async {
+    try {
+      await     getDefaultInstructor();
+      await  getLogsList();
+      ref.refresh(logBookSummaryProvider);
+      debugPrint("\nrefresh complete\n");
+    } catch (error) {
+      Fluttertoast.showToast(
+        msg: "Failed to refresh",
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+      throw Exception('Failed to refresh : $error');
+    }
+  }
 
   /// set default instructor
   Future<bool?> setDefaultInstructor({required String email}) async {
@@ -37,18 +55,21 @@ class LogBookNotifier extends StateNotifier<LogBookState> {
       if (instructorFindResponse["success"] &&
           instructorFindResponse["data"].isNotEmpty) {
         final String instructorId = instructorFindResponse["data"][0]["id"];
+        debugPrint("\ninstructor id : $instructorId\n");
         final instructorSetResponse = await ApiServices.instance.postData(
           endPoint: "${ApiEndPoints.setInstructor}$instructorId",
           body: {},
           headers: {"Authorization": userToken},
         );
         if (instructorSetResponse['success'] == true) {
+          await getDefaultInstructor();
           state = state.copyWith(instructorButtonLoading: false);
           Fluttertoast.showToast(
             msg: "Request send successfully",
             backgroundColor: Colors.green,
             textColor: Colors.white,
           );
+
           return true;
         }
       }
@@ -61,6 +82,12 @@ class LogBookNotifier extends StateNotifier<LogBookState> {
       state = state.copyWith(instructorButtonLoading: false);
       return null;
     } catch (error) {
+      Fluttertoast.showToast(
+        msg: "Instructor save failed",
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+      debugPrint("\nError while saving instructor : $error\n");
       state = state.copyWith(instructorButtonLoading: false);
       return null;
     }
@@ -86,24 +113,29 @@ class LogBookNotifier extends StateNotifier<LogBookState> {
 
   /// add log book
   Future<bool?> addLogBook({
+    required DateTime date,
     required String from,
     required String to,
     required String aircrafttype,
     required String tailNumber,
-    required String flightTime,
-    required String pictime,
+    required num flightTime,
+    required num pictime,
     required String dualrcv,
-    required String daytime,
-    required String nightime,
-    required String ifrtime,
-    required String crossCountry,
+    required num daytime,
+    required num nightime,
+    required num ifrtime,
+    required num crossCountry,
     required num takeoffs,
     required num landings,
-  }) async
-  {
+    required WidgetRef ref, // Add ref here to refresh the provider
+  }) async {
     try {
+      String formattedDate = date.toUtc().toIso8601String(); // "2025-07-12"
+
+      debugPrint("\nformated date : $formattedDate\n");
       state = state.copyWith(addLogButtonLoading: true);
       final body = {
+        "date": formattedDate,
         "from": from,
         "to": to,
         "aircrafttype": aircrafttype,
@@ -118,7 +150,7 @@ class LogBookNotifier extends StateNotifier<LogBookState> {
         "takeoffs": takeoffs,
         "landings": landings,
       };
-      // debugPrint("\nadd log body : $body\n");
+      debugPrint("\nadd log body : $body\n");
       final response = await ApiServices.instance.postData(
         endPoint: ApiEndPoints.addLogBook,
         body: body,
@@ -129,6 +161,8 @@ class LogBookNotifier extends StateNotifier<LogBookState> {
       );
       state = state.copyWith(addLogButtonLoading: false);
       if (response['success'] == true) {
+        // After successful API call, refresh the logBookSummaryProvider
+        ref.refresh(logBookSummaryProvider); // Trigger a refresh
         Fluttertoast.showToast(
           msg: response['message'],
           backgroundColor: Colors.green,
@@ -175,8 +209,7 @@ class LogBookNotifier extends StateNotifier<LogBookState> {
   Future<void> deleteLogRequest({
     required String id,
     required int index,
-  }) async
-  {
+  }) async {
     try {
       state = state.copyWith(deleteButtonLoadingButtonIndex: index);
       final response = await ApiServices.instance.deleteData(
