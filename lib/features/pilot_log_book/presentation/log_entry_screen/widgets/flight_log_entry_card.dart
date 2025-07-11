@@ -17,6 +17,7 @@ class FlightLogEntryCard extends StatefulWidget {
 }
 
 class _FlightLogEntryCardState extends State<FlightLogEntryCard> {
+  DateTime dateTime = DateTime.now();
   late final TextEditingController dateEditingController;
   late final TextEditingController fromEditingController;
   late final TextEditingController toEditingController;
@@ -74,22 +75,26 @@ class _FlightLogEntryCardState extends State<FlightLogEntryCard> {
             spacing: 16.h,
             children: [
               Text("Add Flight Log", style: textTheme.titleMedium),
-              FlightLogCustomTextField(
-                enabled: false,
-                onTap: () async {
-                  final datePicker = await showDatePicker(
-                    context: context,
-                    firstDate: DateTime(DateTime.now().year),
-                    lastDate: DateTime(DateTime.now().year + 50),
+              Consumer(
+                builder: (_, ref, _) {
+                  return FlightLogCustomTextField(
+                    enabled: false,
+                    onTap: () async {
+                      final datePicker = await showDatePicker(
+                        context: context,
+                        firstDate: DateTime(DateTime.now().year),
+                        lastDate: DateTime(DateTime.now().year + 50),
+                      );
+                      if(datePicker!= null){
+                        dateTime = datePicker;
+                        dateEditingController.text = DateFormat('dd MMM, yyyy').format(datePicker);
+                      }
+                    },
+                    controller: dateEditingController,
+                    label: "Date",
+                    hint: "mm/dd/yyyy",
                   );
-                  if(datePicker!= null){
-                    dateEditingController.text = DateFormat('dd MMM, yyyy').format(datePicker);
-
-                  }
-                },
-                controller: dateEditingController,
-                label: "Date",
-                hint: "mm/dd/yyyy",
+                }
               ),
               FlightLogCustomTextField(
                 controller: fromEditingController,
@@ -115,11 +120,13 @@ class _FlightLogEntryCardState extends State<FlightLogEntryCard> {
                 controller: flightTimeEditingController,
                 label: "Flight Time (hrs)",
                 hint: "Enter your flight time",
+                keyboardType: TextInputType.number,
               ),
               FlightLogCustomTextField(
                 controller: picTimeEditingController,
                 label: "PIC Time",
                 hint: "Enter your PIC time",
+                keyboardType: TextInputType.number,
               ),
               FlightLogCustomTextField(
                 controller: dualReceivedEditingController,
@@ -130,27 +137,32 @@ class _FlightLogEntryCardState extends State<FlightLogEntryCard> {
                 controller: dayTimeEditingController,
                 label: "Day Time",
                 hint: "Enter your day time",
+                keyboardType: TextInputType.number,
               ),
               FlightLogCustomTextField(
                 controller: nightTimeEditingController,
                 label: "Night Time",
                 hint: "Enter your night time",
+                keyboardType: TextInputType.number,
               ),
               FlightLogCustomTextField(
                 controller: ifrTimeEditingController,
                 label: "IFR Time",
                 hint: "Enter your IFR time",
+                keyboardType: TextInputType.number,
               ),
               FlightLogCustomTextField(
                 controller: crossCountryEditingController,
                 label: "Cross Country",
                 hint: "Enter your cross country",
+                keyboardType: TextInputType.number,
               ),
               FlightLogCustomTextField(
                 controller: takeOffsEditingController,
                 label: "Take Offs",
                 hint: "Enter your take offs",
                 keyboardType: TextInputType.number,
+
               ),
               FlightLogCustomTextField(
                 controller: landingsEditingController,
@@ -172,26 +184,29 @@ class _FlightLogEntryCardState extends State<FlightLogEntryCard> {
                 : PrimaryButton(
                     bodyText: "Add Log",
                     onTap: () async {
+                      debugPrint("\n date time : $dateTime\n");
                       final success = await ref
                           .read(logBookProvider.notifier)
                           .addLogBook(
+                        date: dateTime,
                             from: fromEditingController.text,
                             to: toEditingController.text,
                             aircrafttype: aircraftTypeEditingController.text,
                             tailNumber: tailNumberEditingController.text,
-                            flightTime: flightTimeEditingController.text,
-                            pictime: picTimeEditingController.text,
-                            dualrcv: dualReceivedEditingController.text,
-                            daytime: dayTimeEditingController.text,
-                            nightime: nightTimeEditingController.text,
-                            ifrtime: ifrTimeEditingController.text,
-                            crossCountry: crossCountryEditingController.text,
+                            flightTime: num.tryParse(flightTimeEditingController.text) ?? 0,
+                            pictime: num.tryParse(picTimeEditingController.text) ?? 0 ,
+                            dualrcv:  dualReceivedEditingController.text,
+                            daytime:  num.tryParse(dayTimeEditingController.text) ?? 0 ,
+                            nightime: num.tryParse(nightTimeEditingController.text) ?? 0  ,
+                            ifrtime: num.tryParse(ifrTimeEditingController.text) ?? 0  ,
+                            crossCountry: num.tryParse( crossCountryEditingController.text) ?? 0  ,
                             takeoffs:
                                 num.tryParse(takeOffsEditingController.text) ??
                                 0,
                             landings:
                                 num.tryParse(landingsEditingController.text) ??
                                 0,
+                        ref: ref
                           );
                       if (success == true && context.mounted) {
                         context.pop();

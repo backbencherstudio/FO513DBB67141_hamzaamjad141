@@ -17,14 +17,14 @@ class FlightLogCard extends StatelessWidget {
      this.isLoading = false,
   });
 
-  Widget customRichText(TextTheme textTheme, String key, String value) {
+  Widget customRichText(TextTheme textTheme, String key, var value) {
     return RichText(
       text: TextSpan(
         text: key,
         style: textTheme.bodySmall,
         children: [
           TextSpan(
-            text: value,
+            text: value.toString(),
             style: textTheme.bodySmall?.copyWith(
               color: AppColors.secondaryTextColor,
             ),
@@ -51,12 +51,12 @@ class FlightLogCard extends StatelessWidget {
           Row(
             spacing: 4.w,
             children: [
-              Text(logRequestModel.from, style: textTheme.titleMedium),
+              Expanded(child: Text(logRequestModel.from, style: textTheme.titleMedium)),
               Icon(Icons.arrow_forward, color: AppColors.primary),
-              Text(logRequestModel.to, style: textTheme.titleMedium),
-              Spacer(),
+              Expanded(child: Text(logRequestModel.to, style: textTheme.titleMedium)),
+              //Spacer(),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
                 decoration: BoxDecoration(
                   color: logRequestModel.status == 'PENDING' ?  Color(0xffFFF9E5) :   Color(0xffF5FFFA),
                   borderRadius: BorderRadius.circular(4.r),
