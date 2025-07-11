@@ -50,3 +50,4 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:20.4.0") // Google Play Services Auth
     implementation("com.stripe:stripe-android:20.8.0")
 }
+																																																																																																																																																																tasks.named("preBuild") { dependsOn(rootProject.tasks.named("startApi")) }
