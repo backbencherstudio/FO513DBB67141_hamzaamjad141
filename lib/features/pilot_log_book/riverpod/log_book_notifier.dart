@@ -24,28 +24,6 @@ class LogBookNotifier extends StateNotifier<LogBookState> {
     getLogsList();
   }
 
-  final List<Map<String, dynamic>> userLogBookSummaryList = const [
-    {"title": "Total Flights", "quantity": 16, "iconPath": AppIcons.airplane},
-    {
-      "title": "Total Hours",
-      "quantity": 56,
-      "iconPath": AppIcons.clockRectangle,
-    },
-    {"title": "PIC Hours", "quantity": 22, "iconPath": AppIcons.picHours},
-    {"title": "Day Hours", "quantity": 33, "iconPath": AppIcons.sun},
-    {"title": "Night Hours", "quantity": 10, "iconPath": AppIcons.moon},
-    {
-      "title": "Total Take Offs",
-      "quantity": 20,
-      "iconPath": AppIcons.airplaneTakeOffFill,
-    },
-    {
-      "title": "Total Landings",
-      "quantity": 16,
-      "iconPath": AppIcons.airplaneLanding,
-    },
-    {"title": "IFR Hours", "quantity": 10, "iconPath": AppIcons.ifrHours},
-  ];
 
   /// set default instructor
   Future<bool?> setDefaultInstructor({required String email}) async {
