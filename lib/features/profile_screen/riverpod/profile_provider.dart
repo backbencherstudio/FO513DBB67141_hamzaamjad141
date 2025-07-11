@@ -106,7 +106,7 @@ Future<void> onSubmitInAnotherThread(Map<String, dynamic> args) async {
 
       // Create a MultipartFile
       var multipartFile = await http.MultipartFile.fromPath(
-        'avatar',
+        'image',
         imageFile.path,
         contentType: MediaType(mimeSplit[0], mimeSplit[1]),
       );
