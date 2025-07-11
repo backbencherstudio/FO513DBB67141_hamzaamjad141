@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_sound/flutter_sound.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class RecorderState {
@@ -41,12 +39,6 @@ class RecorderNotifier extends StateNotifier<RecorderState> {
     } catch (e) {
      // state = state.copyWith(errorMessage: 'Failed to initialize recorder: $e');
     }
-  }
-
-
-  Future<String> _getFilePath() async {
-    final dir = await getApplicationDocumentsDirectory();
-    return '${dir.path}/${DateTime.now().microsecond.toString()}.wav';
   }
 
 
