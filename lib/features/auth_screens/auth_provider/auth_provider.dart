@@ -117,7 +117,8 @@ class AuthProvider extends StateNotifier<AuthState> {
     required String email,
     required String license,
     required String password,
-  }) async {
+  }) async
+  {
     state = state.copyWith(isLoading: true);
     try {
       final payload = {
@@ -154,7 +155,8 @@ class AuthProvider extends StateNotifier<AuthState> {
   Future<String?> signUpOtpVerification({
     required String email,
     required String otp,
-  }) async {
+  }) async
+  {
     state = state.copyWith(isLoading: true);
 
     try {
@@ -219,7 +221,8 @@ class AuthProvider extends StateNotifier<AuthState> {
   Future<String?> forgetOtpVerification({
     required String email,
     required String otp,
-  }) async {
+  }) async
+  {
     state = state.copyWith(isLoading: true);
 
     try {
@@ -254,7 +257,8 @@ class AuthProvider extends StateNotifier<AuthState> {
   Future<String?> resetpassCall({
     required String email,
     required String password,
-  }) async {
+  }) async
+  {
     state = state.copyWith(isLoading: true);
 
     try {
@@ -284,7 +288,8 @@ class AuthProvider extends StateNotifier<AuthState> {
   }
 
   /// Call this api during splash screen to initialize user
-  Future<UserModel?> initializeUser({required String userToken}) async {
+  Future<UserModel?> initializeUser({required String userToken}) async
+  {
     try {
       final response = await ApiServices.instance.getData(
         endPoint: ApiEndPoints.initializeUser,
@@ -305,7 +310,8 @@ class AuthProvider extends StateNotifier<AuthState> {
     }
   }
 
-  Future<bool?> signOut() async {
+  Future<bool?> signOut() async
+  {
     try {
       await GoogleAccountService().signOut();
       await SharedPreferenceStorageService.delete(
