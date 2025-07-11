@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 class LogBookSummaryCard extends StatelessWidget{
   final String svgIconPath;
   final String title;
-  final int quantity;
+  final num quantity;
   const LogBookSummaryCard({
     super.key,
     required this.svgIconPath,
