@@ -25,10 +25,11 @@ class ApiServices {
     required Map<String, dynamic> body,
     required Map<String, String> headers,
   }) async {
+    var response;
     try {
       final isOnline = await Utils.isOnline();
       if (isOnline) {
-        final response = await http.post(
+         response = await http.post(
           Uri.parse('${ApiEndPoints.baseUrl}/$endPoint'),
           headers: headers,
           body: jsonEncode(body),
@@ -41,7 +42,8 @@ class ApiServices {
         throw Exception('Device is Offline, Please connect to internet.');
       }
     } catch (e) {
-      Utils.showErrorToast(message: "Failed to send data.");
+      final decodedBody = jsonDecode(response.body);
+      Utils.showErrorToast(message: decodedBody['message']);
       throw Exception("Failed to send data: $e");
     }
   }
