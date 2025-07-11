@@ -24,12 +24,12 @@ class StripeServices {
     }
   }
 
-  Future<String?> createPaymentMethod() async {
+  Future<String?> createPaymentMethod({required String email}) async {
     try {
       final paymentMethod = await Stripe.instance.createPaymentMethod(
         params: PaymentMethodParams.card(
           paymentMethodData: PaymentMethodData(
-            billingDetails: BillingDetails(email: 'shakinhabib2000@gmail.com'),
+            billingDetails: BillingDetails(email: email),
           ),
         ),
       );

@@ -6,21 +6,23 @@ import 'package:flutter_svg/svg.dart';
 class CustomTextformfiled extends StatelessWidget {
   final String text;
   final String hintext;
-  final String icons;
+  final String? icons;
   final bool? isobscure;
   final bool? isVisible;
   final String? toogleIcon;
   final void Function()? onTapToggle;
   final TextEditingController controller;
+  final FocusNode? focusNode;
   const CustomTextformfiled({super.key,
   required this.text,
-  required this.icons,
+   this.icons,
   required this.hintext,
   required this.controller,
    this.isobscure ,
    this.isVisible,
    this.toogleIcon,
-   this.onTapToggle
+   this.onTapToggle,
+    this.focusNode
   });
 
   @override
@@ -48,16 +50,21 @@ class CustomTextformfiled extends StatelessWidget {
             Expanded(
               child: TextFormField(
                 style: Theme.of(context).textTheme.bodyMedium,
+                focusNode: focusNode,
+                onTapOutside: (_){
+                  if(focusNode!=null){
+                    focusNode!.unfocus();
+                  }
+                },
                 obscureText: isobscure ?? false,
                 controller: controller,
                 decoration: InputDecoration(
-               hintText: hintext,
-
-                  suffixIcon: GestureDetector(
+                hintText: hintext,
+                  suffixIcon: icons == null ? null : GestureDetector(
                     onTap: onTapToggle,
                     child: Padding(
                       padding:  EdgeInsets.only(left: 2, right: 2, top: 2, bottom: 5),
-                      child: isVisible == true? SvgPicture.asset(toogleIcon!): SvgPicture.asset(icons),
+                      child: isVisible == true? SvgPicture.asset(toogleIcon!): SvgPicture.asset(icons!),
                     ),
                   ),
                 ),
