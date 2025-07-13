@@ -81,7 +81,7 @@ class FlightLogCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 12.h,
             children: [
-              customRichText(textTheme, "Flight Name : ", logRequestModel.flightTime),
+              customRichText(textTheme, "Aircraft Type : ", logRequestModel.aircrafttype),
               customRichText(textTheme, "Flight Time : ", logRequestModel.flightTime),
               customRichText(textTheme, "Day : ", logRequestModel.daytime),
               customRichText(textTheme, "Night : ", logRequestModel.nightime),
