@@ -11,14 +11,14 @@ class VoiceAiNotifier extends StateNotifier<VoiceAiState> {
 
   VoiceAiNotifier(this._aiChatRepository) : super(VoiceAiState());
 
-  Future<void> getGeminiResponse(String message) async {
+  Future<void> getGeminiResponse(String message, bool isAudio) async {
     try {
       /// Set loading to true and clear any previous error
       state = state.copyWith(isLoading: true, error: '');
       /// Add user message to the chat history
       final updatedMessages = [
         ...state.messages,
-        ChatMessage(text: message, isUser: true, timestamp: DateTime.now()),
+        ChatMessage(text: message, isUser: true,isAudio: isAudio, timestamp: DateTime.now()),
       ];
       state = state.copyWith(messages: updatedMessages);
 
@@ -28,7 +28,7 @@ class VoiceAiNotifier extends StateNotifier<VoiceAiState> {
       /// Add AI response to the chat history
       final newMessages = [
         ...state.messages,
-        ChatMessage(text: aiResponse, isUser: false, timestamp: DateTime.now()),
+        ChatMessage(text: aiResponse, isUser: false,isAudio: isAudio, timestamp: DateTime.now()),
       ];
       state = state.copyWith(messages: newMessages, isLoading: false);
     } catch (e) {

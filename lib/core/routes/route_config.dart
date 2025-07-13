@@ -273,6 +273,18 @@ class RouteConfig {
           );
         },
       ),
+      GoRoute(
+        name: RouteName.favouriteScreen,
+        path: RouteName.favouriteScreen,
+        pageBuilder: (context, state) {
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.slideRightToLeft,
+            child: FavouriteScreen(),
+          );
+        },
+      ),
     ],
   );
 }
