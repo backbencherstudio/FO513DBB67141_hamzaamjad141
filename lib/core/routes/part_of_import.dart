@@ -1,5 +1,6 @@
 import 'package:aviation_app/core/routes/build_page_with_transition.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
+import 'package:aviation_app/features/favourite_screen/favourite_screen.dart';
 import 'package:aviation_app/features/payment_screen/presentation/payment_intro_screen.dart';
 import 'package:aviation_app/features/ebook_screen/presentation/ebook_play.dart';
 import 'package:aviation_app/features/auth_screens/forget_password%20screen/presentation/forget_otp_screen.dart';
