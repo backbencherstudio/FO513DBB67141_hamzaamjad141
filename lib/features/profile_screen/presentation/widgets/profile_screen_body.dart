@@ -57,6 +57,18 @@ class ProfileScreenBody extends StatelessWidget {
             onTap: () {},
             trailing: Switch(value: true, onChanged: (value) {}),
           ),
+
+          customListTile(
+            textTheme: textTheme,
+            titleText: "Privacy Policy",
+            onTap: () {context.push(RouteName.privacyPolicyScreen);},
+          ),
+          customListTile(
+            textTheme: textTheme,
+            titleText: "Terms & Conditions",
+            onTap: () {context.push(RouteName.termsConditionsScreen);},
+          ),
+
         ],
       ),
     );

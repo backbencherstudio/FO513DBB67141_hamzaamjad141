@@ -2,6 +2,8 @@ import 'package:aviation_app/core/constant/icons.dart';
 import 'package:aviation_app/core/utils/common_widget/common_widget.dart';
 import 'package:aviation_app/core/utils/common_widget/primary_button/primary_button.dart';
 import 'package:aviation_app/features/weather_screen/model/weather_model.dart';
+import 'package:aviation_app/features/weather_screen/presentation/widgets/weather_card/weather_card_custom_list_tile.dart';
+import 'package:aviation_app/features/weather_screen/presentation/widgets/weather_card/weather_card_header.dart';
 import 'package:aviation_app/features/weather_screen/riverpod/weather_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,37 +18,6 @@ class WeatherCard extends StatelessWidget {
   final bool isExpand;
 
   const WeatherCard({super.key, required this.weather, this.isExpand = true});
-
-  Widget _customListTile({
-    required TextTheme textTheme,
-    required String svgIconPath,
-    required String title,
-    required String body,
-  }) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 5.w,
-      children: [
-        SvgPicture.asset(svgIconPath, width: 16.w, height: 16.h),
-        Expanded(
-          child: RichText(
-            text: TextSpan(
-              text: title,
-              style: textTheme.bodySmall?.copyWith(color: Colors.white),
-              children: [
-                TextSpan(
-                  text: ' $body',
-                  style: textTheme.bodySmall?.copyWith(
-                    color: Colors.white.withValues(alpha: 0.4),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,49 +37,7 @@ class WeatherCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 8.h,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  spacing: 8.h,
-                  children: [
-                    Text(
-                      weather.station?.toUpperCase() ?? "",
-                      style: textTheme.titleMedium,
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 10.w,
-                        vertical: 2.h,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.yellow,
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                      child: Text(
-                        weather.station?.toUpperCase() ?? "",
-                        style: textTheme.bodySmall?.copyWith(
-                          color: Color(0xff070707),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Consumer(
-                  builder: (_, ref, _) {
-                    final bool isFavourite = ref.watch(weatherProvider).favouriteWeatherList.any((item)=>item.station == weather.station);
-                    return CommonWidget.secondaryButton(
-                      child: SvgPicture.asset(
-                        isFavourite ? AppIcons.loveFill : AppIcons.love,
-                      ),
-                      onTap: () => ref
-                          .read(weatherProvider.notifier)
-                          .addToFavouriteWeather(weather: weather),
-                    );
-                  },
-                ),
-              ],
-            ),
+            WeatherCardHeader(weather: weather),
 
             if (isExpand)
               Column(
@@ -117,52 +46,52 @@ class WeatherCard extends StatelessWidget {
                   Column(
                     spacing: 12.h,
                     children: [
-                      _customListTile(
+                      customListTile(
                         textTheme: textTheme,
                         svgIconPath: AppIcons.clockOutline,
                         title: "Time (EST):",
-                        body: DateFormat('MM/dd/yyyy, hh:mm a').format(
-                          DateTime.parse(weather.meta?['cache-timestamp']),
-                        ),
+                        body:
+                            "${DateFormat('MM/dd/yyyy').format(DateTime.parse(weather.meta?['cache-timestamp']))}, ${DateFormat('hh:mm a').format(DateTime.now())}",
                       ),
-                      _customListTile(
+                      customListTile(
                         textTheme: textTheme,
                         svgIconPath: AppIcons.airplaneTakeOff,
                         title: "Flight Rules",
                         body: weather.flight_rules ?? "",
                       ),
-                      _customListTile(
+                      customListTile(
                         textTheme: textTheme,
                         svgIconPath: AppIcons.temperature,
                         title: "Temperature:",
                         body: "${weather.temperature?.value} °C",
                       ),
-                      _customListTile(
+                      customListTile(
                         textTheme: textTheme,
                         svgIconPath: AppIcons.dewPoint,
                         title: "Dewpoint:",
                         body: "${weather.dewpoint?.value} °C",
                       ),
-                      _customListTile(
+                      customListTile(
                         textTheme: textTheme,
                         svgIconPath: AppIcons.eyeOutline,
                         title: "Visibility:",
                         body: "${weather.visibility?.value ?? ""} sm",
                       ),
-                      _customListTile(
+                      customListTile(
                         textTheme: textTheme,
                         svgIconPath: AppIcons.wind,
                         title: "Wind:",
                         body:
                             "${weather.wind_direction?.value}° at ${weather.wind_speed?.value} kt",
                       ),
-                      _customListTile(
+                      customListTile(
                         textTheme: textTheme,
                         svgIconPath: AppIcons.clouds,
                         title: "Clouds:",
-                        body: "Few clouds at ${weather.clouds!.isNotEmpty ? weather.clouds!.first.altitude : ""}",
+                        body:
+                            "Few clouds at ${weather.clouds!.isNotEmpty ? weather.clouds!.first.altitude : ""}",
                       ),
-                      _customListTile(
+                      customListTile(
                         textTheme: textTheme,
                         svgIconPath: AppIcons.raw,
                         title: "Raw METAR:",

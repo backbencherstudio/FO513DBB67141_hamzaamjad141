@@ -18,12 +18,13 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CreateScreen(
-      child: Column(
+      child: ListView(
+        padding: EdgeInsets.zero,
         children: [
           ProfileScreenHeader(),
           SizedBox(height: 34.h),
           ProfileScreenBody(),
-          Spacer(),
+        //  SizedBox(height: 10.h,),
           SafeArea(
             child: Padding(
               padding: EdgeInsets.all(24.r),

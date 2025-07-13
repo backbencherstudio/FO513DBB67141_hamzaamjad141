@@ -273,18 +273,35 @@ class RouteConfig {
           );
         },
       ),
+
       GoRoute(
-        name: RouteName.favouriteScreen,
-        path: RouteName.favouriteScreen,
+        name: RouteName.privacyPolicyScreen,
+        path: RouteName.privacyPolicyScreen,
+
         pageBuilder: (context, state) {
           return buildPageWithTransition(
             context: context,
             state: state,
             transitionType: PageTransitionType.slideRightToLeft,
-            child: FavouriteScreen(),
+            child: PrivacyPolicyScreen(),
           );
         },
       ),
+
+
+    GoRoute(
+      name: RouteName.termsConditionsScreen,
+      path: RouteName.termsConditionsScreen,
+      pageBuilder: (context, state) {
+        return buildPageWithTransition(
+          context: context,
+          state: state,
+          transitionType: PageTransitionType.slideRightToLeft,
+          child: TermsConditionScreen(),
+        );
+      },
+    ),
+
     ],
   );
 }

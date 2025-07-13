@@ -1,9 +1,11 @@
 import 'package:aviation_app/core/constant/padding.dart';
+import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:aviation_app/features/payment_screen/presentation/widgets/payment_tile.dart';
 import 'package:aviation_app/features/payment_screen/presentation/widgets/promo_code_submit_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class PaymentIntroScreen extends StatelessWidget {
   const PaymentIntroScreen({super.key});
@@ -40,28 +42,39 @@ class PaymentIntroScreen extends StatelessWidget {
                 /// ====== Promo Code ====== ///
                 SizedBox(height: 22.h),
                 PaymentTile(),
+                SizedBox(height: 24.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: ()=>context.push(RouteName.privacyPolicyScreen),
+                      child: Text(
+                        "Privacy Policy",
+                        style: style.bodySmall!.copyWith(
+                          fontSize: 14.sp,
+                          color: Color(0xffD2D2D5),
+                          decoration: TextDecoration.underline,
+                          decorationColor: Color(0xffD2D2D5),
+                        ),
+                      ),
+                    ),
+
+                    GestureDetector(
+                      onTap: ()=>context.push(RouteName.privacyPolicyScreen),
+
+                      child: Text(
+                        "Terms & Conditions",
+                        style: style.bodySmall!.copyWith(
+                          fontSize: 14.sp,
+                          color: Color(0xffD2D2D5),
+                          decoration: TextDecoration.underline,
+                          decorationColor: Color(0xffD2D2D5),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(height: 30.h),
-                // SizedBox(height: 24.h),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Text(
-                //       "Terms of User",
-                //       style: style.bodySmall!.copyWith(
-                //         fontSize: 14.sp,
-                //         color: Color(0xffD2D2D5),
-                //       ),
-                //     ),
-                //     SizedBox(width: 24.w),
-                //     Text(
-                //       "Privacy Policy",
-                //       style: style.bodySmall!.copyWith(
-                //         fontSize: 14.sp,
-                //         color: Color(0xffD2D2D5),
-                //       ),
-                //     ),
-                //   ],
-                // ),
               ],
             ),
           ),
