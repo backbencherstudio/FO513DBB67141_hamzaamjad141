@@ -289,18 +289,18 @@ class RouteConfig {
       ),
 
 
-    // GoRoute(
-    //   name: RouteName.privacyPolicyScreen,
-    //   path: RouteName.privacyPolicyScreen,
-    //   pageBuilder: (context, state) {
-    //     return buildPageWithTransition(
-    //       context: context,
-    //       state: state,
-    //       transitionType: PageTransitionType.slideRightToLeft,
-    //       child: EditProfileScreen(),
-    //     );
-    //   },
-    // ),
+    GoRoute(
+      name: RouteName.termsConditionsScreen,
+      path: RouteName.termsConditionsScreen,
+      pageBuilder: (context, state) {
+        return buildPageWithTransition(
+          context: context,
+          state: state,
+          transitionType: PageTransitionType.slideRightToLeft,
+          child: TermsConditionScreen(),
+        );
+      },
+    ),
 
     ],
   );

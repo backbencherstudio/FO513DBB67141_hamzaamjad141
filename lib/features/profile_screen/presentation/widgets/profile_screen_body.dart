@@ -66,7 +66,7 @@ class ProfileScreenBody extends StatelessWidget {
           customListTile(
             textTheme: textTheme,
             titleText: "Terms & Conditions",
-            onTap: () {context.push(RouteName.privacyPolicyScreen);},
+            onTap: () {context.push(RouteName.termsConditionsScreen);},
           ),
 
         ],
