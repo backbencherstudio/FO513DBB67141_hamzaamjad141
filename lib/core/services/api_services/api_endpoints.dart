@@ -25,7 +25,7 @@ class ApiEndPoints {
   static const String setInstructor = "instructor/set-instructor/";
   static const String getInstructor = "instructor/my-instructor";
   static const String addLogBook = "addlog/add-addlog";
-  static const String getLogRequestList = "addlog/get-logbook?page=1&limit=10";
+  static const String getLogRequestList = "addlog/get-logbook?page=1&limit=100";
   static const String deleteLogRequest = 'addlog/delete-log/';
   static const String payment = 'subscription/pay';
   static const String promoCode = 'subscription/subscribe-with-promo';
