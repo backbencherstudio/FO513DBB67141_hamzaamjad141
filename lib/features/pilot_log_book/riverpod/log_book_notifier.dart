@@ -44,22 +44,30 @@ class LogBookNotifier extends StateNotifier<LogBookState> {
   }
 
   /// set default instructor
-  Future<bool?> setDefaultInstructor({required String email}) async {
+  Future<bool?> setDefaultInstructor({required String email, required String name, required String phone}) async {
     try {
       state = state.copyWith(instructorButtonLoading: true);
 
-      final instructorFindResponse = await ApiServices.instance.getData(
-        endPoint: "${ApiEndPoints.findInstructor}$email",
-        headers: {"Authorization": userToken},
+      final instructorFindResponse = await ApiServices.instance.postData(
+        endPoint: ApiEndPoints.createInstructor,
+        headers: {"Authorization": userToken,
+        "Content-Type" :"application/json"
+        },
+        body: {
+          "name" : name,
+          "email" : email,
+          "phone" : phone,
+        }
       );
-      if (instructorFindResponse["success"] &&
-          instructorFindResponse["data"].isNotEmpty) {
-        final String instructorId = instructorFindResponse["data"][0]["id"];
+      if (instructorFindResponse["success"]) {
+        final String instructorId = instructorFindResponse["data"]["id"];
         debugPrint("\ninstructor id : $instructorId\n");
         final instructorSetResponse = await ApiServices.instance.postData(
           endPoint: "${ApiEndPoints.setInstructor}$instructorId",
           body: {},
-          headers: {"Authorization": userToken},
+          headers: {"Authorization": userToken,
+            "Content-Type" :"application/json"
+          },
         );
         if (instructorSetResponse['success'] == true) {
           await getDefaultInstructor();

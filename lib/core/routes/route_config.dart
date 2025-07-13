@@ -273,6 +273,34 @@ class RouteConfig {
           );
         },
       ),
+
+      GoRoute(
+        name: RouteName.privacyPolicyScreen,
+        path: RouteName.privacyPolicyScreen,
+        pageBuilder: (context, state) {
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.slideRightToLeft,
+            child: PrivacyPolicyScreen(),
+          );
+        },
+      ),
+
+
+    // GoRoute(
+    //   name: RouteName.privacyPolicyScreen,
+    //   path: RouteName.privacyPolicyScreen,
+    //   pageBuilder: (context, state) {
+    //     return buildPageWithTransition(
+    //       context: context,
+    //       state: state,
+    //       transitionType: PageTransitionType.slideRightToLeft,
+    //       child: EditProfileScreen(),
+    //     );
+    //   },
+    // ),
+
     ],
   );
 }

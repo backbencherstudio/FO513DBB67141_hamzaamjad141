@@ -14,6 +14,7 @@ import 'package:aviation_app/features/auth_screens/sign_up%20screen/presentation
 import 'package:aviation_app/features/ebook_screen/presentation/ebook_screen.dart';
 import 'package:aviation_app/features/pilot_log_book/presentation/instructor_entry_screen/instructor_entry_screen.dart';
 import 'package:aviation_app/features/pilot_log_book/presentation/log_entry_screen/log_entry_screen.dart';
+import 'package:aviation_app/features/privacy_policy_terms_and_condition_screens/privacy_policy_screen/presentation/privacy_policy_screen.dart';
 import 'package:aviation_app/features/profile_screen/presentation/edit_profile/edit_profile_screen.dart';
 import 'package:aviation_app/features/profile_screen/presentation/profile_screen.dart';
 import 'package:aviation_app/features/podcast_screen/presentation/podcast_player_screen.dart';

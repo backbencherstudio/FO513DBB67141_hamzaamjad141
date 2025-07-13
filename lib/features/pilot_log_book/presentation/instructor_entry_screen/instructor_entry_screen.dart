@@ -105,23 +105,29 @@ class _InstructorEntryScreenState extends State<InstructorEntryScreen> {
               SizedBox(height: 18.h),
               Consumer(
                 builder: (_, ref, _) {
-                  final isLoading = ref.watch(logBookProvider).instructorButtonLoading;
-                  return isLoading ?
-                  Center(child: CircularProgressIndicator(),)
-                  :
-                  PrimaryButton(
-                    bodyText: "Save Instructor",
-                    onTap: () async {
-                      if(emailController.text.isNotEmpty){
-                        final success = await ref.read(logBookProvider.notifier).setDefaultInstructor(email: emailController.text);
-                        if(success == true && context.mounted){
-                          context.pop();
-                        }
-                      }
-
-                    },
-                  );
-                }
+                  final isLoading = ref
+                      .watch(logBookProvider)
+                      .instructorButtonLoading;
+                  return isLoading
+                      ? Center(child: CircularProgressIndicator())
+                      : PrimaryButton(
+                          bodyText: "Save Instructor",
+                          onTap: () async {
+                            if (emailController.text.isNotEmpty) {
+                              final success = await ref
+                                  .read(logBookProvider.notifier)
+                                  .setDefaultInstructor(
+                                name: nameController.text,
+                                    email: emailController.text,
+                                phone: phoneController.text
+                                  );
+                              if (success == true && context.mounted) {
+                                context.pop();
+                              }
+                            }
+                          },
+                        );
+                },
               ),
             ],
           ),
