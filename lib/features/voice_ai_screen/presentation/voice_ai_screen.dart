@@ -6,6 +6,7 @@ import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:aviation_app/features/voice_ai_screen/presentation/widget/build_text_filed.dart';
 import 'package:aviation_app/features/voice_ai_screen/presentation/widget/chat_history_widget/chat_history.dart';
 import 'package:aviation_app/features/voice_ai_screen/presentation/widget/circle_shadow_box.dart';
+import 'package:aviation_app/features/voice_ai_screen/presentation/widget/text_field_toggle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -47,15 +48,7 @@ class _VoiceAiScreenState extends ConsumerState<VoiceAiScreen> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   SizedBox(height: 20.w),
-                  GestureDetector(
-                    onTap: () {
-                      ref.read(showTextFieldProvider.notifier).state =
-                          !showTextField;
-                    },
-                    child: CommonWidget.secondaryButton(
-                      child: SvgPicture.asset(AppIcons.keyboardStroke),
-                    ),
-                  ),
+                  TextFieldToggle(svgAsset: AppIcons.keyboardStroke,),
                   Center(
                     child: Consumer(
                       builder: (context, ref,child) {
