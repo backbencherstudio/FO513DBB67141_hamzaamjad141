@@ -9,7 +9,7 @@ plugins {
 android {
     namespace = "com.example.aviation_app"
     compileSdk = 35
-    ndkVersion = "27.0.12077973"
+    ndkVersion = "29.0.13113456"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

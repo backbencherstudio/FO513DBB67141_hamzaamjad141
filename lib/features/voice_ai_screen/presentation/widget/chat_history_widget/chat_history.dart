@@ -1,3 +1,4 @@
+import 'package:aviation_app/features/voice_ai_screen/presentation/widget/audio_message_wave_from.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -34,26 +35,32 @@ class ChatHistory extends StatelessWidget {
                 SizedBox(height: 10.h),
                 voiceAiState.messages.isNotEmpty
                     ? ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: voiceAiState.messages.length,
-                  itemBuilder: (context, index) {
-                    final message = voiceAiState.messages[index];
-                    return buildChatBubble(context, message, index);
-                  },
-                )
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: voiceAiState.messages.length,
+                        itemBuilder: (context, index) {
+                          final message = voiceAiState.messages[index];
+                          final isAudio = voiceAiState.messages[index].isAudio;
+                          debugPrint(isAudio.toString());
+                          if (isAudio) {
+                            return AudioMessageWidget(message: message);
+                          } else {
+                            return buildChatBubble(context, message, index);
+                          }
+                        },
+                      )
                     : Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20.h),
-                  child: Center(
-                    child: Text(
-                      'Start the conversation!',
-                      style: textTheme.bodyMedium!.copyWith(
-                        color: AppColors.secondaryTextColor,
-                        fontStyle: FontStyle.italic,
+                        padding: EdgeInsets.symmetric(vertical: 20.h),
+                        child: Center(
+                          child: Text(
+                            'Start the conversation!',
+                            style: textTheme.bodyMedium!.copyWith(
+                              color: AppColors.secondaryTextColor,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
                 if (voiceAiState.isLoading)
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 10.h),
@@ -76,7 +83,7 @@ class ChatHistory extends StatelessWidget {
                       ),
                     ),
                   ),
-                SizedBox(height: 80.h),
+                SizedBox(height: 90.h),
               ],
             ),
           ),
@@ -84,5 +91,4 @@ class ChatHistory extends StatelessWidget {
       ),
     );
   }
-
 }

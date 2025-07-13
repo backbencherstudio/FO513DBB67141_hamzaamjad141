@@ -57,7 +57,13 @@ class CircleShadowBox extends HookConsumerWidget {
         isHolding.value = false;
         holdController.hold(false);
         stopListening(); /// Stop listening on long press end
-        ref.read(voiceAiProvider.notifier).getGeminiResponse(speechText.value);
+        final message = speechText.value.trim();
+        if (message.isNotEmpty) {
+          /// Call the provider to send the message
+          ref.read(voiceAiProvider.notifier).getGeminiResponse(message,true);
+        }else{
+          debugPrint('No message to send');
+        }
       },
       behavior: HitTestBehavior.translucent,
       child: AnimatedSwitcher(

@@ -109,7 +109,7 @@ class BuildTextFiled extends HookConsumerWidget {
                       final message = messageController?.text.trim();
                       if (message != null && message.isNotEmpty) {
                         /// Call the provider to send the message
-                        ref.read(voiceAiProvider.notifier).getGeminiResponse(message);
+                        ref.read(voiceAiProvider.notifier).getGeminiResponse(message,false);
                         messageController?.clear(); // Clear the text field
                       }
                     },
