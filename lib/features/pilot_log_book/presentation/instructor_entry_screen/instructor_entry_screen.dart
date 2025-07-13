@@ -19,19 +19,31 @@ class InstructorEntryScreen extends StatefulWidget {
 
 class _InstructorEntryScreenState extends State<InstructorEntryScreen> {
   late final TextEditingController emailController;
-  late final FocusNode focusNode;
+  late final TextEditingController nameController;
+  late final TextEditingController phoneController;
+  late final FocusNode emailFocusNode;
+  late final FocusNode nameFocusNode;
+  late final FocusNode phoneFocusNode;
 
   @override
   void initState() {
     emailController = TextEditingController();
-    focusNode = FocusNode();
+    nameController = TextEditingController();
+    phoneController = TextEditingController();
+    emailFocusNode = FocusNode();
+    nameFocusNode = FocusNode();
+    phoneFocusNode = FocusNode();
     super.initState();
   }
 
   @override
   void dispose() {
     emailController.dispose();
-    focusNode.dispose();
+    nameController.dispose();
+    phoneController.dispose();
+    nameFocusNode.dispose();
+    phoneFocusNode.dispose();
+    emailFocusNode.dispose();
     super.dispose();
   }
 
@@ -73,7 +85,19 @@ class _InstructorEntryScreenState extends State<InstructorEntryScreen> {
                       label: "Email",
                       hint: "Enter instructor email",
                       controller: emailController,
-                      focusNode: focusNode,
+                      focusNode: emailFocusNode,
+                    ),
+                    FlightLogCustomTextField(
+                      label: "Name",
+                      hint: "Enter instructor Name",
+                      controller: nameController,
+                      focusNode: nameFocusNode,
+                    ),
+                    FlightLogCustomTextField(
+                      label: "Phone",
+                      hint: "Enter instructor phone",
+                      controller: phoneController,
+                      focusNode: phoneFocusNode,
                     ),
                   ],
                 ),
@@ -88,7 +112,6 @@ class _InstructorEntryScreenState extends State<InstructorEntryScreen> {
                   PrimaryButton(
                     bodyText: "Save Instructor",
                     onTap: () async {
-                      focusNode.unfocus();
                       if(emailController.text.isNotEmpty){
                         final success = await ref.read(logBookProvider.notifier).setDefaultInstructor(email: emailController.text);
                         if(success == true && context.mounted){
