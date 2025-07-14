@@ -1,7 +1,9 @@
 import 'package:aviation_app/core/constant/padding.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/core/theme/theme_extension/app_colors.dart';
+import 'package:aviation_app/features/profile_screen/riverpod/single_value_provider/notification_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
@@ -51,11 +53,17 @@ class ProfileScreenBody extends StatelessWidget {
             titleText: "Subscribe",
             onTap: () {context.push(RouteName.paymentIntro);},
           ),
-          customListTile(
-            textTheme: textTheme,
-            titleText: "My push notifications",
-            onTap: () {},
-            trailing: Switch(value: true, onChanged: (value) {}),
+          Consumer(
+            builder: (_,ref, _) {
+              final notificationValue = ref.watch(notificationProvider);
+              final notificationNotifier = ref.read(notificationProvider.notifier);
+              return customListTile(
+                textTheme: textTheme,
+                titleText: "My push notifications",
+                onTap: () {},
+                trailing: Switch(value: notificationValue, onChanged: (value)=>notificationNotifier.toggleNotification(value)),
+              );
+            }
           ),
 
           customListTile(
