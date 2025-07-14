@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:aviation_app/core/constant/padding.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
@@ -31,21 +32,13 @@ class PrivacyPolicyScreen extends StatelessWidget {
                     onTap: () => context.pop(),
                     child: Icon(Icons.arrow_back),
                   ),
-                  Text("Privacy Policy",style: textTheme.headlineSmall,)
+                  Text("Privacy Policy", style: textTheme.headlineSmall),
                 ],
               ),
-              // SizedBox(height: 5.h,),
-              // Align(
-              //     alignment: Alignment.topLeft,
-              //     child
-              //     : Text("Privacy Policy",style: textTheme.headlineSmall,)),
-              SizedBox(height: 20.h,),
-              Text(
-                (privacyPolicy) ,
-                style: textTheme.bodySmall,
-              ),
 
+              SizedBox(height: 20.h),
 
+              Html(data: privacyPolicy, shrinkWrap: true),
             ],
           ),
         ),

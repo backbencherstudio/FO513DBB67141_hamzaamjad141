@@ -60,7 +60,7 @@ class PaymentIntroScreen extends StatelessWidget {
                     ),
 
                     GestureDetector(
-                      onTap: ()=>context.push(RouteName.privacyPolicyScreen),
+                      onTap: ()=>context.push(RouteName.termsConditionsScreen),
 
                       child: Text(
                         "Terms & Conditions",
