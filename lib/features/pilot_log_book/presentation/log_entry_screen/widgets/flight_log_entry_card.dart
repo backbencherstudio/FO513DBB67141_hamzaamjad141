@@ -191,7 +191,7 @@ class _FlightLogEntryCardState extends State<FlightLogEntryCard> {
                         date: dateTime,
                             from: fromEditingController.text,
                             to: toEditingController.text,
-                            aircrafttype: aircraftTypeEditingController.text,
+                            aircrafttype: aircraftTypeEditingController.text ,
                             tailNumber: tailNumberEditingController.text,
                             flightTime: num.tryParse(flightTimeEditingController.text) ?? 0,
                             pictime: num.tryParse(picTimeEditingController.text) ?? 0 ,
