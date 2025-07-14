@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../../core/theme/theme_extension/app_colors.dart';
 
@@ -19,6 +20,8 @@ Widget buildTypingIndicator() {
     child: Row(
       mainAxisSize: MainAxisSize.min,
       children: [
+        _buildText(),
+        SizedBox(width: 6.w),
         _buildDot(),
         SizedBox(width: 4.w),
         _buildDot(delay: 200.ms),
@@ -38,3 +41,9 @@ Widget _buildDot({Duration delay = Duration.zero}) {
     ),
   ).animate().scale(duration: 600.ms, delay: delay, curve: Curves.easeInOut);
 }
+
+Widget _buildText({Duration delay = Duration.zero}) {
+  return Text("Thinking",style: GoogleFonts.poppins(fontSize: 12.sp,color: AppColors.primary),).animate().scale(duration: 600.ms, delay: delay, curve: Curves.easeInOut);
+}
+
+
