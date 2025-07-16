@@ -1,7 +1,6 @@
 import 'package:aviation_app/core/constant/icons.dart';
 import 'package:aviation_app/core/constant/padding.dart';
 import 'package:aviation_app/core/theme/theme_extension/app_colors.dart';
-import 'package:aviation_app/core/utils/common_widget/common_widget.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:aviation_app/features/voice_ai_screen/presentation/widget/build_text_filed.dart';
 import 'package:aviation_app/features/voice_ai_screen/presentation/widget/chat_history_widget/chat_history.dart';
@@ -9,7 +8,6 @@ import 'package:aviation_app/features/voice_ai_screen/presentation/widget/circle
 import 'package:aviation_app/features/voice_ai_screen/presentation/widget/text_field_toggle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../data/provider/chat_bot_provider/chat_bot_provider.dart';
 import 'widget/ai_voice_recording_widget.dart';

@@ -1,4 +1,4 @@
-import 'package:aviation_app/features/voice_ai_screen/presentation/widget/audio_message_wave_from.dart';
+import 'package:aviation_app/features/voice_ai_screen/presentation/widget/audio_message_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
