@@ -46,7 +46,7 @@ class _VoiceAiScreenState extends ConsumerState<VoiceAiScreen> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   SizedBox(height: 20.w),
-                  TextFieldToggle(svgAsset: AppIcons.keyboardStroke,),
+                  TextFieldToggle(keyBoard: AppIcons.keyboardStroke,mic: AppIcons.mic),
                   Center(
                     child: Consumer(
                       builder: (context, ref,child) {
@@ -89,7 +89,7 @@ class _VoiceAiScreenState extends ConsumerState<VoiceAiScreen> {
                             ),
                           );
                         },
-                    child: showTextField
+                    child: !showTextField
                         ? BuildTextFiled(
                             key: const ValueKey('textField'),
                             messageController: messageController,
