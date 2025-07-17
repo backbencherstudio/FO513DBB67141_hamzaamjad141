@@ -7,9 +7,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../data/provider/text_filed_to_voice.dart';
 
 class TextFieldToggle extends ConsumerWidget {
-  final String svgAsset;
+  final String keyBoard;
+  final String mic;
 
-  const TextFieldToggle({super.key, required this.svgAsset});
+  const TextFieldToggle( {super.key, required this.keyBoard,required this.mic,});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -58,12 +59,20 @@ class TextFieldToggle extends ConsumerWidget {
                   ],
                 ),
                 child: Center(
-                  child: SvgPicture.asset(
-                    svgAsset,
+                  child: isActive ?SvgPicture.asset(
+                    mic,
                     width: 16.0,
                     height: 16.0,
                     colorFilter: ColorFilter.mode(
-                      isActive ? AppColors.onError : AppColors.onSecondary,
+                      AppColors.primary,
+                      BlendMode.srcIn,
+                    ),
+                  ):SvgPicture.asset(
+                    keyBoard,
+                    width: 16.0,
+                    height: 16.0,
+                    colorFilter: ColorFilter.mode(
+                      AppColors.onError,
                       BlendMode.srcIn,
                     ),
                   ),
