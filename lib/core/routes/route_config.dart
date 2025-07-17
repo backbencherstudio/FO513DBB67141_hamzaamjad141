@@ -68,24 +68,29 @@ class RouteConfig {
           return const MaterialPage(child: SplashScreen());
         },
       ),
-     GoRoute(
-  name: RouteName.signUpOtpScreen,
-  path: '${RouteName.signUpOtpScreen}/:email',
-  pageBuilder: (context, state) {
-    final email = state.pathParameters['email']!;  
-    return buildPageWithTransition(
-      context: context,
-      state: state,
-      transitionType: PageTransitionType.fade,
-      child: SignUpOtpScreen(email: email),
-    );
-  },
-),
       GoRoute(
-        name: RouteName.paymentSelection,
-        path: RouteName.paymentSelection,
+        name: RouteName.signUpOtpScreen,
+        path: '${RouteName.signUpOtpScreen}/:email',
         pageBuilder: (context, state) {
-          return const MaterialPage(child: PaymentSelection());
+          final email = state.pathParameters['email']!;
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.fade,
+            child: SignUpOtpScreen(email: email),
+          );
+        },
+      ),
+      GoRoute(
+        name: RouteName.payment,
+        path: RouteName.payment,
+        pageBuilder: (context, state) {
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.slideRightToLeft,
+            child: PaymentScreen(),
+          );
         },
       ),
       GoRoute(
@@ -130,20 +135,35 @@ class RouteConfig {
           return const MaterialPage(child: SuccessScreen());
         },
       ),
+
       GoRoute(
         name: RouteName.forgetOtpScreen,
-        path: RouteName.forgetOtpScreen,
+        path: '${RouteName.forgetOtpScreen}/:email',
         pageBuilder: (context, state) {
-          return const MaterialPage(child: ForgetOtpScreen());
+          final email = state.pathParameters['email']!;
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.fade,
+            child: ForgetOtpScreen(email: email),
+          );
         },
       ),
+
       GoRoute(
         name: RouteName.resetPassScreen,
-        path: RouteName.resetPassScreen,
+        path: '${RouteName.resetPassScreen}/:email',
         pageBuilder: (context, state) {
-          return const MaterialPage(child: ResetPassScreen());
+          final email = state.pathParameters['email']!;
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.fade,
+            child: ResetPassScreen(email: email),
+          );
         },
       ),
+
       GoRoute(
         name: RouteName.signupScreen,
         path: RouteName.signupScreen,
@@ -209,7 +229,7 @@ class RouteConfig {
           return buildPageWithTransition(
             context: context,
             state: state,
-            transitionType: PageTransitionType.slideRightToLeft,
+            transitionType: PageTransitionType.slideLeftToRight,
             child: ProfileScreen(),
           );
         },
@@ -253,6 +273,35 @@ class RouteConfig {
           );
         },
       ),
+
+      GoRoute(
+        name: RouteName.privacyPolicyScreen,
+        path: RouteName.privacyPolicyScreen,
+
+        pageBuilder: (context, state) {
+          return buildPageWithTransition(
+            context: context,
+            state: state,
+            transitionType: PageTransitionType.slideRightToLeft,
+            child: PrivacyPolicyScreen(),
+          );
+        },
+      ),
+
+
+    GoRoute(
+      name: RouteName.termsConditionsScreen,
+      path: RouteName.termsConditionsScreen,
+      pageBuilder: (context, state) {
+        return buildPageWithTransition(
+          context: context,
+          state: state,
+          transitionType: PageTransitionType.slideRightToLeft,
+          child: TermsConditionScreen(),
+        );
+      },
+    ),
+
     ],
   );
 }

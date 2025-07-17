@@ -1,17 +1,20 @@
 import 'package:aviation_app/core/constant/icons.dart';
 import 'package:aviation_app/core/constant/padding.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
+import 'package:aviation_app/core/utils/common_widget/primary_button/primary_button.dart';
 import 'package:aviation_app/core/utils/utils.dart';
-import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/custom_dummy_button.dart';
+import 'package:aviation_app/features/auth_screens/auth_provider/auth_provider.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/custom_textformfiled.dart';
-import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/richtext.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ResetPassScreen extends StatelessWidget {
-  const ResetPassScreen({super.key});
+  final String email;
+  const ResetPassScreen({super.key, required this.email});
 
   @override
   Widget build(BuildContext context) {
@@ -63,25 +66,63 @@ class ResetPassScreen extends StatelessWidget {
               controller: confirmPasswordController,
             ),
             SizedBox(height: 36.h),
-             Padding(
+            Padding(
               padding: AppPadding.screenHorizontal,
-              child: Utils.primaryButton(text: "Continue", 
-              height: 54.h,
-              onPressed: () {    context.push(RouteName.successScreen);}),
+              child: Consumer(
+                builder: (context, ref, _) {
+                  final data = ref.watch(authProvider);
+                  return data.isLoading == true
+                      ? CircularProgressIndicator()
+                      : PrimaryButton(
+                          bodyText: "Continue",
+                          onTap: () async {
+                            if (passwordController.text.trim() !=
+                                    confirmPasswordController.text.trim() ||
+                                passwordController.text.trim().isEmpty ||
+                                confirmPasswordController.text.trim().isEmpty) {
+                              Fluttertoast.showToast(
+                                msg:
+                                    passwordController.text.trim() !=
+                                        confirmPasswordController.text.trim()
+                                    ? "Passwords do not match!"
+                                    : "Please fill all the fields correctly.",
+                                backgroundColor: Colors.red,
+                                textColor: Colors.white,
+                              );
+                              return;
+                            }
+
+                            final path = await ref
+                                .read(authProvider.notifier)
+                                .resetpassCall(
+                                  email: email,
+                                  password: passwordController.text.trim(),
+                                );
+
+                            if (path != null && context.mounted) {
+                              context.push(path);
+                            } else {
+                              Fluttertoast.showToast(
+                                msg: data.message.toString(),
+                                backgroundColor: Colors.red,
+                                textColor: Colors.white,
+                              );
+                            }
+                          },
+                        );
+                },
+              ),
             ),
             SizedBox(height: 16.h),
 
             Padding(
               padding: AppPadding.screenHorizontal,
-              child: Utils.primaryButton(
-                onPressed: () {},
-                text: "Cancel",
+              child: PrimaryButton(
+                onTap: () {},
+                bodyText: "Cancel",
                 backgroundColor: Color(0xff1D1F2C),
-                height: 54.h,
               ),
             ),
-           
-           
           ],
         ),
       ),

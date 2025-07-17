@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:slider_button/slider_button.dart';
-
 import '../../../../core/constant/padding.dart';
 import '../../../../core/routes/route_name.dart';
 import '../../../../core/theme/theme_extension/app_colors.dart';

@@ -1,10 +1,8 @@
 import 'package:aviation_app/core/routes/build_page_with_transition.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
-import 'package:aviation_app/features/auth_screens/payment%20screen/presentation/payment_intro_screen.dart';
-import 'package:aviation_app/features/auth_screens/payment%20screen/presentation/payment_selection.dart';
-
+import 'package:aviation_app/features/favourite_screen/favourite_screen.dart';
+import 'package:aviation_app/features/payment_screen/presentation/payment_intro_screen.dart';
 import 'package:aviation_app/features/ebook_screen/presentation/ebook_play.dart';
-
 import 'package:aviation_app/features/auth_screens/forget_password%20screen/presentation/forget_otp_screen.dart';
 import 'package:aviation_app/features/auth_screens/forget_password%20screen/presentation/forget_pas_screen.dart';
 import 'package:aviation_app/features/auth_screens/forget_password%20screen/presentation/reset_pass_screen.dart';
@@ -17,6 +15,8 @@ import 'package:aviation_app/features/auth_screens/sign_up%20screen/presentation
 import 'package:aviation_app/features/ebook_screen/presentation/ebook_screen.dart';
 import 'package:aviation_app/features/pilot_log_book/presentation/instructor_entry_screen/instructor_entry_screen.dart';
 import 'package:aviation_app/features/pilot_log_book/presentation/log_entry_screen/log_entry_screen.dart';
+import 'package:aviation_app/features/privacy_policy_terms_and_condition_screens/privacy_policy_screen/presentation/privacy_policy_screen.dart';
+import 'package:aviation_app/features/privacy_policy_terms_and_condition_screens/terms_and_condition_screens/presentation/terms_condition_screen.dart';
 import 'package:aviation_app/features/profile_screen/presentation/edit_profile/edit_profile_screen.dart';
 import 'package:aviation_app/features/profile_screen/presentation/profile_screen.dart';
 import 'package:aviation_app/features/podcast_screen/presentation/podcast_player_screen.dart';
@@ -25,6 +25,7 @@ import 'package:aviation_app/features/weather_screen/presentation/weather_screen
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
+import '../../features/payment_screen/presentation/payment_screen.dart';
 import '../../features/pilot_log_book/presentation/log_book_summary_screen/pilot_log_book_screen.dart';
 import '../../features/podcast_screen/presentation/podcast_screen.dart';
 import '../../features/splash/presentation/splash_screen.dart';

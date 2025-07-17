@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-Future<void> logOutBottomSheet({required BuildContext context}) async {
+Future<void> logOutBottomSheet({required BuildContext context, required Function onLogOut}) async {
   await showModalBottomSheet(
     isScrollControlled: true,
     useSafeArea: true,
@@ -52,7 +52,10 @@ Future<void> logOutBottomSheet({required BuildContext context}) async {
             Spacer(),
             PrimaryButton(
               bodyText: "Yes, I want to Logout",
-              onTap: () => context.go(RouteName.signInScreen),
+              onTap: () async {
+                await onLogOut();
+
+              },
             ),
             SizedBox(height: 16.h),
             PrimaryButton(

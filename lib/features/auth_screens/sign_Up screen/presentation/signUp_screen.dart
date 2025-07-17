@@ -140,7 +140,7 @@ class _SignupScreenState extends State<SignupScreen> {
               child: Consumer(
                 builder: (context, ref, _) {
                   final signUpData = ref.watch(authProvider);
-                  return signUpData.isloading == true
+                  return signUpData.isLoading == true
                       ? CircularProgressIndicator()
                       : PrimaryButton(
                           bodyText: "Continue",

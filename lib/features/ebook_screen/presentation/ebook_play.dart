@@ -8,10 +8,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../data/riverpod/ebook_riverpod.dart';
-import 'widgets/audio_player_widget.dart'
-    show AudioPlayerWidget; // Assuming this contains your provider for EBook
 
 class EbookPlay extends ConsumerWidget {
   final String ebookId;
@@ -21,16 +20,15 @@ class EbookPlay extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ebook = ref.watch(ebookByIdProvider(ebookId));
-    final audioUrl = ebook?.audioUrl;
     TextTheme textTheme = Theme.of(context).textTheme;
-    debugPrint('rebuild');
+
     return CreateScreen(
       child: SafeArea(
         child: Padding(
           padding: AppPadding.screenHorizontal,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // App Bar Row
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -42,47 +40,51 @@ class EbookPlay extends ConsumerWidget {
                       child: SvgPicture.asset(AppIcons.backIcon),
                     ),
                   ),
-                  CommonWidget.secondaryButton(
-                    child: SvgPicture.asset(
-                      'assets/icons/save_icon.svg',
-                      height: 20.h,
-                      width: 20.w,
-                    ),
-                  ),
                 ],
               ),
+
               SizedBox(height: 20.h),
+
+              // Check for eBook data
               ebook != null
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(6.r),
-                          child: Image.network(
-                            ebook.imageUrl,
-                            height: 256.h,
-                            width: 256.w,
-                            fit: BoxFit.cover,
-                          ),
+                  ? Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              ebook.bookTitle,
+                              style: textTheme.headlineSmall!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+
+                            SizedBox(height: 5.h, width: double.infinity),
+
+                            Text(
+                              Utils.dateFormat(date: ebook.publishDate),
+                              style: textTheme.labelSmall,
+                            ),
+
+                            SizedBox(height: 15.h),
+
+                            SizedBox(
+                              height: 600.h, // Adjust as needed
+                              child: SfPdfViewer.network(
+                                'https://freetestdata.com/wp-content/uploads/2023/07/260KB.pdf',
+                                canShowScrollHead: true,
+                                canShowScrollStatus: true,
+                                enableDoubleTapZooming: true,
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(height: 24.h),
-                        Text(
-                          Utils.dateFormat(date: ebook.publishDate),
-                          style: textTheme.labelSmall,
-                        ),
-                        SizedBox(height: 5.h),
-                        Text(
-                          ebook.bookTitle,
-                          style: textTheme.headlineSmall!.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 24.h),
-                        if (audioUrl != null)
-                          AudioPlayerWidget(audioUrl: audioUrl),
-                      ],
+                      ),
                     )
-                  : Center(child: CircularProgressIndicator()),
+                  : const Expanded(
+                      child: Center(child: CircularProgressIndicator()),
+                    ),
             ],
           ),
         ),

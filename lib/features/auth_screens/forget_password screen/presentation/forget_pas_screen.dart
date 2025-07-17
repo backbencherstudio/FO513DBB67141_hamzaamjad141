@@ -60,7 +60,7 @@ class ForgetPasScreen extends StatelessWidget {
                 builder: (context, ref, _) {
                   final otpStatus = ref.watch(authProvider);
 
-                  return otpStatus.isloading == true
+                  return otpStatus.isLoading == true
                       ? CircularProgressIndicator()
                       : PrimaryButton(
                           bodyText: "Continue",
@@ -70,7 +70,7 @@ class ForgetPasScreen extends StatelessWidget {
                                 .sendOtp(email: emailController.text.trim());
 
                             if (path != null && context.mounted) {
-                              context.push(RouteName.forgetOtpScreen);
+                              context.push(path);
                             }else{
                               Fluttertoast.showToast(
                                   msg: otpStatus.message.toString(),
