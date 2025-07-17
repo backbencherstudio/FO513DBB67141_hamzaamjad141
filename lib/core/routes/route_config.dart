@@ -229,7 +229,7 @@ class RouteConfig {
           return buildPageWithTransition(
             context: context,
             state: state,
-            transitionType: PageTransitionType.slideRightToLeft,
+            transitionType: PageTransitionType.slideLeftToRight,
             child: ProfileScreen(),
           );
         },
