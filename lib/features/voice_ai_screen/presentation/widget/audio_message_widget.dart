@@ -1,4 +1,3 @@
-import 'package:aviation_app/core/constant/logos.dart';
 import 'package:aviation_app/core/theme/theme_extension/app_colors.dart';
 import 'package:aviation_app/core/utils/common_widget/common_widget.dart';
 import 'package:aviation_app/features/voice_ai_screen/data/entity/chat_message_state.dart';
