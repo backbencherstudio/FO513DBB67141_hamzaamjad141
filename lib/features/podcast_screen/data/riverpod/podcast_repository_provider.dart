@@ -13,12 +13,13 @@ class PodcastNotifier extends StateNotifier<PodcastState> {
   final PodcastRepository podcastRepository;
   final String? userToken;
   PodcastNotifier(this.podcastRepository, this.userToken)
-    : super(PodcastState(podcastsApi: [], podcasts: []));
+      : super(PodcastState(podcastsApi: [], podcasts: []));
 
   /// Fetch podcasts method
   Future<List<PodcastApi>> fetchPodcasts({
     required int page,
     required int limit,
+    String? query,
   }) async {
     debugPrint('Fetching podcasts: page=$page, limit=$limit');
     state = state.copyWith(
@@ -31,6 +32,7 @@ class PodcastNotifier extends StateNotifier<PodcastState> {
       List<PodcastApi> newPodcastsApi = await podcastRepository.getPodcastsApi(
         page: page,
         limit: limit,
+        query: query,
         authToken: userToken ?? '',
       );
       debugPrint('Fetched ${newPodcastsApi.length} podcasts for page $page');
@@ -57,11 +59,13 @@ class PodcastNotifier extends StateNotifier<PodcastState> {
   Future<List<Podcast>> loadPodcasts({
     required int page,
     required int limit,
+    String? query,
   }) async {
-    debugPrint('Loading podcasts: page=$page, limit=$limit');
+    debugPrint('Loading podcasts: page=$page, limit=$limit query=$query');
 
     /// Fetch new podcasts
-    final newPodcastsApi = await fetchPodcasts(page: page, limit: limit);
+    final newPodcastsApi =
+    await fetchPodcasts(page: page, limit: limit, query: query);
 
     /// Map new PodcastApi to Podcast
     if (newPodcastsApi.isNotEmpty) {
@@ -73,7 +77,7 @@ class PodcastNotifier extends StateNotifier<PodcastState> {
         podcasts: page == 1 ? newPodcasts : [...state.podcasts, ...newPodcasts],
         currentPage: page,
         hasMore:
-            newPodcasts.length >= limit, // Assume more data if limit is met
+        newPodcasts.length >= limit, // Assume more data if limit is met
       );
       return newPodcasts;
     }
@@ -92,11 +96,21 @@ class PodcastNotifier extends StateNotifier<PodcastState> {
     }
     await loadPodcasts(page: state.currentPage + 1, limit: limit);
   }
+
+  /// Reset podcast list for new search
+  void resetPodcasts() {
+    state = state.copyWith(
+      podcasts: [],
+      podcastsApi: [],
+      currentPage: 1,
+      hasMore: true,
+    );
+  }
 }
 
-/// Podcast api provider
-final podcastApiProvider = StateNotifierProvider<PodcastNotifier, PodcastState>(
-  (ref) {
+final podcastApiProvider =
+StateNotifierProvider<PodcastNotifier, PodcastState>(
+      (ref) {
     final userToken = ref.watch(authProvider).userToken;
     final podcastRepository = PodcastRepository();
     return PodcastNotifier(podcastRepository, userToken);

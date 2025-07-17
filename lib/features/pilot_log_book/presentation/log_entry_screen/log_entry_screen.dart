@@ -4,8 +4,12 @@ import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:aviation_app/features/pilot_log_book/presentation/log_entry_screen/widgets/flight_log_entry_card.dart';
 import 'package:aviation_app/features/pilot_log_book/presentation/log_entry_screen/widgets/instructor_info_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../models/instructor_model.dart';
+import '../../riverpod/log_book_notifier.dart';
 
 class LogEntryScreen extends StatelessWidget {
   const LogEntryScreen({super.key});
@@ -27,7 +31,12 @@ class LogEntryScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 18.h),
-            InstructorInfoCard(),
+            Consumer(
+              builder: (_ ,ref, _) {
+                final InstructorModel? instructor = ref.watch(logBookProvider).instructor;
+                return instructor != null ? InstructorInfoCard(instructor: instructor,) : SizedBox.shrink();
+              }
+            ),
             SizedBox(height: 18.h),
             FlightLogEntryCard(),
 

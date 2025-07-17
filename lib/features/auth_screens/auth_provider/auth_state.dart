@@ -6,9 +6,9 @@ class AuthState {
   final UserModel? user;
   final String? message;
   final String? userToken;
-  final bool? isloading;
+  final bool? isLoading;
 
-  AuthState({this.googleUser, this.user, this.userToken, this.message, this.isloading});
+  AuthState({this.googleUser, this.user, this.userToken, this.message, this.isLoading});
 
   AuthState copyWith({
     GoogleUserModel? googleUser,
@@ -21,7 +21,7 @@ class AuthState {
       user: user ?? this.user,
       userToken: userToken ?? this.userToken,
       message: message ?? this.message,
-      isloading: isloading ?? this.isloading
+        isLoading: isLoading ?? this.isLoading
     );
   }
 

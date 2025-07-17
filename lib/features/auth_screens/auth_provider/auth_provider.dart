@@ -45,7 +45,13 @@ class AuthProvider extends StateNotifier<AuthState> {
           userToken: userToken,
         );
         debugPrint("\nuser token : $userToken.\n");
-        return RouteName.weatherScreen;
+        if (user.premium == true) {
+          return RouteName.weatherScreen;
+        } else {
+          return RouteName.paymentIntro;
+        }
+
+        //
       }
       return RouteName.signInScreen;
     } catch (error) {
@@ -82,14 +88,17 @@ class AuthProvider extends StateNotifier<AuthState> {
             token,
           );
         }
-        state = state.copyWith(
-          isLoading: false,
-          userToken: token,
-          user: UserModel.fromJson(userJson),
-        );
+        final user = UserModel.fromJson(userJson);
+        state = state.copyWith(isLoading: false, userToken: token, user: user);
         debugPrint("Login successful. User ID: ${state.user?.id}");
 
-        return RouteName.weatherScreen;
+        if (user.premium == true) {
+          return RouteName.weatherScreen;
+        } else {
+          return RouteName.paymentIntro;
+        }
+
+        //
       } else {
         state = state.copyWith(isLoading: false);
 
@@ -108,7 +117,8 @@ class AuthProvider extends StateNotifier<AuthState> {
     required String email,
     required String license,
     required String password,
-  }) async {
+  }) async
+  {
     state = state.copyWith(isLoading: true);
     try {
       final payload = {
@@ -145,7 +155,8 @@ class AuthProvider extends StateNotifier<AuthState> {
   Future<String?> signUpOtpVerification({
     required String email,
     required String otp,
-  }) async {
+  }) async
+  {
     state = state.copyWith(isLoading: true);
 
     try {
@@ -193,7 +204,7 @@ class AuthProvider extends StateNotifier<AuthState> {
       if (success) {
         state = state.copyWith(isLoading: false);
         debugPrint(message);
-        return RouteName.forgetOtpScreen;
+        return "${RouteName.forgetOtpScreen}/${Uri.encodeComponent(email)}";
       } else {
         state = state.copyWith(isLoading: false);
         return null;
@@ -205,9 +216,80 @@ class AuthProvider extends StateNotifier<AuthState> {
     }
   }
 
+  //forget otp call
+
+  Future<String?> forgetOtpVerification({
+    required String email,
+    required String otp,
+  }) async
+  {
+    state = state.copyWith(isLoading: true);
+
+    try {
+      final payload = {"email": email, "otp": otp};
+
+      final response = await ApiServices.instance.postData(
+        endPoint: ApiEndPoints.forgetOtp,
+        body: payload,
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      // final success = response["success"].toString().toLowerCase() == "true";
+      final message = response["message"];
+      debugPrint("\n\n$response\n\n");
+      if (message == "OTP verified successfully") {
+        state = state.copyWith(isLoading: false);
+        debugPrint(message);
+        return "${RouteName.resetPassScreen}/${Uri.encodeComponent(email)}";
+      } else {
+        state = state.copyWith(isLoading: false);
+        return null;
+      }
+    } catch (e) {
+      state = state.copyWith(isLoading: false);
+
+      throw Exception(e);
+    }
+  }
+
+  // reset password
+
+  Future<String?> resetpassCall({
+    required String email,
+    required String password,
+  }) async
+  {
+    state = state.copyWith(isLoading: true);
+
+    try {
+      final payload = {"email": email, "newPassword": password};
+
+      final response = await ApiServices.instance.putData(
+        endPoint: ApiEndPoints.resetpass,
+        body: payload,
+        headers: {'Content-Type': 'application/json'},
+      );
+      final message = response["message"];
+
+      if (message == "Password changed successfully") {
+        state = state.copyWith(isLoading: false);
+
+        return RouteName.successScreen;
+      } else {
+        state = state.copyWith(isLoading: false);
+
+        return null;
+      }
+    } catch (e) {
+      state = state.copyWith(isLoading: false);
+
+      throw Exception(e);
+    }
+  }
 
   /// Call this api during splash screen to initialize user
-  Future<bool> initializeUser({required String userToken}) async {
+  Future<UserModel?> initializeUser({required String userToken}) async
+  {
     try {
       final response = await ApiServices.instance.getData(
         endPoint: ApiEndPoints.initializeUser,
@@ -215,17 +297,38 @@ class AuthProvider extends StateNotifier<AuthState> {
       );
       if (response["success"] == true) {
         debugPrint("\nUser Initialized successful\n");
-        state = state.copyWith(
-          user: UserModel.fromJson(response["user"]),
-          userToken: userToken,
-        );
+        final user = UserModel.fromJson(response["user"]);
+        state = state.copyWith(user: user, userToken: userToken);
         debugPrint("\nuser token after initializing : ${state.userToken}\n");
+        return user;
       } else {
         debugPrint("\nUser Initialized failed\n");
+        return null;
       }
-      return response['success'];
+    } catch (error) {
+      return null;
+    }
+  }
+
+  Future<bool?> signOut() async
+  {
+    try {
+      await GoogleAccountService().signOut();
+      await SharedPreferenceStorageService.delete(
+        SharedPreferencesKeyName.userToken,
+      );
+      return true;
     } catch (error) {
       return false;
+    }
+  }
+
+  Future<bool?> updateUserModel() async {
+    try{
+    await  initializeUser(userToken: state.userToken ?? "");
+    return true;
+    }catch(error){
+      throw Exception('Error while updating profile : $error');
     }
   }
 }

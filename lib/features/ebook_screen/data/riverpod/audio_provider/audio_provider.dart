@@ -114,7 +114,7 @@ class AudioPlayerNotifier extends StateNotifier<AudioPlayerState> {
       await _audioPlayer
           .setSource(UrlSource(audioUrl, mimeType: 'audio/mpeg'))
           .timeout(
-            const Duration(seconds: 1),
+            const Duration(seconds: 10),
             onTimeout: () {
               throw TimeoutException(
                 'Failed to set audio source',

@@ -9,6 +9,7 @@ class PodcastRepository {
   Future<List<PodcastApi>> getPodcastsApi({
     required int page,
     required int limit,
+    String? query,
     required String authToken,
   }) async {
     try {
@@ -21,7 +22,7 @@ class PodcastRepository {
 
       /// Make the API request with the headers
       final response = await _apiServices.getData(
-        endPoint: 'portcusts/all?page=$page&limit=$limit',
+        endPoint: 'portcusts/all?page=$page&limit=$limit&search=$query',
         headers: headers,
       );
 

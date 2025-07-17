@@ -1,11 +1,12 @@
 // ignore_for_file: deprecated_member_use
 import 'package:aviation_app/core/constant/icons.dart';
 import 'package:aviation_app/core/theme/theme_extension/app_colors.dart';
-import 'package:aviation_app/features/auth_screens/payment%20screen/Riverpod/payment_selection_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+
+import '../../Riverpod/payment_provider.dart';
 
 class CustomSelectTile extends StatelessWidget {
   final String title;

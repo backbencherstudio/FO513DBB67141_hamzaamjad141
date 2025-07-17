@@ -19,11 +19,15 @@ class RouteName {
   static const String ebookPlay = '/e-book-play';
   static const String aiAssistant = '/ai-assistant';
   static const String paymentIntro = '/PaymentIntroScreen';
-  static const String paymentSelection = '/PaymentSelection';
+  static const String payment = '/payment';
   static const String logEntryScreen = '/logEntryScreen';
   static const String instructorEntryScreen = "/instructorEntryScreen";
   static const String profileScreen = '/profileScreen';
   static const String podcastPlayerScreen = "/podcast-player-screen";
   static const String editProfileScreen = '/edit-profile-screen';
+  static const String dummyScreen = '/dummy-screen';
+  static const String termsConditionsScreen = '/terms-conditions-screen';
+  static const String privacyPolicyScreen = '/privacy-policy-screen';
+  static const String favouriteScreen = '/favourite-screen';
 
 }

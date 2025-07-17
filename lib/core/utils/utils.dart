@@ -1,14 +1,11 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../theme/theme_extension/app_colors.dart';
-import 'common_widget/nav_bar/bottom_sheet_controller.dart';
 
 class Utils {
   static Widget customAppBar({
@@ -250,27 +247,6 @@ class Utils {
     );
   }
 
-  static Widget loadingButton({
-    double? height,
-    EdgeInsets? padding,
-    double? loadingAnimationWidgetSize,
-  }) {
-    return Container(
-      height: height ?? 48.h,
-      width: double.infinity,
-      padding: padding ?? EdgeInsets.symmetric(vertical: 12.h),
-      decoration: BoxDecoration(
-        color: AppColors.primary,
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      child: Center(
-        child: LoadingAnimationWidget.staggeredDotsWave(
-          color: Colors.white,
-          size: loadingAnimationWidgetSize ?? 50.sp,
-        ),
-      ),
-    );
-  }
 
   static String dateFormat({required DateTime date, String? format}) {
     return DateFormat(format ?? 'dd MMM, yyyy').format(date);

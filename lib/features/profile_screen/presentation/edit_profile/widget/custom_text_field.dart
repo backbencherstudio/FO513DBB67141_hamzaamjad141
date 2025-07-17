@@ -2,18 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/theme/theme_extension/app_colors.dart';
+
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     super.key,
     required this.textTheme,
     required this.labelName,
-    this.controller, required this.hintText,
+    this.controller,
+    required this.hintText,
+    this.enabled = true,
   });
 
   final TextTheme textTheme;
   final String labelName;
   final String hintText;
   final TextEditingController? controller;
+  final bool enabled;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,6 +36,10 @@ class CustomTextField extends StatelessWidget {
             ),
           ),
           TextFormField(
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: !enabled ? AppColors.secondaryTextColor : AppColors.onPrimary,
+            ),
+            enabled: enabled,
             controller: controller,
             decoration: InputDecoration(
               border: OutlineInputBorder(),

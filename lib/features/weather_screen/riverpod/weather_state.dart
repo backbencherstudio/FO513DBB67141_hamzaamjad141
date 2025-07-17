@@ -49,7 +49,7 @@ class WeatherState {
 
   WeatherState clearWeather({required String searchCommand}) {
     return WeatherState(
-        searchedWeather: searchedWeather,
+        searchedWeather: null,
         selectedTab: selectedTab,
         searchCommand: searchCommand,
         favouriteWeatherList: favouriteWeatherList,

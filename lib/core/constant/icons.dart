@@ -60,5 +60,6 @@ class AppIcons {
   static const String global = "$iconPath/global.svg";
   static const String edit = "$iconPath/Edit.svg";
   static const String editProfile = "$iconPath/edit_profile.svg";
+  static const String mic = "$iconPath/microphone.svg";
 
 }

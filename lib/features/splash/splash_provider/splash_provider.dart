@@ -1,4 +1,5 @@
 import 'package:aviation_app/features/auth_screens/auth_provider/auth_provider.dart';
+import 'package:aviation_app/features/auth_screens/model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/routes/route_name.dart';
@@ -28,12 +29,18 @@ class SplashProvider extends StateNotifier<SplashState>{
       final userToken = await SharedPreferenceStorageService.getString(key: SharedPreferencesKeyName.userToken);
       if(userToken != null){
         debugPrint("\nuser token : $userToken,\n returning to weather screen...\n");
-        final bool success = await authNotifier.initializeUser(userToken: userToken);
-        if(success){
-          return RouteName.weatherScreen;
+        final UserModel? user = await authNotifier.initializeUser(userToken: userToken);
+        if(user != null){
+        //
+          if(user.premium == true){
+            return RouteName.weatherScreen;
+          }
+          return RouteName.paymentIntro;
+
         }
       }
       debugPrint("\nuser token : is null,\n returning to sign in screen...\n");
+
       return RouteName.signInScreen;
     }
   }

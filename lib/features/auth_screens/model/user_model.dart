@@ -10,6 +10,7 @@ class UserModel {
   final String? image;
   final String role;
   final String? license;
+  final bool premium;
   final String createdAt;
   final String? updatedAt;
   UserModel({
@@ -19,6 +20,7 @@ class UserModel {
     this.image,
     required this.role,
     this.license,
+    required this.premium,
     required this.createdAt,
     this.updatedAt,
   });

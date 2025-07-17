@@ -3,22 +3,33 @@ import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/core/utils/common_widget/primary_button/primary_button.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:aviation_app/features/ebook_screen/presentation/widgets/e_book_app_bar.dart';
+import 'package:aviation_app/features/pilot_log_book/presentation/log_book_summary_screen/widgets/flight_log_list.dart';
 import 'package:aviation_app/features/pilot_log_book/presentation/log_book_summary_screen/widgets/log_book_summary/log_book_summary.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../riverpod/log_book_notifier.dart';
 import '../log_entry_screen/widgets/flight_log_card.dart';
 
-class PilotLogBookScreen extends StatelessWidget{
+class PilotLogBookScreen extends ConsumerStatefulWidget{
   const PilotLogBookScreen({super.key});
 
+  @override
+  ConsumerState<PilotLogBookScreen> createState() => _PilotLogBookScreenState();
+}
+
+class _PilotLogBookScreenState extends ConsumerState<PilotLogBookScreen> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return CreateScreen(child: Padding(padding: AppPadding.screenHorizontal,
-    child: SingleChildScrollView(
-      child: Column(
+    child: RefreshIndicator(
+      onRefresh: () async {
+        await ref.read(logBookProvider.notifier).onRefresh(ref: ref);
+      },
+      child: ListView(
         children: [
           EBookAppBar(textTheme: textTheme),
           SizedBox(height: 30.h,),
@@ -30,20 +41,7 @@ class PilotLogBookScreen extends StatelessWidget{
           SizedBox(height: 22.h,),
           LogBookSummary(),
           SizedBox(height: 22.h,),
-          FlightLogCard(
-            from: "VGHS",
-            to: "KIND",
-            status: "Pending",
-            date: "May 22, 2025",
-            flightName: "Flight Name",
-            flightTime: "1 hrs, PIC: 2hrs, Dual: 0.8 hrs",
-            day: "0.1 hrs",
-            night: "0.1 hrs",
-            ifr: "0.2 hrs",
-            crossCountry: "0.1 hrs",
-            takeOffs: "01",
-            landings: "01",
-          ),
+          FlightLogList(),
 
           SizedBox(height: 145.h,)
         ],
