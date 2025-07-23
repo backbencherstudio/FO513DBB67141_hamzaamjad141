@@ -28,7 +28,7 @@ class EBookAppBar extends StatelessWidget {
                 onTap: () => context.push(RouteName.profileScreen),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  spacing: 6.w,
+                  spacing: 8.w,
                   children: [
                     Icon(Icons.menu, color: Colors.white, size: 25.sp),
 
