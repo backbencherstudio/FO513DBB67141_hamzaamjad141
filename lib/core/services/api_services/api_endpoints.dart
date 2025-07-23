@@ -2,7 +2,7 @@ class ApiEndPoints {
 
   // static const String baseUrl = "http://192.168.4.35:3000";
   
-  static const String baseUrl = "https://hamzaamjad.signalsmind.com";
+  static const String baseUrl = "https://api.leftseatlessons.com";
   
   static const String googleLogin = 'users/google-login';
   static const String login = 'users/login';
@@ -31,5 +31,5 @@ class ApiEndPoints {
   static const String promoCode = 'subscription/subscribe-with-promo';
   static const String logBookSummary = 'addlog/get-logsummary';
   static const String editProfile = 'users/update-user';
-
+  static const String resendOtp = 'users/resent-otp';
 }
