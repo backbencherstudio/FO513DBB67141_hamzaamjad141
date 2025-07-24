@@ -14,7 +14,7 @@ class PodcastRepository {
   }) async {
     try {
       final headers = {
-        'Authorization': 'Bearer $authToken',
+        'Authorization': authToken,
         'Content-Type': 'application/json',
       };
 
