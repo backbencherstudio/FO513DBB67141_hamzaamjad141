@@ -171,7 +171,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   password: passwordController.text.trim(),
                                 );
                             if (routeName != null && context.mounted) {
-                          context.go(routeName);
+                          context.push(routeName);
 
                             } else {
                               Fluttertoast.showToast(

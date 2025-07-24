@@ -11,7 +11,7 @@ import '../repository/podcast_repository.dart';
 /// Podcast Provider (StateNotifier)
 class PodcastNotifier extends StateNotifier<PodcastState> {
   final PodcastRepository podcastRepository;
-  final String? userToken;
+  final String userToken;
   PodcastNotifier(this.podcastRepository, this.userToken)
       : super(PodcastState(podcastsApi: [], podcasts: []));
 
@@ -21,7 +21,7 @@ class PodcastNotifier extends StateNotifier<PodcastState> {
     required int limit,
     String? query,
   }) async {
-    debugPrint('Fetching podcasts: page=$page, limit=$limit');
+    debugPrint('\nFetching podcasts: page=$page, limit=$limit\n');
     state = state.copyWith(
       isLoading: page == 1,
       isFetching: page > 1,
@@ -33,7 +33,7 @@ class PodcastNotifier extends StateNotifier<PodcastState> {
         page: page,
         limit: limit,
         query: query,
-        authToken: userToken ?? '',
+        authToken: userToken,
       );
       debugPrint('Fetched ${newPodcastsApi.length} podcasts for page $page');
       state = state.copyWith(
@@ -111,7 +111,7 @@ class PodcastNotifier extends StateNotifier<PodcastState> {
 final podcastApiProvider =
 StateNotifierProvider<PodcastNotifier, PodcastState>(
       (ref) {
-    final userToken = ref.watch(authProvider).userToken;
+    final userToken = ref.watch(authProvider).userToken ?? "";
     final podcastRepository = PodcastRepository();
     return PodcastNotifier(podcastRepository, userToken);
   },
