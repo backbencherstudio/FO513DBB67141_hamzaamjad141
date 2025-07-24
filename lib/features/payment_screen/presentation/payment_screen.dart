@@ -24,7 +24,7 @@ class PaymentScreen extends StatelessWidget {
             children: [
               SizedBox(height: 24.h),
               Text(
-                "Pay to Get Full Access",
+                "Add a payment method",
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               SizedBox(height: 24.h),
@@ -48,7 +48,7 @@ class PaymentScreen extends StatelessWidget {
                   const Center(child: CircularProgressIndicator())
                   :
                   PrimaryButton(
-                    bodyText: "Pay",
+                    bodyText: "Pay \$9.99",
                     onTap: () async {
                     final success =   await ref.read(paymentProvider.notifier).makePayment();
                     if(success == true && context.mounted){
