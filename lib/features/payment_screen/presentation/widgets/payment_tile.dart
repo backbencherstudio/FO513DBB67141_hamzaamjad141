@@ -2,10 +2,14 @@ import 'package:aviation_app/core/constant/icons.dart';
 import 'package:aviation_app/core/constant/images.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/core/utils/utils.dart';
+import 'package:aviation_app/features/payment_screen/Riverpod/payment_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+
+import '../payment_screen.dart';
 
 class PaymentTile extends StatelessWidget {
   const PaymentTile({super.key});
@@ -128,13 +132,21 @@ class PaymentTile extends StatelessWidget {
               ),
 
               SizedBox(height: 30.h),
-              Utils.primaryButton(
-                onPressed: () {
-                  context.push(RouteName.payment);
-                },
-                text: "Get Full Access",
-                height: 54.h,
-                width: 280.w,
+              Consumer(
+                builder: (_, ref, _) {
+                  return Utils.primaryButton(
+                    onPressed: ()  async {
+                      final url = await ref.read(paymentProvider.notifier).makePayment();
+                      debugPrint("\nurl in screen : $url\n");
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentWebView(paymentUrl: url!,)));
+
+                      //   context.push(RouteName.payment);
+                    },
+                    text: "Get Full Access",
+                    height: 54.h,
+                    width: 280.w,
+                  );
+                }
               ),
             ],
           ),

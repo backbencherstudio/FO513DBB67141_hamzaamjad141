@@ -24,36 +24,38 @@ class PaymentProvider extends StateNotifier<PaymentState> {
   final String userToken;
   final String userEmail;
   PaymentProvider({required this.userToken, required this.userEmail}) : super(PaymentState());
-  Future<bool?> makePayment() async {
+  Future<String?> makePayment() async {
     try {
-      state = state.copyWith(isLoading: true);
-      final paymentId = await StripeServices.instance.createPaymentMethod(email: userEmail);
-      final body = {"paymentMethodId": paymentId};
+    //  state = state.copyWith(isLoading: true);
+    //  final paymentId = await StripeServices.instance.createPaymentMethod(email: userEmail);
+    //  final body = {"paymentMethodId": paymentId};
       final headers = {
         "Authorization": userToken,
         "Content-Type": "application/json",
       };
       final response = await ApiServices.instance.postData(
-        endPoint: ApiEndPoints.payment,
-        body: body,
+        endPoint: ApiEndPoints.paymentWebPage,
+        body: {},
         headers: headers,
       );
       if (response["success"]) {
+
         Fluttertoast.showToast(
           msg: "Payment Successful",
           backgroundColor: Colors.green,
           textColor: Colors.white,
         );
-        state = state.copyWith(isLoading: false);
-        return true;
+      //  state = state.copyWith(isLoading: false);
+        debugPrint("\npayment url : ${response['checkoutUrl']}\n");
+        return response['checkoutUrl'];
       } else {
         Fluttertoast.showToast(
           msg: response["message"],
           backgroundColor: Colors.red,
           textColor: Colors.white,
         );
-        state = state.copyWith(isLoading: false);
-        return false;
+       // state = state.copyWith(isLoading: false);
+        return 'false';
       }
 
     } catch (error) {
