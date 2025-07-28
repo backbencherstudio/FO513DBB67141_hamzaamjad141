@@ -19,7 +19,7 @@ class PaymentTile extends StatelessWidget {
     final style = Theme.of(context).textTheme;
     return Stack(
       children: [
-        Opacity(opacity: 0.5, child: Image.asset(AppImages.priceBg)),
+        Opacity(opacity: 0.5, child: Image.asset(AppImages.priceBg,width: 330.w,)),
         Positioned(
           top: 32.h,
           left: 24.w,
@@ -134,7 +134,10 @@ class PaymentTile extends StatelessWidget {
               SizedBox(height: 30.h),
               Consumer(
                 builder: (_, ref, _) {
-                  return Utils.primaryButton(
+                  final bool isLoading = ref.watch(paymentProvider).isWebPageButtonLoading;
+                  return
+                  Utils.primaryButton(
+                    isLoading: isLoading,
                     onPressed: ()  async {
                       final url = await ref.read(paymentProvider.notifier).makePayment();
                       debugPrint("\nurl in screen : $url\n");

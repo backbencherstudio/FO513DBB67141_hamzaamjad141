@@ -26,7 +26,7 @@ class PaymentProvider extends StateNotifier<PaymentState> {
   PaymentProvider({required this.userToken, required this.userEmail}) : super(PaymentState());
   Future<String?> makePayment() async {
     try {
-    //  state = state.copyWith(isLoading: true);
+      state = state.copyWith(isWebPageButtonLoading: true);
     //  final paymentId = await StripeServices.instance.createPaymentMethod(email: userEmail);
     //  final body = {"paymentMethodId": paymentId};
       final headers = {
@@ -38,6 +38,7 @@ class PaymentProvider extends StateNotifier<PaymentState> {
         body: {},
         headers: headers,
       );
+      debugPrint("\npayment response : $response\n");
       if (response["success"]) {
 
         // Fluttertoast.showToast(
@@ -45,7 +46,7 @@ class PaymentProvider extends StateNotifier<PaymentState> {
         //   backgroundColor: Colors.green,
         //   textColor: Colors.white,
         // );
-      //  state = state.copyWith(isLoading: false);
+        state = state.copyWith(isWebPageButtonLoading: false);
         debugPrint("\npayment url : ${response['checkoutUrl']}\n");
         return response['checkoutUrl'];
       } else {
@@ -54,12 +55,12 @@ class PaymentProvider extends StateNotifier<PaymentState> {
           backgroundColor: Colors.red,
           textColor: Colors.white,
         );
-       // state = state.copyWith(isLoading: false);
+        state = state.copyWith(isWebPageButtonLoading: false);
         return 'false';
       }
 
     } catch (error) {
-      state = state.copyWith(isLoading: false);
+      state = state.copyWith(isWebPageButtonLoading: false);
       throw Exception("Failed to make payment : $error");
     }
   }
