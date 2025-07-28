@@ -40,11 +40,11 @@ class PaymentProvider extends StateNotifier<PaymentState> {
       );
       if (response["success"]) {
 
-        Fluttertoast.showToast(
-          msg: "Payment Successful",
-          backgroundColor: Colors.green,
-          textColor: Colors.white,
-        );
+        // Fluttertoast.showToast(
+        //   msg: "Payment Successful",
+        //   backgroundColor: Colors.green,
+        //   textColor: Colors.white,
+        // );
       //  state = state.copyWith(isLoading: false);
         debugPrint("\npayment url : ${response['checkoutUrl']}\n");
         return response['checkoutUrl'];
