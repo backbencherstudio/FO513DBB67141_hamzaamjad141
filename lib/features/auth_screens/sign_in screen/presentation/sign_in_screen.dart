@@ -61,6 +61,8 @@ class _SignInScreenState extends State<SignInScreen> {
               controller: emailController,
             ),
             SizedBox(height: 18.h),
+
+
             Consumer(
               builder: (context, ref, _) {
                 final isVisible = ref.watch(isLoginVisibleProvider);
@@ -78,6 +80,10 @@ class _SignInScreenState extends State<SignInScreen> {
                 );
               },
             ),
+
+
+
+            
             SizedBox(height: 36.h),
             Padding(
               padding: AppPadding.screenHorizontal,
@@ -105,7 +111,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               } else {
 
                                   Fluttertoast.showToast(
-                                    msg: "Login failed",
+                                    msg: authData.message.toString(),
                                     backgroundColor: Colors.red,
                                     textColor: Colors.white,
                                   );

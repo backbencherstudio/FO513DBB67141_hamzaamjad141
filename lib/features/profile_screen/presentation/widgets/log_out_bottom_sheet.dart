@@ -1,4 +1,6 @@
 import 'package:aviation_app/core/routes/route_name.dart';
+import 'package:aviation_app/core/services/local_storage_services/shared_preferences_services/sharedPref_service.dart';
+import 'package:aviation_app/core/services/local_storage_services/shared_preferences_services/shared_preferences_key_name.dart';
 import 'package:aviation_app/core/utils/common_widget/primary_button/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -52,7 +54,11 @@ Future<void> logOutBottomSheet({required BuildContext context}) async {
             Spacer(),
             PrimaryButton(
               bodyText: "Yes, I want to Logout",
-              onTap: () => context.go(RouteName.signInScreen),
+              onTap: () async{
+            await SharedPreferenceStorageService.clearAll();
+            context.go(RouteName.signInScreen);
+
+              } 
             ),
             SizedBox(height: 16.h),
             PrimaryButton(

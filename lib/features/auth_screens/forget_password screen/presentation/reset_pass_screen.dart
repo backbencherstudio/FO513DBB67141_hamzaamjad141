@@ -4,6 +4,7 @@ import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/core/utils/common_widget/primary_button/primary_button.dart';
 import 'package:aviation_app/core/utils/utils.dart';
 import 'package:aviation_app/features/auth_screens/auth_provider/auth_provider.dart';
+import 'package:aviation_app/features/auth_screens/sign_Up%20screen/Riverpod/isVisible_provider.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/custom_textformfiled.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:flutter/material.dart';
@@ -50,20 +51,42 @@ class ResetPassScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 48.h),
-            CustomTextformfiled(
-              hintext: "Enter your password",
-              isobscure: true,
-              text: "Password",
-              icons: AppIcons.eye,
-              controller: passwordController,
+              Consumer(
+              builder: (context, ref,_) {
+             final isVisible = ref.watch(isPassVisibleProvider);
+                return CustomTextformfiled(
+                  isVisible: isVisible,
+                  onTapToggle: () {
+                    ref.read(isPassVisibleProvider.notifier).onTapToggle();
+                  },
+                  text: "Password",
+                  isobscure: !isVisible,
+                  hintext: "Enter your password",
+                  icons: AppIcons.eye,
+                  toogleIcon: AppIcons.openEye,
+                  controller: passwordController,
+                );
+              }
             ),
+         
             SizedBox(height: 16.h),
-            CustomTextformfiled(
-              hintext: "Enter your password",
-              isobscure: true,
-              text: "password",
-              icons: AppIcons.eye,
-              controller: confirmPasswordController,
+           Consumer(
+              builder: (context, ref, _) {
+                final isVisible = ref.watch(isConfirmPAssVisibleProvider);
+                return CustomTextformfiled(
+                  isVisible: isVisible,
+                  onTapToggle: () {
+                   ref.read(isConfirmPAssVisibleProvider.notifier).onTapToggle();
+
+                  },
+                  text: "Confirm Password",
+                  isobscure: !isVisible,
+                  hintext: "Enter your password",
+                  icons: AppIcons.eye,
+                  toogleIcon: AppIcons.openEye,
+                  controller: confirmPasswordController,
+                );
+              }
             ),
             SizedBox(height: 36.h),
             Padding(
