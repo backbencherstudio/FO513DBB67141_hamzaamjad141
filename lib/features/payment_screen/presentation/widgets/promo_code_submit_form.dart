@@ -49,28 +49,31 @@ class _PromoCodeSubmitFormState extends State<PromoCodeSubmitForm> {
         Consumer(
           builder: (_, ref, _) {
             final isLoading = ref.watch(paymentProvider).isLoading;
-            return isLoading ?
-            const Center(child: CircularProgressIndicator(),)
-            :
-            PrimaryButton(
-              bodyText: "Continue",
-              onTap: () async  {
-                if (promoCodeController.text.isEmpty) {
-                  Fluttertoast.showToast(
-                    msg: "Please enter promo code!",
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    gravity: ToastGravity.TOP,
+            return isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : PrimaryButton(
+                    bodyText: "Continue",
+                    onTap: () async {
+                      if (promoCodeController.text.isEmpty) {
+                        Fluttertoast.showToast(
+                          msg: "Please enter promo code!",
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          gravity: ToastGravity.TOP,
+                        );
+                      } else {
+                        final success = await ref
+                            .read(paymentProvider.notifier)
+                            .onPromoCodeSubmit(
+                              promoCode: promoCodeController.text,
+                            );
+                        if (success == true && context.mounted) {
+                          context.go(RouteName.weatherScreen);
+                        }
+                      }
+                    },
                   );
-                } else {
-                  final success = await ref.read(paymentProvider.notifier).onPromoCodeSubmit(promoCode: promoCodeController.text);
-                if(success == true && context.mounted){
-                  context.go(RouteName.weatherScreen);
-                }
-                }
-              },
-            );
-          }
+          },
         ),
       ],
     );

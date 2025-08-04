@@ -2,10 +2,14 @@ import 'package:aviation_app/core/constant/icons.dart';
 import 'package:aviation_app/core/constant/images.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/core/utils/utils.dart';
+import 'package:aviation_app/features/payment_screen/presentation/widgets/subscription_cancel_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../auth_screens/auth_provider/auth_provider.dart';
 
 class PaymentTile extends StatelessWidget {
   const PaymentTile({super.key});
@@ -126,15 +130,53 @@ class PaymentTile extends StatelessWidget {
                   ),
                 ],
               ),
+              SizedBox(height: 6.h),
+              Consumer(
+                builder: (context, ref, child) {
+                  final isPremium = ref.watch(authProvider).user!.premium;
 
-              SizedBox(height: 30.h),
-              Utils.primaryButton(
-                onPressed: () {
-                  context.push(RouteName.payment);
+                  return isPremium
+                      ? Column(
+                          children: [
+                            Center(
+                              child: Text(
+                                "You have already this plan",
+                                style: style.bodyLarge!.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 30.h),
+                            Utils.primaryButton(
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return SubscriptionCancelDialog();
+                                  },
+                                );
+                              },
+                              backgroundColor: Colors.redAccent,
+                              text: "Cancel Subscription",
+                              height: 54.h,
+                              width: 280.w,
+                            ),
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            SizedBox(height: 30.h),
+                            Utils.primaryButton(
+                              onPressed: () {
+                                context.push(RouteName.payment);
+                              },
+                              text: "Get Full Access",
+                              height: 54.h,
+                              width: 280.w,
+                            ),
+                          ],
+                        );
                 },
-                text: "Get Full Access",
-                height: 54.h,
-                width: 280.w,
               ),
             ],
           ),
@@ -143,3 +185,4 @@ class PaymentTile extends StatelessWidget {
     );
   }
 }
+

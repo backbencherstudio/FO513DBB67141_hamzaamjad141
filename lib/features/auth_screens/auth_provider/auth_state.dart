@@ -20,7 +20,7 @@ class AuthState {
       googleUser: googleUser ?? this.googleUser,
       user: user ?? this.user,
       userToken: userToken ?? this.userToken,
-      message: message ?? this.message,
+      message: message ?? message,
         isLoading: isLoading ?? this.isLoading
     );
   }

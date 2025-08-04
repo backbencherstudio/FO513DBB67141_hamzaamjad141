@@ -247,7 +247,6 @@ class Utils {
     );
   }
 
-
   static String dateFormat({required DateTime date, String? format}) {
     return DateFormat(format ?? 'dd MMM, yyyy').format(date);
   }
@@ -290,7 +289,4 @@ class Utils {
       textColor: Colors.white,
     );
   }
-
-
-
 }
