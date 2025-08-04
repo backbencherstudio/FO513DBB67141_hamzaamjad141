@@ -33,4 +33,6 @@ class ApiEndPoints {
   static const String editProfile = 'users/update-user';
   static const String cancelSubscription = 'subscription/cancel';
 
+  static const String resendOtp = 'users/resent-otp';
+  static const String paymentWebPage = 'subscription/create-checkout-session';
 }
