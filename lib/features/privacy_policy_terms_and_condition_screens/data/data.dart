@@ -116,9 +116,14 @@ const String termsCondition = '''
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terms & Conditions</title>
+
 </head>
+
 <body>
+
+<div>
     <h1>Terms & Conditions</h1>
+    </div>
     <p><strong>Effective Date:</strong> July 14, 2025</p>
     <p><strong>Last Updated:</strong> July 14, 2025</p>
     <p><strong>Company Name:</strong> Left Seat Lessons LLC</p>
@@ -199,7 +204,18 @@ const String termsCondition = '''
         <li>You must not rely solely on the Service for making aviation-related or safety-critical decisions.</li>
     </ul>
 
-    <h2>6. No Warranty / Disclaimers</h2>
+    <h2>6. AI-Generated Content Disclaimer</h2>
+    <p>Some audio content available on this platform may be generated, enhanced, or synthesized using
+    artificial intelligence technologies. While we strive to ensure accuracy and originality, certain
+    materials may incorporate or reference information derived from third-party sources. All copyrights,
+    trademarks, and intellectual property rights in such referenced content remain the property of their respective owners.
+    <br>
+    We do not claim ownership over any third-party content. nor do we assert any rights beyond those granted 
+    under applicable law. Users are responsible for ensuring their use of the content complies
+    with all relevant copyright, intellectual property, and licensing laws.
+    </p>
+
+    <h2>7. No Warranty / Disclaimers</h2>
     <p>The Service is provided on an "AS IS" and "AS AVAILABLE" basis without warranties of any kind. To the fullest extent permitted by law, we disclaim:</p>
     <ul>
         <li>All warranties, express or implied, including merchantability, fitness for a particular purpose, and non-infringement;</li>
@@ -208,10 +224,10 @@ const String termsCondition = '''
     </ul>
     <p>You assume full responsibility for your use of the Service.</p>
 
-    <h2>7. Limitation of Liability</h2>
+    <h2>8. Limitation of Liability</h2>
     <p>To the maximum extent permitted by applicable law, Left Seat Lessons LLC and its officers, directors, employees, contractors, and affiliates shall not be liable for any direct, indirect, incidental, special, punitive, or consequential damages arising out of or related to your use of or inability to use the Service.</p>
 
-    <h2>8. Indemnification</h2>
+    <h2>9. Indemnification</h2>
     <p>You agree to defend, indemnify, and hold harmless Left Seat Lessons LLC, its affiliates, team members, contractors, and licensors from and against any claims, liabilities, damages, losses, and expenses (including legal fees) arising out of or in any way connected with:</p>
     <ul>
         <li>Your access to or use of the Service;</li>
@@ -220,11 +236,11 @@ const String termsCondition = '''
         <li>Any third-party claims relating to your conduct or submissions.</li>
     </ul>
 
-    <h2>9. Intellectual Property</h2>
+    <h2>10. Intellectual Property</h2>
     <p>All content, trademarks, graphics, software, designs, and other materials within the Service are the exclusive property of Left Seat Lessons LLC or its licensors. You may not reproduce, modify, distribute, or use any part of the Service without express written consent.</p>
     <p>Unauthorized use may result in account termination and legal action.</p>
 
-    <h2>10. Termination</h2>
+    <h2>11. Termination</h2>
     <p>We may terminate or suspend your account or access to the Service at any time, with or without cause or notice, including for violations of these Terms.</p>
     <p>Upon termination:</p>
     <ul>
@@ -233,13 +249,13 @@ const String termsCondition = '''
         <li>Provisions regarding disclaimers, limitations of liability, and indemnity will continue to apply.</li>
     </ul>
 
-    <h2>11. Governing Law and Jurisdiction</h2>
+    <h2>12. Governing Law and Jurisdiction</h2>
     <p>These Terms are governed by the laws of the State of Michigan, USA. Any dispute arising out of or related to these Terms shall be resolved exclusively in the state or federal courts located within the State of Michigan. You consent to the personal jurisdiction and venue of such courts.</p>
 
-    <h2>12. Entire Agreement</h2>
+    <h2>13. Entire Agreement</h2>
     <p>These Terms, together with our Privacy Policy, constitute the entire agreement between you and Left Seat Lessons LLC regarding your use of the Service, and supersede any prior agreements, oral or written.</p>
 
-    <h2>13. Contact Us</h2>
+    <h2>14. Contact Us</h2>
     <p>If you have any questions about these Terms, please contact us at:</p>
     <p>Left Seat Lessons LLC<br>
     📧 Email: <a href="mailto:info@leftseatlessons.com">info@leftseatlessons.com</a></p>

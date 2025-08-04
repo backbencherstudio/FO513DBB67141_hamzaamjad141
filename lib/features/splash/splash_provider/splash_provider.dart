@@ -35,6 +35,7 @@ class SplashProvider extends StateNotifier<SplashState>{
           if(user.premium == true){
             return RouteName.weatherScreen;
           }
+          debugPrint("\npayment false, ri-directing to payment screen\n");
           return RouteName.paymentIntro;
 
         }

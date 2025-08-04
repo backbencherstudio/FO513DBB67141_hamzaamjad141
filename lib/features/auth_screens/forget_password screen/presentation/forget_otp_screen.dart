@@ -108,7 +108,7 @@ class ForgetOtpScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16.h),
-            Resendtext(),
+            Resendtext(email: email,),
           ],
         ),
       ),

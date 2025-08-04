@@ -25,42 +25,43 @@ class EBookAppBar extends StatelessWidget {
             builder: (_, ref, _) {
               final user = ref.watch(authProvider).user;
               return GestureDetector(
-                onTap: ()=>context.push(RouteName.profileScreen),
+                onTap: () => context.push(RouteName.profileScreen),
                 child: Row(
-                  spacing: 12.w,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  spacing: 8.w,
                   children: [
+                    Icon(Icons.menu, color: Colors.white, size: 25.sp),
 
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Image.network(
-                          user?.image ?? "",
-                          //'https://i.pravatar.cc/150?img=12',
-                          height: 47.h,
-                          width: 47.h,
-                          fit: BoxFit.cover,
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child; // Image loaded successfully
-                            } else {
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  value: loadingProgress.expectedTotalBytes != null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                            (loadingProgress.expectedTotalBytes ?? 1)
-                                      : null,
-                                ),
-                              );
-                            }
-                          },
-                          errorBuilder: (context, error, stackTrace) {
-                            // Fallback widget in case of error
-                            return Center(
-                              child: Icon(Icons.image_not_supported_outlined,  size: 40.sp),
-                            );
-                          },
-                        ),
-                      ),
-
+                    // ClipRRect(
+                    //   borderRadius: BorderRadius.circular(100),
+                    //   child: Image.network(
+                    //     user?.image ?? "",
+                    //     //'https://i.pravatar.cc/150?img=12',
+                    //     height: 47.h,
+                    //     width: 47.h,
+                    //     fit: BoxFit.cover,
+                    //     loadingBuilder: (context, child, loadingProgress) {
+                    //       if (loadingProgress == null) {
+                    //         return child; // Image loaded successfully
+                    //       } else {
+                    //         return Center(
+                    //           child: CircularProgressIndicator(
+                    //             value: loadingProgress.expectedTotalBytes != null
+                    //                 ? loadingProgress.cumulativeBytesLoaded /
+                    //                       (loadingProgress.expectedTotalBytes ?? 1)
+                    //                 : null,
+                    //           ),
+                    //         );
+                    //       }
+                    //     },
+                    //     errorBuilder: (context, error, stackTrace) {
+                    //       // Fallback widget in case of error
+                    //       return Center(
+                    //         child: Icon(Icons.image_not_supported_outlined,  size: 40.sp),
+                    //       );
+                    //     },
+                    //   ),
+                    // ),
                     Text(user?.name ?? "No Name"),
                     //const Spacer(),
                     // CommonWidget.secondaryButton(
@@ -69,7 +70,7 @@ class EBookAppBar extends StatelessWidget {
                   ],
                 ),
               );
-            }
+            },
           ),
         ],
       ),

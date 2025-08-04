@@ -34,7 +34,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   void initState() {
     nameController = TextEditingController();
-    licenseController = TextEditingController(text: "No License");
+    licenseController = TextEditingController(text: "NO_LICENCE");
     emailController = TextEditingController();
     passwordController = TextEditingController();
     confirmPasswordController = TextEditingController();
@@ -95,7 +95,7 @@ class _SignupScreenState extends State<SignupScreen> {
             CustomAnimatedContainer(
               icons: AppIcons.dropdown,
               controller: licenseController,
-              dropdownItems: ["No License", "SPL", "PPL", "CPL", "ATPL", "CH"],
+              dropdownItems: ["NO_LICENCE", "SPL", "PPL", "CPL1", "ATPL", "CH"],
             ),
             SizedBox(height: 18.h),
             Consumer(
@@ -171,7 +171,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   password: passwordController.text.trim(),
                                 );
                             if (routeName != null && context.mounted) {
-                          context.go(routeName);
+                          context.push(routeName);
 
                             } else {
                               Fluttertoast.showToast(

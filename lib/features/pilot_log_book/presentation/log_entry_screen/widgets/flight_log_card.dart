@@ -70,7 +70,7 @@ class FlightLogCard extends StatelessWidget {
                       : Color(0xffF5FFFA),
                   borderRadius: BorderRadius.circular(4.r),
                 ),
-                child: Text(
+                child: Text( logRequestModel.status == "SELF_VERIFIED" ? "SELF VERIFIED" :
                   logRequestModel.status,
                   style: textTheme.bodySmall?.copyWith(
                     color: logRequestModel.status == 'PENDING'

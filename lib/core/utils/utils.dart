@@ -125,11 +125,12 @@ class Utils {
     double? height,
     double? width,
     BorderRadius? borderRadius,
+    bool isLoading = false
   }) {
     return SizedBox(
       height: height,
       width: width ?? double.infinity,
-      child: ElevatedButton(
+      child: isLoading ? Center(child: const CircularProgressIndicator()) : ElevatedButton(
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(horizontal: 28.w, vertical: 12.h),
           backgroundColor: backgroundColor,

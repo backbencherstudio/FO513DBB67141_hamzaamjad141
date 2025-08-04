@@ -3,6 +3,7 @@ import 'package:aviation_app/core/constant/images.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/core/utils/utils.dart';
 import 'package:aviation_app/features/payment_screen/presentation/widgets/subscription_cancel_dialog.dart';
+import 'package:aviation_app/features/payment_screen/Riverpod/payment_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../auth_screens/auth_provider/auth_provider.dart';
+import '../payment_screen.dart';
 
 class PaymentTile extends StatelessWidget {
   const PaymentTile({super.key});
@@ -19,7 +21,7 @@ class PaymentTile extends StatelessWidget {
     final style = Theme.of(context).textTheme;
     return Stack(
       children: [
-        Opacity(opacity: 0.5, child: Image.asset(AppImages.priceBg)),
+        Opacity(opacity: 0.5, child: Image.asset(AppImages.priceBg,width: 330.w,)),
         Positioned(
           top: 32.h,
           left: 24.w,
@@ -134,7 +136,6 @@ class PaymentTile extends StatelessWidget {
               Consumer(
                 builder: (context, ref, child) {
                   final isPremium = ref.watch(authProvider).user!.premium;
-
                   return isPremium
                       ? Column(
                           children: [
@@ -166,18 +167,29 @@ class PaymentTile extends StatelessWidget {
                       : Column(
                           children: [
                             SizedBox(height: 30.h),
-                            Utils.primaryButton(
-                              onPressed: () {
-                                context.push(RouteName.payment);
-                              },
-                              text: "Get Full Access",
-                              height: 54.h,
-                              width: 280.w,
+                            Consumer(
+                                builder: (_, ref, _) {
+                                  final bool isLoading = ref.watch(paymentProvider).isWebPageButtonLoading;
+                                  return
+                                    Utils.primaryButton(
+                                      isLoading: isLoading,
+                                      onPressed: ()  async {
+                                        final url = await ref.read(paymentProvider.notifier).makePayment();
+                                        debugPrint("\nurl in screen : $url\n");
+                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentWebView(paymentUrl: url!,)));
+
+                                        //   context.push(RouteName.payment);
+                                      },
+                                      text: "Get Full Access",
+                                      height: 54.h,
+                                      width: 280.w,
+                                    );
+                                }
                             ),
                           ],
                         );
                 },
-              ),
+              )
             ],
           ),
         ),

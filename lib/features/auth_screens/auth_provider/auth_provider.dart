@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/core/services/api_services/api_endpoints.dart';
 import 'package:aviation_app/core/services/api_services/api_services.dart';
@@ -6,8 +8,10 @@ import 'package:aviation_app/core/services/local_storage_services/shared_prefere
 import 'package:aviation_app/features/auth_screens/auth_provider/auth_state.dart';
 import 'package:aviation_app/features/auth_screens/model/user_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 import '../../../core/services/google_account_services/google_account_service.dart';
 
 final authProvider = StateNotifierProvider<AuthProvider, AuthState>((ref) {
@@ -16,6 +20,29 @@ final authProvider = StateNotifierProvider<AuthProvider, AuthState>((ref) {
 
 class AuthProvider extends StateNotifier<AuthState> {
   AuthProvider() : super(AuthState());
+
+  Future<void> resendOtp({required String email})async{
+    try{
+      final rawResponse = await http.patch(Uri.parse('${ApiEndPoints.baseUrl}/${ApiEndPoints.resendOtp}'),
+      body: jsonEncode({
+        "email":email
+      },
+      ),
+          headers: {"Content-Type":"application/json"}
+      );
+      final response = jsonDecode(rawResponse.body);
+      // ApiServices.instance.postData(endPoint: ApiEndPoints.resendOtp, body: {
+      //   "email":email
+      // }, headers: {"Content-Type":"application/json"});
+      if(response['success'] == true){
+        Fluttertoast.showToast(msg: "Otp sent successfully",backgroundColor: Colors.green,textColor: Colors.white);
+      }
+    }catch(error){
+      Fluttertoast.showToast(msg: "Otp sent failed",backgroundColor: Colors.red,textColor: Colors.white);
+
+      throw Exception('Error while resending otp : $error');
+    }
+  }
 
   Future<String> createAccountWithGoogle() async {
     try {
