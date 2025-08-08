@@ -109,7 +109,7 @@ class _VoiceAiScreenState extends ConsumerState<VoiceAiScreen> {
                   SizedBox(height: 20),
                   Center(
                     child: Text(
-                      showTextField ? 'Type your question' : 'Hold to Speak',
+                      !showTextField ? 'Type your question' : 'Hold to Speak',
                       style: textTheme.bodyMedium!.copyWith(
                         color: AppColors.secondaryTextColor,
                       ),

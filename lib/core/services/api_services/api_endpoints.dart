@@ -35,4 +35,5 @@ class ApiEndPoints {
 
   static const String resendOtp = 'users/resent-otp';
   static const String paymentWebPage = 'subscription/create-checkout-session';
+  static const String deleteAccount = 'users/delete';
 }
