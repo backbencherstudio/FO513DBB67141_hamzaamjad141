@@ -10,6 +10,11 @@ class WeatherState {
   final bool searchButtonLoading;
   final String? homeBase;
   final bool homeBaseButtonLoading;
+  final int favouriteCurrentPage;
+  final bool favouriteIsLoading;
+  final bool favouriteHasMoreData;
+  final bool favouriteIsLoadingMore;
+  
   WeatherState({
     this.searchedWeather,
     this.selectedTab = 0,
@@ -20,6 +25,10 @@ class WeatherState {
     this.searchButtonLoading = false,
     this.homeBase,
     this.homeBaseButtonLoading = false,
+    this.favouriteCurrentPage = 1,
+    this.favouriteIsLoading = false,
+    this.favouriteHasMoreData = true,
+    this.favouriteIsLoadingMore = false,
   });
   WeatherState copyWith({
     List<WeatherModel>? weatherList,
@@ -32,6 +41,10 @@ class WeatherState {
     bool? searchButtonLoading,
     String? homeBase,
     bool? homeBaseButtonLoading,
+    int? favouriteCurrentPage,
+    bool? favouriteIsLoading,
+    bool? favouriteHasMoreData,
+    bool? favouriteIsLoadingMore,
   }) {
     return WeatherState(
       searchedWeather: searchedWeather ?? this.searchedWeather,
@@ -43,6 +56,10 @@ class WeatherState {
       searchButtonLoading: searchButtonLoading ?? this.searchButtonLoading,
       homeBase: homeBase ?? this.homeBase,
       homeBaseButtonLoading: homeBaseButtonLoading ?? this.homeBaseButtonLoading,
+      favouriteCurrentPage: favouriteCurrentPage ?? this.favouriteCurrentPage,
+      favouriteIsLoading: favouriteIsLoading ?? this.favouriteIsLoading,
+      favouriteHasMoreData: favouriteHasMoreData ?? this.favouriteHasMoreData,
+      favouriteIsLoadingMore: favouriteIsLoadingMore ?? this.favouriteIsLoadingMore,
     );
   }
 
@@ -57,7 +74,11 @@ class WeatherState {
         expandedIndex: expandedIndex,
         searchButtonLoading: false,
         homeBase: null,
-      homeBaseButtonLoading: false,
+        homeBaseButtonLoading: false,
+        favouriteCurrentPage: favouriteCurrentPage,
+        favouriteIsLoading: favouriteIsLoading,
+        favouriteHasMoreData: favouriteHasMoreData,
+        favouriteIsLoadingMore: favouriteIsLoadingMore,
     );
   }
 }
