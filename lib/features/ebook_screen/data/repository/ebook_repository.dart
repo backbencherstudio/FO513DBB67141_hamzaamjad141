@@ -1,5 +1,6 @@
 import 'package:aviation_app/features/ebook_screen/data/entity/ebook_api_model.dart';
 import 'package:flutter/cupertino.dart';
+import '../../../../core/exceptions/subscription_exception.dart';
 import '../../../../core/services/api_services/api_services.dart';
 
 class EbookRepository {
@@ -32,6 +33,12 @@ class EbookRepository {
           .map((ebook) => EbookApiModel.fromJson(ebook as Map<String, dynamic>))
           .toList();
     } catch (e) {
+      if (e is SubscriptionException) {
+        // Subscription exception is already handled by API service
+        // The user is already being redirected to subscription page
+        debugPrint('Subscription required for ebooks: ${e.message}');
+        rethrow;
+      }
       debugPrint('Repository error: $e');
       throw Exception("Error fetching ebooks: $e");
     }

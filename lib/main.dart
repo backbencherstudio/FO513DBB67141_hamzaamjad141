@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'core/routes/part_of_import.dart';
 import 'core/services/local_storage_services/hive_services.dart';
+import 'core/services/navigation_service/navigation_service.dart';
 import 'core/services/payment_services/stripe_services.dart';
 import 'core/theme/theme.dart';
 
