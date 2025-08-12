@@ -12,6 +12,9 @@ final deleteProvider = StateNotifierProvider<DeleteNotifier, DeleteStateModel>(
 
     return DeleteNotifier(); }
 );
+
+
+
 class DeleteNotifier extends StateNotifier<DeleteStateModel>{
   DeleteNotifier():super(DeleteStateModel());
 

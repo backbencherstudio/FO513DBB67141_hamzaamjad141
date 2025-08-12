@@ -14,69 +14,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-// class PaymentScreen extends StatelessWidget {
-//   const PaymentScreen({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return CreateScreen(
-//       child: SafeArea(
-//         child: Padding(
-//           padding: AppPadding.screenHorizontal,
-//           child: Column(
-//             children: [
-//               SizedBox(height: 24.h),
-//               Text(
-//                 "Add a payment method",
-//                 style: Theme.of(context).textTheme.headlineSmall,
-//               ),
-//               SizedBox(height: 24.h),
-//               CardFormField(
-//                 style: CardFormStyle(
-//                   backgroundColor: Colors.white,
-//                   textColor: AppColors.primary,
-//                   borderRadius: 15,
-//                   borderColor: AppColors.primary,
-//                   borderWidth: 2,
-//                   cursorColor: AppColors.primary,
-//                   placeholderColor: AppColors.primary,
-//                   textErrorColor: Colors.red,
-//                 ),
-//               ),
-//               SizedBox(height: 15.h),
-//               Consumer(
-//                 builder: (_, ref, _) {
-//                   final isLoading = ref.watch(paymentProvider).isLoading;
-//                   return isLoading
-//                       ? const Center(child: CircularProgressIndicator())
-//                       : PrimaryButton(
-//                           bodyText: "Pay \$9.99",
-//                           onTap: () async {
-//                             // final success = await ref
-//                             //     .read(paymentProvider.notifier)
-//                             //     .makePayment();
-//                             // if (success == true && context.mounted) {
-//                             //   context.go(RouteName.weatherScreen);
-//                             // }
-//
-//                             Navigator.push(
-//                               context,
-//                               MaterialPageRoute(
-//                                 builder: (context) =>
-//                                     PaymentWebView(paymentUrl: ""),
-//                               ),
-//                             );
-//                           },
-//                         );
-//                 },
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class PaymentWebView extends StatefulWidget {
   final String paymentUrl;
