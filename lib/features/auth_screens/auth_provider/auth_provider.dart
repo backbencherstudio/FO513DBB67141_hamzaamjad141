@@ -83,7 +83,7 @@ class AuthProvider extends StateNotifier<AuthState> {
       return RouteName.signInScreen;
     } catch (error) {
       throw Exception(
-        '\nException while creating account with google : $error\n',
+        '\nException while creating account with google++++++++++++++++ : $error\n',
       );
     }
   }

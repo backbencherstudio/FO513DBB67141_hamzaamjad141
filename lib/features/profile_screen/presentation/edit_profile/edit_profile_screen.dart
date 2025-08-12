@@ -1,17 +1,18 @@
-import 'package:aviation_app/core/constant/icons.dart';
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:aviation_app/core/constant/padding.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/core/theme/theme_extension/app_colors.dart';
-import 'package:aviation_app/core/utils/common_widget/common_widget.dart';
 import 'package:aviation_app/core/utils/utils.dart';
 import 'package:aviation_app/features/auth_screens/auth_provider/auth_provider.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
 import 'package:aviation_app/features/profile_screen/presentation/widgets/profile_screen_header.dart';
+import 'package:aviation_app/features/profile_screen/riverpod/deleteAccountProvider.dart';
 import 'package:aviation_app/features/profile_screen/riverpod/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 
 import 'widget/custom_text_field.dart';
@@ -24,8 +25,6 @@ class EditProfileScreen extends ConsumerStatefulWidget {
 }
 
 class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
-
-
   late final TextEditingController fullNameEditingController;
   late final TextEditingController emailEditingController;
 
@@ -33,10 +32,10 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   void initState() {
     fullNameEditingController = TextEditingController();
     emailEditingController = TextEditingController();
-    WidgetsBinding.instance.addPostFrameCallback((_)async{
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       final user = ref.watch(authProvider).user;
       fullNameEditingController.text = user?.name ?? "";
-      emailEditingController.text =  user?.email ?? "";
+      emailEditingController.text = user?.email ?? "";
     });
     super.initState();
   }
@@ -94,6 +93,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                             labelName: 'Email',
                             hintText: 'Enter your email',
                           ),
+
                           // CustomTextField(
                           //   textTheme: textTheme,
                           //   labelName: 'Old Password',
@@ -109,7 +109,6 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                           //   labelName: 'Confirm Password',
                           //   hintText: 'Enter your new password',
                           // ),
-
                         ],
                       ),
                     ),
@@ -119,25 +118,57 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                       builder: (_, ref, _) {
                         return Utils.primaryButton(
                           onPressed: () async {
-                            await ref.read(profileProvider.notifier).onSubmit(name: fullNameEditingController.text);
-                          context.pop();
-                            },
+                            await ref
+                                .read(profileProvider.notifier)
+                                .onSubmit(name: fullNameEditingController.text);
+                            context.pop();
+                          },
                           text: 'Save Change',
                         );
-                      }
+                      },
                     ),
                     SizedBox(height: 18.h),
-                    Utils.primaryButton(
-                      onPressed: () {},
-                      backgroundColor: AppColors.surface,
-                      text: 'Delete my account ',
+
+                    Consumer(
+                      builder: (context, ref, _) {
+                        final callOut = ref.watch(deleteProvider);
+                        return callOut.isLoading == true
+                            ? Center(child: CircularProgressIndicator())
+                            : Utils.primaryButton(
+                                onPressed: () async {
+                                  final path = await ref
+                                      .read(deleteProvider.notifier)
+                                      .deleteUser();
+
+                                  if (path == "ok" && context.mounted) {
+                                    debugPrint("✅ Routing to SignIn");
+                                    context.go(
+                                      RouteName.signInScreen,
+                                    ); // <-- replace push with go
+                                    Fluttertoast.showToast(
+                                      msg: "Successfully deleted the account",
+                                      backgroundColor: Colors.green,
+                                      textColor: Colors.white,
+                                    );
+                                  } else {
+                                    Fluttertoast.showToast(
+                                      msg: "Sorry, network issue!",
+                                      backgroundColor: Colors.red,
+                                      textColor: Colors.white,
+                                    );
+                                  }
+                                },
+                                backgroundColor: AppColors.surface,
+                                text: 'Delete my account',
+                              );
+                      },
                     ),
 
                     SizedBox(height: 40.h),
                   ],
                 ),
               ),
-              SizedBox(height: 145.h,)
+              SizedBox(height: 145.h),
             ],
           ),
         ),

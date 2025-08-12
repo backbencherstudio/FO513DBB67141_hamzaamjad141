@@ -1,52 +1,26 @@
 {
   "project_info": {
-    "project_number": "531409801699",
-    "project_id": "aviation-app-f2b74",
-    "storage_bucket": "aviation-app-f2b74.firebasestorage.app"
+    "project_number": "315260108035",
+    "project_id": "hamzamjad-a3152",
+    "storage_bucket": "hamzamjad-a3152.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:531409801699:android:68caadd7cdfdf5d72e50d6",
+        "mobilesdk_app_id": "1:315260108035:android:4f97349215c6241ede7d36",
         "android_client_info": {
           "package_name": "com.example.aviation_app"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "531409801699-ansmcjs36koth1qcj6jpotci3b4sq3h6.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.aviation_app",
-            "certificate_hash": "5f7c8e994dcf53bb939bda846e0eb38df3eac80d"
-          }
-        },
-        {
-          "client_id": "531409801699-go383ju29rd22r4a59opgk1nqiou89uu.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.aviation_app",
-            "certificate_hash": "7bd80dc12b702ede4d670e51a178d2fab5fbc3df"
-          }
-        },
-        {
-          "client_id": "531409801699-um1p978lfhhcvrpi2kqjsmhrot3i6a4q.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBkSZfFxouq8GG_ZVLXZlBjMkz0pi7O2OY"
+          "current_key": "AIzaSyChW7Ju6OodQJoA32N5w3_eWQSChRa_VGk"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "531409801699-um1p978lfhhcvrpi2kqjsmhrot3i6a4q.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
