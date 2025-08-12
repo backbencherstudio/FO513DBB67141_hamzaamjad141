@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:aviation_app/core/exceptions/subscription_exception.dart';
 import 'package:aviation_app/features/auth_screens/auth_provider/auth_provider.dart';
 import 'package:aviation_app/features/ebook_screen/data/mapping/ebook_mapping.dart';
 import 'package:aviation_app/features/ebook_screen/model/e_book_model.dart';
@@ -48,6 +49,16 @@ class EbookNotifier extends StateNotifier<EbookState> {
       );
       return newEbooksApi;
     } catch (e) {
+      if (e is SubscriptionException) {
+        // Don't show error state for subscription issues
+        // User is already being redirected to subscription page
+        debugPrint('Subscription required: ${e.message}');
+        state = state.copyWith(
+          isLoading: false,
+          isFetching: false,
+        );
+        return [];
+      }
       debugPrint('Error fetching ebooks: $e');
       state = state.copyWith(
         error: e.toString(),

@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../../exceptions/subscription_exception.dart';
 import '../../utils/utils.dart';
+import '../navigation_service/navigation_service.dart';
 import 'api_endpoints.dart';
 
 class ApiServices {
@@ -10,10 +12,38 @@ class ApiServices {
   ApiServices._internal();
 
   /// Helper method to handle the response
-
   static dynamic _handleResponse(http.Response response) {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return jsonDecode(response.body);
+    } else if (response.statusCode == 403) {
+      // Handle 403 subscription errors
+      try {
+        final responseBody = jsonDecode(response.body);
+        
+        // Check if it's a subscription-related 403 error
+        if (responseBody['message'] != null && 
+            (responseBody['message'].toString().contains('Premium subscription required') ||
+             responseBody['trialEnded'] == true)) {
+          
+          // Navigate to subscription page
+          NavigationService.instance.navigateToSubscription();
+          
+          throw SubscriptionException(
+            message: responseBody['message'] ?? 'Premium subscription required',
+            trialEnded: responseBody['trialEnded'] ?? true,
+            trialEndDate: responseBody['trialEndDate'],
+            upgradeUrl: responseBody['upgradeUrl'],
+          );
+        }
+      } catch (e) {
+        if (e is SubscriptionException) {
+          rethrow;
+        }
+        // If it's not a valid JSON or doesn't match subscription error format
+        // fall through to generic error handling
+      }
+      
+      throw Exception('Error: ${response.statusCode}, ${response.body}');
     } else {
       throw Exception('Error: ${response.statusCode}, ${response.body}');
     }
@@ -42,8 +72,17 @@ class ApiServices {
         throw Exception('Device is Offline, Please connect to internet.');
       }
     } catch (e) {
-      final decodedBody = jsonDecode(response.body);
-      Utils.showErrorToast(message: decodedBody['message']);
+      if (e is SubscriptionException) {
+        // Don't show toast for subscription errors as user is being redirected
+        rethrow;
+      }
+      try {
+        final decodedBody = jsonDecode(response.body);
+        Utils.showErrorToast(message: decodedBody['message']);
+      } catch (_) {
+        // If response body is not valid JSON, show generic error
+        Utils.showErrorToast(message: "An error occurred");
+      }
       throw Exception("Failed to send data: $e");
     }
   }
@@ -60,6 +99,9 @@ class ApiServices {
       );
       return _handleResponse(response);
     } catch (e) {
+      if (e is SubscriptionException) {
+        rethrow;
+      }
       throw Exception("Failed to send data: $e");
     }
   }
@@ -78,6 +120,9 @@ class ApiServices {
       );
       return _handleResponse(response);
     } catch (e) {
+      if (e is SubscriptionException) {
+        rethrow;
+      }
       throw Exception("Failed to send data: $e");
     }
   }
@@ -93,6 +138,9 @@ class ApiServices {
       );
       return _handleResponse(response);
     } catch (e) {
+      if (e is SubscriptionException) {
+        rethrow;
+      }
       throw Exception("Failed to send data: $e");
     }
   }
