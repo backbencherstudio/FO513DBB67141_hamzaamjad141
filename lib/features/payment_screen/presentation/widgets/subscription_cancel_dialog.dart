@@ -45,9 +45,19 @@ class SubscriptionCancelDialog extends StatelessWidget {
               debugPrint("User token is null");
             }
             return TextButton(
-              onPressed: () {
-                CancelSubscription.cancel(userToken!);
-                Navigator.of(context).pop();
+              onPressed: () async {
+                try {
+                  final result = await CancelSubscription.cancel(userToken!);
+                  Navigator.of(context).pop();
+                  
+                  // If cancellation was successful, refresh user data to reflect current status
+                  if (result?['success'] == true) {
+                    await ref.read(authProvider.notifier).updateUserModel();
+                  }
+                } catch (e) {
+                  Navigator.of(context).pop();
+                  debugPrint("Error cancelling subscription: $e");
+                }
               },
               child: Text("Yes"),
             );

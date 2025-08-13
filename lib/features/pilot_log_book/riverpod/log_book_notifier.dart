@@ -193,24 +193,66 @@ class LogBookNotifier extends StateNotifier<LogBookState> {
     }
   }
 
-  /// get log request list
-  Future<void> getLogsList() async {
+  /// get log request list with pagination
+  Future<void> getLogsList({int page = 1, int limit = 10, bool loadMore = false}) async {
     try {
+      if (loadMore) {
+        state = state.copyWith(isLoadingMore: true);
+      } else {
+        state = state.copyWith(isLoading: true, currentPage: 1, hasMoreData: true);
+      }
+
       final response = await ApiServices.instance.getData(
-        endPoint: ApiEndPoints.getLogRequestList,
+        endPoint: ApiEndPoints.getLogRequestListWithPagination(page: page, limit: limit),
         headers: {"Authorization": userToken},
       );
-      if (response['success'] == true && response['data']['logs'].isNotEmpty) {
-        final List<LogRequestModel> logRequestList =
+      
+      if (response['success'] == true) {
+        final List<LogRequestModel> newLogRequestList =
             (response['data']['logs'] as List<dynamic>)
                 .map((item) => LogRequestModel.fromJson(item))
                 .toList();
-        state = state.copyWith(logRequestList: logRequestList);
+        
+        List<LogRequestModel> updatedList;
+        if (loadMore && state.logRequestList != null) {
+          // Append new data to existing list
+          updatedList = [...state.logRequestList!, ...newLogRequestList];
+        } else {
+          // Replace with new data (first load or refresh)
+          updatedList = newLogRequestList;
+        }
+        
+        // Check if there's more data available
+        final hasMoreData = newLogRequestList.length == limit;
+        
+        state = state.copyWith(
+          logRequestList: updatedList,
+          currentPage: page,
+          hasMoreData: hasMoreData,
+          isLoading: false,
+          isLoadingMore: false,
+        );
       } else {
         debugPrint("\nLog request list is empty\n");
+        state = state.copyWith(
+          isLoading: false,
+          isLoadingMore: false,
+          hasMoreData: false,
+        );
       }
     } catch (error) {
+      state = state.copyWith(
+        isLoading: false,
+        isLoadingMore: false,
+      );
       throw Exception('Failed to get log request list: $error');
+    }
+  }
+
+  /// Load more log requests
+  Future<void> loadMoreLogs() async {
+    if (state.hasMoreData && !state.isLoadingMore) {
+      await getLogsList(page: state.currentPage + 1, loadMore: true);
     }
   }
 

@@ -136,8 +136,31 @@ class PaymentTile extends StatelessWidget {
               Consumer(
                 builder: (context, ref, child) {
                   final isPremium = ref.watch(authProvider).user!.premium;
-                  return isPremium
-                      ? Column(
+                  return isPremium == false
+                      ?Column(
+                          children: [
+                            SizedBox(height: 30.h),
+                            Consumer(
+                                builder: (_, ref, _) {
+                                  final bool isLoading = ref.watch(paymentProvider).isWebPageButtonLoading;
+                                  return
+                                    Utils.primaryButton(
+                                      isLoading: isLoading,
+                                      onPressed: ()  async {
+                                        final url = await ref.read(paymentProvider.notifier).makePayment();
+                                        debugPrint("\nurl in screen : $url\n");
+                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentWebView(paymentUrl: url!,)));
+
+                                        //   context.push(RouteName.payment);
+                                      },
+                                      text: "Get Full Access",
+                                      height: 54.h,
+                                      width: 280.w,
+                                    );
+                                }
+                            ),
+                          ],
+                        ) : Column(
                           children: [
                             Center(
                               child: Text(
@@ -163,31 +186,8 @@ class PaymentTile extends StatelessWidget {
                               width: 280.w,
                             ),
                           ],
-                        )
-                      : Column(
-                          children: [
-                            SizedBox(height: 30.h),
-                            Consumer(
-                                builder: (_, ref, _) {
-                                  final bool isLoading = ref.watch(paymentProvider).isWebPageButtonLoading;
-                                  return
-                                    Utils.primaryButton(
-                                      isLoading: isLoading,
-                                      onPressed: ()  async {
-                                        final url = await ref.read(paymentProvider.notifier).makePayment();
-                                        debugPrint("\nurl in screen : $url\n");
-                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentWebView(paymentUrl: url!,)));
-
-                                        //   context.push(RouteName.payment);
-                                      },
-                                      text: "Get Full Access",
-                                      height: 54.h,
-                                      width: 280.w,
-                                    );
-                                }
-                            ),
-                          ],
                         );
+                    
                 },
               )
             ],
