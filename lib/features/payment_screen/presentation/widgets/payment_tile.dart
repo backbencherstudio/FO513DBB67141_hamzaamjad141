@@ -9,19 +9,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-
+ 
 import '../../../auth_screens/auth_provider/auth_provider.dart';
 import '../payment_screen.dart';
-
+ 
 class PaymentTile extends StatelessWidget {
   const PaymentTile({super.key});
-
+ 
   @override
   Widget build(BuildContext context) {
     final style = Theme.of(context).textTheme;
     return Stack(
       children: [
-        Opacity(opacity: 0.5, child: Image.asset(AppImages.priceBg,width: 330.w,)),
+        Opacity(
+          opacity: 0.5,
+          child: Image.asset(AppImages.priceBg, width: 330.w),
+        ),
         Positioned(
           top: 32.h,
           left: 24.w,
@@ -135,36 +138,19 @@ class PaymentTile extends StatelessWidget {
               SizedBox(height: 6.h),
               Consumer(
                 builder: (context, ref, child) {
-                  final isPremium = ref.watch(authProvider).user!.premium;
-                  return isPremium == false
-                      ?Column(
-                          children: [
-                            SizedBox(height: 30.h),
-                            Consumer(
-                                builder: (_, ref, _) {
-                                  final bool isLoading = ref.watch(paymentProvider).isWebPageButtonLoading;
-                                  return
-                                    Utils.primaryButton(
-                                      isLoading: isLoading,
-                                      onPressed: ()  async {
-                                        final url = await ref.read(paymentProvider.notifier).makePayment();
-                                        debugPrint("\nurl in screen : $url\n");
-                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentWebView(paymentUrl: url!,)));
-
-                                        //   context.push(RouteName.payment);
-                                      },
-                                      text: "Get Full Access",
-                                      height: 54.h,
-                                      width: 280.w,
-                                    );
-                                }
-                            ),
-                          ],
-                        ) : Column(
+                  final user = ref.watch(authProvider).user;
+                  final isPremium = user?.premium ?? false;
+                 
+                  // Log the premium status
+                  debugPrint("Premium status: $isPremium");
+                  debugPrint("User data: ${user?.toJson()}"); // Assuming your User model has toJson()
+                 
+                  return isPremium
+                      ? Column(
                           children: [
                             Center(
                               child: Text(
-                                "You have already this plan",
+                                "You already have this plan",
                                 style: style.bodyLarge!.copyWith(
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -186,10 +172,42 @@ class PaymentTile extends StatelessWidget {
                               width: 280.w,
                             ),
                           ],
+                        )
+                      : Column(
+                          children: [
+                            SizedBox(height: 30.h),
+                            Consumer(
+                              builder: (_, ref, _) {
+                                final bool isLoading = ref
+                                    .watch(paymentProvider)
+                                    .isWebPageButtonLoading;
+                                return Utils.primaryButton(
+                                  isLoading: isLoading,
+                                  onPressed: () async {
+                                    final url = await ref
+                                        .read(paymentProvider.notifier)
+                                        .makePayment();
+                                    debugPrint("Payment URL: $url");
+                                    if (url != null) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              PaymentWebView(paymentUrl: url),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  text: "Get Full Access",
+                                  height: 54.h,
+                                  width: 280.w,
+                                );
+                              },
+                            ),
+                          ],
                         );
-                    
                 },
-              )
+              ),
             ],
           ),
         ),
@@ -197,4 +215,3 @@ class PaymentTile extends StatelessWidget {
     );
   }
 }
-
