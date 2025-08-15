@@ -1,21 +1,34 @@
 import 'package:aviation_app/core/constant/icons.dart';
 import 'package:aviation_app/core/constant/images.dart';
-import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/core/utils/utils.dart';
 import 'package:aviation_app/features/payment_screen/presentation/widgets/subscription_cancel_dialog.dart';
 import 'package:aviation_app/features/payment_screen/Riverpod/payment_provider.dart';
+import 'package:aviation_app/features/splash/splash_provider/isfreetrailProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
- 
+
 import '../../../auth_screens/auth_provider/auth_provider.dart';
 import '../payment_screen.dart';
- 
-class PaymentTile extends StatelessWidget {
+
+class PaymentTile extends ConsumerStatefulWidget {
   const PaymentTile({super.key});
- 
+
+  @override
+  ConsumerState<PaymentTile> createState() => _PaymentTileState();
+}
+
+class _PaymentTileState extends ConsumerState<PaymentTile> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      ref.read(isfreetrailProvider.notifier).checkFreeTrialStatus();
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final style = Theme.of(context).textTheme;
@@ -140,40 +153,17 @@ class PaymentTile extends StatelessWidget {
                 builder: (context, ref, child) {
                   final user = ref.watch(authProvider).user;
                   final isPremium = user?.premium ?? false;
-                 
-                  // Log the premium status
-                  debugPrint("Premium status: $isPremium");
-                  debugPrint("User data: ${user?.toJson()}"); // Assuming your User model has toJson()
-                 
-                  return isPremium
+
+                  final isfreetrailOn = ref
+                      .watch(isfreetrailProvider)
+                      .hasRealSubscription;
+
+                      
+                  debugPrint("Premium status: $isfreetrailOn");
+                  debugPrint("User data: ${user?.toJson()}");
+
+                  return isfreetrailOn == false
                       ? Column(
-                          children: [
-                            Center(
-                              child: Text(
-                                "You already have this plan",
-                                style: style.bodyLarge!.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 30.h),
-                            Utils.primaryButton(
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return SubscriptionCancelDialog();
-                                  },
-                                );
-                              },
-                              backgroundColor: Colors.redAccent,
-                              text: "Cancel Subscription",
-                              height: 54.h,
-                              width: 280.w,
-                            ),
-                          ],
-                        )
-                      : Column(
                           children: [
                             SizedBox(height: 30.h),
                             Consumer(
@@ -205,7 +195,34 @@ class PaymentTile extends StatelessWidget {
                               },
                             ),
                           ],
+                        ): Column(
+                          children: [
+                            Center(
+                              child: Text(
+                                "You already have this plan",
+                                style: style.bodyLarge!.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 30.h),
+                            Utils.primaryButton(
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return SubscriptionCancelDialog();
+                                  },
+                                );
+                              },
+                              backgroundColor: Colors.redAccent,
+                              text: "Cancel Subscription",
+                              height: 54.h,
+                              width: 280.w,
+                            ),
+                          ],
                         );
+                      
                 },
               ),
             ],
