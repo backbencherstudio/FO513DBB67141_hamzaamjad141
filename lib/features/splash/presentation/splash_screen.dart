@@ -6,8 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/routes/route_name.dart';
-import '../../onboarding/riverpod/onboarding_notifier.dart';
+
 import '../splash_provider/splash_provider.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {

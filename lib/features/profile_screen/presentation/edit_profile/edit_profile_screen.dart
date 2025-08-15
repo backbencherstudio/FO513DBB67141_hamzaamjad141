@@ -1,11 +1,11 @@
-// ignore_for_file: unnecessary_null_comparison
-
 import 'package:aviation_app/core/constant/padding.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/core/theme/theme_extension/app_colors.dart';
 import 'package:aviation_app/core/utils/utils.dart';
 import 'package:aviation_app/features/auth_screens/auth_provider/auth_provider.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
+import 'package:aviation_app/features/payment_screen/presentation/widgets/deleteBox.dart';
+import 'package:aviation_app/features/payment_screen/presentation/widgets/subscription_cancel_dialog.dart';
 import 'package:aviation_app/features/profile_screen/presentation/widgets/profile_screen_header.dart';
 import 'package:aviation_app/features/profile_screen/riverpod/deleteAccountProvider.dart';
 import 'package:aviation_app/features/profile_screen/riverpod/profile_provider.dart';
@@ -129,50 +129,25 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                     ),
                     SizedBox(height: 18.h),
 
-                    Consumer(
-                      builder: (context, ref, _) {
-                        final callOut = ref.watch(deleteProvider);
-                      final ok =  ref.watch(authProvider).user!.premium ;
-                        return callOut.isLoading == true
-                            ? Center(child: CircularProgressIndicator())
-                            : Utils.primaryButton(onPressed: (){
-                              debugPrint(ok.toString());
-                            }, text: "test");
-                            
-                            
-                            //  Utils.primaryButton(
-                            //     onPressed: () async {
-                            //       final path = await ref
-                            //           .read(deleteProvider.notifier)
-                            //           .deleteUser();
+               Utils.primaryButton(
+                                onPressed: ()  {
+                                  
 
-                            //       if (path == "ok" && context.mounted) {
-                            //         debugPrint("✅ Routing to SignIn");
-                            //         context.go(
-                            //           RouteName.signInScreen,
-                            //         ); // <-- replace push with go
-                            //         Fluttertoast.showToast(
-                            //           msg: "Successfully deleted the account",
-                            //           backgroundColor: Colors.green,
-                            //           textColor: Colors.white,
-                            //         );
-                            //       } else {
-                            //         Fluttertoast.showToast(
-                            //           msg: "Sorry, network issue!",
-                            //           backgroundColor: Colors.red,
-                            //           textColor: Colors.white,
-
-                            //         );
-                            //       }
-                            //     },
-                            //     backgroundColor: AppColors.surface,
-                            //     text: 'Delete my account',
-                            //   );
+                           showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return confirmDeleteDialog();
+                                  },
+                                );
+                              },
 
 
 
-
-                      },
+                                  
+                                
+                                backgroundColor: AppColors.surface,
+                                text: 'Delete my account',
+                     
                     ),
 
                     SizedBox(height: 40.h),

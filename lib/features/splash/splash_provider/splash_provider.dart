@@ -56,18 +56,27 @@ class SplashProvider extends StateNotifier<SplashState> {
             final inFreeTrial = hoursSinceSignup < 72; // 3 days = 72 hours
 
             debugPrint(
-              "\nAccount Age: ${hoursSinceSignup}h | Premium: ${user.premium} | In Trial: $inFreeTrial\n",
+              "\nAccount Age: ${hoursSinceSignup}h | Premium: ${user.premium} (type: ${user.premium.runtimeType}) | In Trial: $inFreeTrial\n",
             );
 
-            if (user.premium == true || inFreeTrial) {
-              debugPrint("\n✅ Full access granted. Redirecting to weather screen.\n");
+            // Enhanced debugging for premium access
+            debugPrint("\n=== ACCESS CONTROL DEBUG ===");
+            debugPrint("user.premium value: ${user.premium}");
+            debugPrint("user.premium type: ${user.premium.runtimeType}");
+            debugPrint("user.premium == true: ${user.premium == true}");
+            debugPrint("inFreeTrial: $inFreeTrial");
+            debugPrint("Final access granted: ${user.premium == true || inFreeTrial}");
+            debugPrint("=============================\n");
+
+            if (user.premium == true) {
+              debugPrint("\n Full access granted. Redirecting to weather screen.\n");
               return RouteName.weatherScreen;
             } else {
-              debugPrint("\n❌ Access restricted. Redirecting to payment screen.\n");
+              debugPrint("\n Access restricted. Redirecting to payment screen.\n");
               return RouteName.paymentIntro;
             }
           } catch (e) {
-            debugPrint("\n⚠️ Error parsing createdAt: $e\n");
+            debugPrint("\n Error parsing createdAt: $e\n");
             return RouteName.paymentIntro;
           }
         }
