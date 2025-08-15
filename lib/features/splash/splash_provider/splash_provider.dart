@@ -6,42 +6,74 @@ import '../../../core/routes/route_name.dart';
 import '../../../core/services/local_storage_services/shared_preferences_services/sharedPref_service.dart';
 import '../../../core/services/local_storage_services/shared_preferences_services/shared_preferences_key_name.dart';
 
+class SplashState {}
 
-class SplashState{}
-
-final splashProvider = StateNotifierProvider<SplashProvider, SplashState>((ref){
+final splashProvider = StateNotifierProvider<SplashProvider, SplashState>((ref) {
   final authNotifier = ref.read(authProvider.notifier);
-  return SplashProvider(authNotifier);});
+  return SplashProvider(authNotifier);
+});
 
-class SplashProvider extends StateNotifier<SplashState>{
+class SplashProvider extends StateNotifier<SplashState> {
   final AuthProvider authNotifier;
-  SplashProvider(this.authNotifier):super(SplashState());
-   Future<String> handleAppOpeningCount() async {
-    final openingCount = await SharedPreferenceStorageService.getInt(key: SharedPreferencesKeyName.openingCount);
-    if(openingCount == null){
-      await SharedPreferenceStorageService.saveInt(key: SharedPreferencesKeyName.openingCount, value: 1);
+  SplashProvider(this.authNotifier) : super(SplashState());
+
+  Future<String> handleAppOpeningCount() async {
+    final openingCount = await SharedPreferenceStorageService.getInt(
+      key: SharedPreferencesKeyName.openingCount,
+    );
+
+    if (openingCount == null) {
+      await SharedPreferenceStorageService.saveInt(
+        key: SharedPreferencesKeyName.openingCount,
+        value: 1,
+      );
       debugPrint("\nFirst Time App Open.\n");
       return RouteName.onboardingScreen;
-    }
-    else{
-      await SharedPreferenceStorageService.saveInt(key: SharedPreferencesKeyName.openingCount, value: openingCount+1);
+    } else {
+      await SharedPreferenceStorageService.saveInt(
+        key: SharedPreferencesKeyName.openingCount,
+        value: openingCount + 1,
+      );
       debugPrint("\nApp Opening time : $openingCount\n");
-      final userToken = await SharedPreferenceStorageService.getString(key: SharedPreferencesKeyName.userToken);
-      if(userToken != null){
-        debugPrint("\nuser token : $userToken,\n returning to weather screen...\n");
-        final UserModel? user = await authNotifier.initializeUser(userToken: userToken);
-        if(user != null){
-        //
-          if(user.premium == true){
-            return RouteName.weatherScreen;
-          }
-          debugPrint("\npayment false, ri-directing to payment screen\n");
-          return RouteName.paymentIntro;
 
+      final userToken = await SharedPreferenceStorageService.getString(
+        key: SharedPreferencesKeyName.userToken,
+      );
+
+      if (userToken != null) {
+        debugPrint("\nuser token : $userToken\nFetching user data...\n");
+
+        final UserModel? user = await authNotifier.initializeUser(
+          userToken: userToken,
+        );
+
+        if (user != null) {
+          try {
+            final createdAt = DateTime.parse(user.createdAt).toUtc();
+            final now = DateTime.now().toUtc();
+            final hoursSinceSignup = now.difference(createdAt).inHours;
+
+            final inFreeTrial = hoursSinceSignup < 72; // 3 days = 72 hours
+
+            debugPrint(
+              "\nAccount Age: ${hoursSinceSignup}h | Premium: ${user.premium} | In Trial: $inFreeTrial\n",
+            );
+
+            if (user.premium == true || inFreeTrial) {
+              debugPrint("\n✅ Full access granted. Redirecting to weather screen.\n");
+              return RouteName.weatherScreen;
+            } else {
+              debugPrint("\n❌ Access restricted. Redirecting to payment screen.\n");
+              return RouteName.paymentIntro;
+            }
+          } catch (e) {
+            debugPrint("\n⚠️ Error parsing createdAt: $e\n");
+            return RouteName.paymentIntro;
+          }
         }
       }
-      debugPrint("\nuser token : is null,\n returning to sign in screen...\n");
 
+      debugPrint("\nuser token is null. Redirecting to sign in screen...\n");
       return RouteName.signInScreen;
     }
   }
