@@ -132,35 +132,46 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                     Consumer(
                       builder: (context, ref, _) {
                         final callOut = ref.watch(deleteProvider);
+                      final ok =  ref.watch(authProvider).user!.premium ;
                         return callOut.isLoading == true
                             ? Center(child: CircularProgressIndicator())
-                            : Utils.primaryButton(
-                                onPressed: () async {
-                                  final path = await ref
-                                      .read(deleteProvider.notifier)
-                                      .deleteUser();
+                            : Utils.primaryButton(onPressed: (){
+                              debugPrint(ok.toString());
+                            }, text: "test");
+                            
+                            
+                            //  Utils.primaryButton(
+                            //     onPressed: () async {
+                            //       final path = await ref
+                            //           .read(deleteProvider.notifier)
+                            //           .deleteUser();
 
-                                  if (path == "ok" && context.mounted) {
-                                    debugPrint("✅ Routing to SignIn");
-                                    context.go(
-                                      RouteName.signInScreen,
-                                    ); // <-- replace push with go
-                                    Fluttertoast.showToast(
-                                      msg: "Successfully deleted the account",
-                                      backgroundColor: Colors.green,
-                                      textColor: Colors.white,
-                                    );
-                                  } else {
-                                    Fluttertoast.showToast(
-                                      msg: "Sorry, network issue!",
-                                      backgroundColor: Colors.red,
-                                      textColor: Colors.white,
-                                    );
-                                  }
-                                },
-                                backgroundColor: AppColors.surface,
-                                text: 'Delete my account',
-                              );
+                            //       if (path == "ok" && context.mounted) {
+                            //         debugPrint("✅ Routing to SignIn");
+                            //         context.go(
+                            //           RouteName.signInScreen,
+                            //         ); // <-- replace push with go
+                            //         Fluttertoast.showToast(
+                            //           msg: "Successfully deleted the account",
+                            //           backgroundColor: Colors.green,
+                            //           textColor: Colors.white,
+                            //         );
+                            //       } else {
+                            //         Fluttertoast.showToast(
+                            //           msg: "Sorry, network issue!",
+                            //           backgroundColor: Colors.red,
+                            //           textColor: Colors.white,
+
+                            //         );
+                            //       }
+                            //     },
+                            //     backgroundColor: AppColors.surface,
+                            //     text: 'Delete my account',
+                            //   );
+
+
+
+
                       },
                     ),
 
