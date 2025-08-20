@@ -50,19 +50,22 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyChW7Ju6OodQJoA32N5w3_eWQSChRa_VGk',
-    appId: '1:315260108035:android:4f97349215c6241ede7d36',
-    messagingSenderId: '315260108035',
-    projectId: 'hamzamjad-a3152',
-    storageBucket: 'hamzamjad-a3152.firebasestorage.app',
+    apiKey: 'AIzaSyCc2KGDeiBJvIQgNrInk95PC9SA83ZQ3rs',
+    appId: '1:727057154921:android:427ddfb54fb14084e673f8',
+    messagingSenderId: '727057154921',
+    projectId: 'lslapp-c4989',
+    storageBucket: 'lslapp-c4989.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBcawwvfywSpE3O5A8Y4L2u0GQkLy5nFwM',
-    appId: '1:315260108035:ios:4197d4aa98ced140de7d36',
-    messagingSenderId: '315260108035',
-    projectId: 'hamzamjad-a3152',
-    storageBucket: 'hamzamjad-a3152.firebasestorage.app',
+    apiKey: 'AIzaSyD9I3ojfFRrrl4BN5kd1aIAOH7-DI22vIs',
+    appId: '1:727057154921:ios:728474d1353b10b7e673f8',
+    messagingSenderId: '727057154921',
+    projectId: 'lslapp-c4989',
+    storageBucket: 'lslapp-c4989.firebasestorage.app',
+    androidClientId: '727057154921-5frkemdu4l0s0c9bspe756ai7803a3kd.apps.googleusercontent.com',
+    iosClientId: '727057154921-3kem9hnfb8titnimmpo3h1lc067i25mh.apps.googleusercontent.com',
     iosBundleId: 'com.example.aviationApp',
   );
+
 }

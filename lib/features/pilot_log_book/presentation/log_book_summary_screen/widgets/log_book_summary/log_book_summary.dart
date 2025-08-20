@@ -115,9 +115,13 @@ class LogBookSummary extends StatelessWidget {
                 SizedBox(height: 18.h),
                 PrimaryButton(
                   onTap: () {
-                     ref.read(logBookDownloadProvider).downloadLogBook(summary);
+
+                    ref.read(logBookDownloadProvider).downloadLogBookWithProgress(
+                      context: context,
+                      logBookSummaryModel: summary,
+                    );
                   },
-                  bodyText: "Download Logs CSV",
+                  bodyText: "Download Logs Excel",
                 ),
               ],
             ),
