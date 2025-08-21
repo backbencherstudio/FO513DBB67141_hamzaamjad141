@@ -70,8 +70,10 @@ dependencies:
   flutter_html: ^3.0.0
   webview_flutter: ^4.13.0
   app_links: ^6.4.0
-
-
+  excel: ^2.0.4
+  flutter_local_notifications: ^17.2.2
+  open_file: ^3.2.1
+ 
 dev_dependencies:
   flutter_test:
     sdk: flutter

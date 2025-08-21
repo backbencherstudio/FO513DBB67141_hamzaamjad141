@@ -8,11 +8,14 @@ plugins {
 
 android {
     namespace = "com.example.aviation_app"
-    compileSdk = 35
+
+    compileSdk = 36
     ndkVersion = "29.0.13113456"
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
     }
 
     kotlinOptions {
@@ -20,23 +23,20 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.example.aviation_app"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
 
-   buildTypes {
-    getByName("release") {
-        isMinifyEnabled = false
-        isShrinkResources = false
-        signingConfig = signingConfigs.getByName("debug") // or your release signing config
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+            isShrinkResources = false
+            signingConfig = signingConfigs.getByName("debug") // Replace with your release signing config
+        }
     }
-}
 }
 
 flutter {
@@ -48,4 +48,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:21.0.1") // Firebase Authentication
     implementation("com.google.android.gms:play-services-auth:20.4.0") // Google Play Services Auth
     implementation("com.stripe:stripe-android:20.8.0")
+
+    // Required for core library desugaring
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
 }

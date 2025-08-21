@@ -34,11 +34,7 @@ class LogBookNotifier extends StateNotifier<LogBookState> {
       ref.refresh(logBookSummaryProvider);
       debugPrint("\nrefresh complete\n");
     } catch (error) {
-      Fluttertoast.showToast(
-        msg: "Failed to refresh",
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
+      
       throw Exception('Failed to refresh : $error');
     }
   }
