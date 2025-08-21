@@ -4,28 +4,50 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 import 'core/routes/part_of_import.dart';
 import 'core/services/local_storage_services/hive_services.dart';
 import 'core/services/navigation_service/navigation_service.dart';
 import 'core/services/payment_services/stripe_services.dart';
 import 'core/theme/theme.dart';
 
-void main() async {
+// Local notifications plugin instance
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+FlutterLocalNotificationsPlugin();
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Stripe
   await StripeServices.instance.initialize();
 
+  // Initialize Firebase
   await Firebase.initializeApp();
 
-  ///set device orientation to portraitUp during app running for better user experience of the UI
+  // Initialize Local Notifications
+  const AndroidInitializationSettings androidInitSettings =
+  AndroidInitializationSettings('@mipmap/ic_launcher');
+
+  const InitializationSettings initSettings =
+  InitializationSettings(android: androidInitSettings);
+
+  await flutterLocalNotificationsPlugin.initialize(initSettings);
+
+  /// set device orientation to portraitUp during app running
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  ///ensuring screen size for screen util package to implement pixel perfect UI
+  /// ensuring screen size for screen util package
   await ScreenUtil.ensureScreenSize();
+
+  // Run app
   runApp(const ProviderScope(child: MyApp()));
+
+  // Transparent status bar & nav bar styling
   SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent, // Transparent status bar
-      systemNavigationBarColor: Colors.transparent, // Transparent nav bar
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      systemNavigationBarColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.light,
       statusBarIconBrightness: Brightness.light,
     ),
@@ -37,7 +59,6 @@ class MyApp extends StatelessWidget {
   static const double deviceWidth = 375.0;
   static const double deviceHeight = 812.0;
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
