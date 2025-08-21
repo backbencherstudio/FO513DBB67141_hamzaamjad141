@@ -63,9 +63,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '727057154921',
     projectId: 'lslapp-c4989',
     storageBucket: 'lslapp-c4989.firebasestorage.app',
+
     androidClientId: '727057154921-5frkemdu4l0s0c9bspe756ai7803a3kd.apps.googleusercontent.com',
     iosClientId: '727057154921-3kem9hnfb8titnimmpo3h1lc067i25mh.apps.googleusercontent.com',
-    iosBundleId: 'com.example.aviationApp',
+
   );
 
 }

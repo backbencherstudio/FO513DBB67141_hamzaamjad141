@@ -20,20 +20,31 @@ class ApiEndPoints {
   static const String forgetOtp = 'users/verify-top';
   static const String resetpass = 'users/change-password';
   static const String addToFavoriteWeather = 'weather/add-favourite';
-  static const String getFavouriteWeatherList = 'weather/get-favourite?page=1&item=10';
+  static const String getFavouriteWeatherList = 'weather/get-favourite';
   static const String createInstructor = "instructor/create-by-user";
   static const String setInstructor = "instructor/set-instructor/";
   static const String getInstructor = "instructor/my-instructor";
   static const String addLogBook = "addlog/add-addlog";
-  static const String getLogRequestList = "addlog/get-logbook?page=1&limit=100";
+  static const String getLogRequestList = "addlog/get-logbook";
+  
+  // Dynamic pagination endpoints
+  static String getFavouriteWeatherListWithPagination({int page = 1, int limit = 10}) {
+    return 'weather/get-favourite?page=$page&item=$limit';
+  }
+  
+  static String getLogRequestListWithPagination({int page = 1, int limit = 10}) {
+    return 'addlog/get-logbook?page=$page&limit=$limit';
+  }
   static const String deleteLogRequest = 'addlog/delete-log/';
   static const String payment = 'subscription/pay';
   static const String promoCode = 'subscription/subscribe-with-promo';
   static const String logBookSummary = 'addlog/get-logsummary';
   static const String editProfile = 'users/update-user';
   static const String cancelSubscription = 'subscription/cancel';
+  static const String subscriptionStatus = 'subscription/status';
 
   static const String resendOtp = 'users/resent-otp';
   static const String paymentWebPage = 'subscription/create-checkout-session';
   static const String deleteAccount = 'users/delete';
+  static const String isfreetrail = 'subscription/check-real-subscription';
 }

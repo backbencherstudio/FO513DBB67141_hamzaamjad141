@@ -8,6 +8,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'core/routes/part_of_import.dart';
 import 'core/services/local_storage_services/hive_services.dart';
+import 'core/services/navigation_service/navigation_service.dart';
 import 'core/services/payment_services/stripe_services.dart';
 import 'core/theme/theme.dart';
 

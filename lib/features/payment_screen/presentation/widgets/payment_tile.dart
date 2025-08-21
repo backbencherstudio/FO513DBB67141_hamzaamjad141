@@ -1,27 +1,43 @@
 import 'package:aviation_app/core/constant/icons.dart';
 import 'package:aviation_app/core/constant/images.dart';
-import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/core/utils/utils.dart';
 import 'package:aviation_app/features/payment_screen/presentation/widgets/subscription_cancel_dialog.dart';
 import 'package:aviation_app/features/payment_screen/Riverpod/payment_provider.dart';
+import 'package:aviation_app/features/splash/splash_provider/isfreetrailProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../auth_screens/auth_provider/auth_provider.dart';
 import '../payment_screen.dart';
 
-class PaymentTile extends StatelessWidget {
+class PaymentTile extends ConsumerStatefulWidget {
   const PaymentTile({super.key});
+
+  @override
+  ConsumerState<PaymentTile> createState() => _PaymentTileState();
+}
+
+class _PaymentTileState extends ConsumerState<PaymentTile> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      ref.read(isfreetrailProvider.notifier).checkFreeTrialStatus();
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
     final style = Theme.of(context).textTheme;
     return Stack(
       children: [
-        Opacity(opacity: 0.5, child: Image.asset(AppImages.priceBg,width: 330.w,)),
+        Opacity(
+          opacity: 0.5,
+          child: Image.asset(AppImages.priceBg, width: 330.w),
+        ),
         Positioned(
           top: 32.h,
           left: 24.w,
@@ -135,13 +151,55 @@ class PaymentTile extends StatelessWidget {
               SizedBox(height: 6.h),
               Consumer(
                 builder: (context, ref, child) {
-                  final isPremium = ref.watch(authProvider).user!.premium;
-                  return isPremium
+                  final user = ref.watch(authProvider).user;
+                  final isPremium = user?.premium ?? false;
+
+                  final isfreetrailOn = ref
+                      .watch(isfreetrailProvider)
+                      .hasRealSubscription;
+
+                      
+                  debugPrint("Premium status: $isfreetrailOn");
+                  debugPrint("User data: ${user?.toJson()}");
+
+                  return isfreetrailOn == false
                       ? Column(
+                          children: [
+                            SizedBox(height: 30.h),
+                            Consumer(
+                              builder: (_, ref, _) {
+                                final bool isLoading = ref
+                                    .watch(paymentProvider)
+                                    .isWebPageButtonLoading;
+                                return Utils.primaryButton(
+                                  isLoading: isLoading,
+                                  onPressed: () async {
+                                    final url = await ref
+                                        .read(paymentProvider.notifier)
+                                        .makePayment();
+                                    debugPrint("Payment URL: $url");
+                                    if (url != null) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              PaymentWebView(paymentUrl: url),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  text: "Get Full Access",
+                                  height: 54.h,
+                                  width: 280.w,
+                                );
+                              },
+                            ),
+                          ],
+                        ): Column(
                           children: [
                             Center(
                               child: Text(
-                                "You have already this plan",
+                                "You already have this plan",
                                 style: style.bodyLarge!.copyWith(
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -163,33 +221,10 @@ class PaymentTile extends StatelessWidget {
                               width: 280.w,
                             ),
                           ],
-                        )
-                      : Column(
-                          children: [
-                            SizedBox(height: 30.h),
-                            Consumer(
-                                builder: (_, ref, _) {
-                                  final bool isLoading = ref.watch(paymentProvider).isWebPageButtonLoading;
-                                  return
-                                    Utils.primaryButton(
-                                      isLoading: isLoading,
-                                      onPressed: ()  async {
-                                        final url = await ref.read(paymentProvider.notifier).makePayment();
-                                        debugPrint("\nurl in screen : $url\n");
-                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentWebView(paymentUrl: url!,)));
-
-                                        //   context.push(RouteName.payment);
-                                      },
-                                      text: "Get Full Access",
-                                      height: 54.h,
-                                      width: 280.w,
-                                    );
-                                }
-                            ),
-                          ],
                         );
+                      
                 },
-              )
+              ),
             ],
           ),
         ),
@@ -197,4 +232,3 @@ class PaymentTile extends StatelessWidget {
     );
   }
 }
-

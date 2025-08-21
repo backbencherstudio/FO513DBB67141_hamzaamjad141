@@ -157,6 +157,12 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                                       textColor: Colors.white,
                                     );
                                   }
+
+
+
+
+
+                                  
                                 },
                                 backgroundColor: AppColors.surface,
                                 text: 'Delete my account',

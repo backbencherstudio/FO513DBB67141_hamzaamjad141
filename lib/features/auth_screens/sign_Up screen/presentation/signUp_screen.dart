@@ -2,7 +2,6 @@ import 'package:aviation_app/core/constant/icons.dart';
 import 'package:aviation_app/core/constant/padding.dart';
 import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/core/utils/common_widget/primary_button/primary_button.dart';
-import 'package:aviation_app/core/utils/utils.dart';
 import 'package:aviation_app/features/auth_screens/auth_provider/auth_provider.dart';
 import 'package:aviation_app/features/auth_screens/sign_Up%20screen/Riverpod/isVisible_provider.dart';
 import 'package:aviation_app/features/auth_screens/sign_Up%20screen/presentation/widgets/customAnimatedContainer.dart';

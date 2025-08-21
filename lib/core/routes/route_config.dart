@@ -3,6 +3,7 @@ part of 'part_of_import.dart';
 class RouteConfig {
   GoRouter goRouter = GoRouter(
     initialLocation: RouteName.splashScreen,
+    navigatorKey: NavigationService.instance.navigatorKey,
 
     routes: [
       /// Bottom NavBar

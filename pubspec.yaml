@@ -74,10 +74,6 @@ dependencies:
   flutter_local_notifications: ^17.2.2
   open_file: ^3.2.1
 
-
-
-
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

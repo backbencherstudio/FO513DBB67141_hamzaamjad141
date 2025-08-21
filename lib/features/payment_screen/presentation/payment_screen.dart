@@ -97,6 +97,7 @@ class _PaymentWebViewState extends State<PaymentWebView> {
         textColor: Colors.white,
       );
       context.go(RouteName.weatherScreen);
+      
       // Navigator.pushReplacementNamed(context, '/success', arguments: sessionId);
     }
   }

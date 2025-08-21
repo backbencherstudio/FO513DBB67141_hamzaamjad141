@@ -122,29 +122,70 @@ class WeatherNotifier extends StateNotifier<WeatherState> {
     }
   }
 
-  /// get favorite weather list
-  Future<void> getFavouriteWeatherList() async {
+  /// get favorite weather list with pagination
+  Future<void> getFavouriteWeatherList({int page = 1, int limit = 10, bool loadMore = false}) async {
     try {
+      if (loadMore) {
+        state = state.copyWith(favouriteIsLoadingMore: true);
+      } else {
+        state = state.copyWith(
+          favouriteIsLoading: true, 
+          favouriteCurrentPage: 1, 
+          favouriteHasMoreData: true
+        );
+      }
+
       final response = await ApiServices.instance.getData(
-        endPoint: ApiEndPoints.getFavouriteWeatherList,
+        endPoint: ApiEndPoints.getFavouriteWeatherListWithPagination(page: page, limit: limit),
         headers: {"Authorization": userToken},
       );
+      
       if (response['success'] == true) {
-        // final List<dynamic>? favouriteWeatherList = response['data'].map((item)
-        // =>WeatherModel.fromJson(item['weatherData'])).toList();
-
-        final List<WeatherModel> favouriteWeatherList =
+        final List<WeatherModel> newFavouriteWeatherList =
             (response['data'] as List<dynamic>)
                 .map((item) => WeatherModel.fromJson(item['weatherData']))
                 .toList();
-        if (favouriteWeatherList.isNotEmpty) {
-          state = state.copyWith(favouriteWeatherList: favouriteWeatherList);
+        
+        List<WeatherModel> updatedList;
+        if (loadMore) {
+          // Append new data to existing list
+          updatedList = [...state.favouriteWeatherList, ...newFavouriteWeatherList];
+        } else {
+          // Replace with new data (first load or refresh)
+          updatedList = newFavouriteWeatherList;
         }
+        
+        // Check if there's more data available
+        final hasMoreData = newFavouriteWeatherList.length == limit;
+        
+        state = state.copyWith(
+          favouriteWeatherList: updatedList,
+          favouriteCurrentPage: page,
+          favouriteHasMoreData: hasMoreData,
+          favouriteIsLoading: false,
+          favouriteIsLoadingMore: false,
+        );
       } else {
         debugPrint("\n Failed to fetch favourite weather list\n");
+        state = state.copyWith(
+          favouriteIsLoading: false,
+          favouriteIsLoadingMore: false,
+          favouriteHasMoreData: false,
+        );
       }
     } catch (error) {
+      state = state.copyWith(
+        favouriteIsLoading: false,
+        favouriteIsLoadingMore: false,
+      );
       throw Exception('Exception while fetching favourite list : $error');
+    }
+  }
+
+  /// Load more favorite weather
+  Future<void> loadMoreFavouriteWeather() async {
+    if (state.favouriteHasMoreData && !state.favouriteIsLoadingMore) {
+      await getFavouriteWeatherList(page: state.favouriteCurrentPage + 1, loadMore: true);
     }
   }
 

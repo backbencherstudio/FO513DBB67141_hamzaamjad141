@@ -72,9 +72,20 @@ class AuthProvider extends StateNotifier<AuthState> {
           userToken: userToken,
         );
         debugPrint("\nuser token : $userToken.\n");
+        
+        // Enhanced debugging for premium access during Google login
+        debugPrint("\n=== GOOGLE LOGIN ACCESS CONTROL DEBUG ===");
+        debugPrint("user.premium value: ${user.premium}");
+        debugPrint("user.premium type: ${user.premium.runtimeType}");
+        debugPrint("user.premium == true: ${user.premium == true}");
+        debugPrint("Raw response['user']['premium']: ${response['user']['premium']}");
+        debugPrint("==========================================\n");
+        
         if (user.premium == true) {
+          debugPrint("\n✅ Premium Google user detected. Redirecting to weather screen.\n");
           return RouteName.weatherScreen;
         } else {
+          debugPrint("\n❌ Non-premium Google user. Redirecting to payment screen.\n");
           return RouteName.paymentIntro;
         }
 
@@ -119,9 +130,19 @@ class AuthProvider extends StateNotifier<AuthState> {
         state = state.copyWith(isLoading: false, userToken: token, user: user);
         debugPrint("Login successful. User ID: ${state.user?.id}");
 
+        // Enhanced debugging for premium access during login
+        debugPrint("\n=== LOGIN ACCESS CONTROL DEBUG ===");
+        debugPrint("user.premium value: ${user.premium}");
+        debugPrint("user.premium type: ${user.premium.runtimeType}");
+        debugPrint("user.premium == true: ${user.premium == true}");
+        debugPrint("Raw userJson['premium']: ${userJson['premium']}");
+        debugPrint("======================================\n");
+
         if (user.premium == true) {
+          debugPrint("\n✅ Premium user detected. Redirecting to weather screen.\n");
           return RouteName.weatherScreen;
         } else {
+          debugPrint("\n❌ Non-premium user. Redirecting to payment screen.\n");
           return RouteName.paymentIntro;
         }
 
