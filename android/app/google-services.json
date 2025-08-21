@@ -14,11 +14,13 @@
       },
       "oauth_client": [
         {
+
           "client_id": "727057154921-ij1sltuuh4ddilq8qrorof07g18gk65e.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.aviation_app",
             "certificate_hash": "3ab53a44982ce3da857f9066ddb317584aaf0d2d"
+
           }
         },
         {
