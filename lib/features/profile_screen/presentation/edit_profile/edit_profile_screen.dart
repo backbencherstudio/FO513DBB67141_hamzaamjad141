@@ -6,6 +6,7 @@ import 'package:aviation_app/core/theme/theme_extension/app_colors.dart';
 import 'package:aviation_app/core/utils/utils.dart';
 import 'package:aviation_app/features/auth_screens/auth_provider/auth_provider.dart';
 import 'package:aviation_app/features/create_screen/create_screen.dart';
+import 'package:aviation_app/features/profile_screen/presentation/edit_profile/widget/deleteBottomSheet.dart';
 import 'package:aviation_app/features/profile_screen/presentation/widgets/profile_screen_header.dart';
 import 'package:aviation_app/features/profile_screen/riverpod/deleteAccountProvider.dart';
 import 'package:aviation_app/features/profile_screen/riverpod/profile_provider.dart';
@@ -129,48 +130,29 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                     ),
                     SizedBox(height: 18.h),
 
-                    Consumer(
-                      builder: (context, ref, _) {
-                        final callOut = ref.watch(deleteProvider);
-                        return callOut.isLoading == true
-                            ? Center(child: CircularProgressIndicator())
-                            : Utils.primaryButton(
-                                onPressed: () async {
-                                  final path = await ref
-                                      .read(deleteProvider.notifier)
-                                      .deleteUser();
+               
+                        
+                        
+                        
+                            Utils.primaryButton(
+                                onPressed: ()  {
+                                  
 
-                                  if (path == "ok" && context.mounted) {
-                                    debugPrint("✅ Routing to SignIn");
-                                    context.go(
-                                      RouteName.signInScreen,
-                                    ); // <-- replace push with go
-                                    Fluttertoast.showToast(
-                                      msg: "Successfully deleted the account",
-                                      backgroundColor: Colors.green,
-                                      textColor: Colors.white,
-                                    );
-                                  } else {
-                                    Fluttertoast.showToast(
-                                      msg: "Sorry, network issue!",
-                                      backgroundColor: Colors.red,
-                                      textColor: Colors.white,
-                                    );
-                                  }
-
-
-
+confirmDeleteBottomSheet(
+  context: context,
+  onDelete: (){}
+);
 
 
                                   
                                 },
                                 backgroundColor: AppColors.surface,
                                 text: 'Delete my account',
-                              );
-                      },
+                     
                     ),
 
                     SizedBox(height: 40.h),
+                    
                   ],
                 ),
               ),
