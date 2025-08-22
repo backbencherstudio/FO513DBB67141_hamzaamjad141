@@ -44,22 +44,20 @@ class LogBookDownloadService {
       // Use the default Sheet1 instead of creating a new one
       final sheet = excel['Sheet1'];
       
-      // Add header row for columns (Metric, Value)
-      sheet.appendRow(["Metric", "Value"]);
+      // Create headers in first row (each metric becomes a column header)
+      List<String> headers = [];
+      List<String> values = [];
       
-      // Add all data in columns
-      int rowIndex = 1; // Start from row 2 (after header at row 1)
       for (var entry in logBookSummaryMap.entries) {
-        // Add metric in first column (Column A)
-        var metricCell = sheet.cell(CellIndex.indexByString("A${rowIndex + 1}"));
-        metricCell.value = entry.key;
-        
-        // Add value in second column (Column B)
-        var valueCell = sheet.cell(CellIndex.indexByString("B${rowIndex + 1}"));
-        valueCell.value = entry.value.toString();
-        
-        rowIndex++;
+        headers.add(entry.key);
+        values.add(entry.value.toString());
       }
+      
+      // Add header row (metrics as column headers)
+      sheet.appendRow(headers);
+      
+      // Add values row (values under their respective headers)
+      sheet.appendRow(values);
 
       Directory directory;
       if (Platform.isAndroid) {
@@ -186,7 +184,7 @@ class LogBookDownloadService {
     }
   }
 
-  // Alternative simpler approach using appendRow for each entry
+  // Alternative simpler approach - data in columns format
   Future<void> downloadLogBookWithProgressSimple({
     required BuildContext context,
     required LogBookSummaryModel logBookSummaryModel,
@@ -209,13 +207,20 @@ class LogBookDownloadService {
       // Use the default Sheet1
       final sheet = excel['Sheet1'];
       
-      // Add header row
-      sheet.appendRow(["Metric", "Value"]);
+      // Create headers and values lists
+      List<String> headers = [];
+      List<String> values = [];
       
-      // Add all data as separate rows (each row has metric and value)
       for (var entry in logBookSummaryMap.entries) {
-        sheet.appendRow([entry.key, entry.value.toString()]);
+        headers.add(entry.key);
+        values.add(entry.value.toString());
       }
+      
+      // Add header row (each metric as column header)
+      sheet.appendRow(headers);
+      
+      // Add values row (values under their respective headers)
+      sheet.appendRow(values);
 
       Directory directory;
       if (Platform.isAndroid) {
@@ -341,7 +346,7 @@ class LogBookDownloadService {
     }
   }
 
-  // CSV version with data in columns
+  // CSV version with data in columns (headers on first row, values on second row)
   Future<void> downloadLogBookAsCSV({
     required BuildContext context,
     required LogBookSummaryModel logBookSummaryModel,
@@ -358,11 +363,23 @@ class LogBookDownloadService {
 
       final Map<String, dynamic> logBookSummaryMap = logBookSummaryModel.toJson();
       
-      // Create CSV content with header
-      String csvContent = "Metric,Value\n";
+      // Create CSV content with headers in first row and values in second row
+      String headerRow = "";
+      String valueRow = "";
+      
+      // Build header row (metric names)
+      List<String> headers = [];
+      List<String> values = [];
+      
       for (var entry in logBookSummaryMap.entries) {
-        csvContent += '"${entry.key.replaceAll('"', '""')}","${entry.value.toString().replaceAll('"', '""')}"\n';
+        headers.add('"${entry.key.replaceAll('"', '""')}"');
+        values.add('"${entry.value.toString().replaceAll('"', '""')}"');
       }
+      
+      headerRow = headers.join(',');
+      valueRow = values.join(',');
+      
+      String csvContent = "$headerRow\n$valueRow\n";
 
       Directory directory;
       if (Platform.isAndroid) {
