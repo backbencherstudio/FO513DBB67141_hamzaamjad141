@@ -36,6 +36,15 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+    <string>This app uses speech recognition to process your voice commands.</string>
+
+    <key>NSMicrophoneUsageDescription</key>
+    <string>This app needs microphone access to capture your voice commands.</string>
+
+    <key>NSCameraUsageDescription</key>
+    <string>This app needs camera access if you want to scan weather reports or images.</string>
+
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
