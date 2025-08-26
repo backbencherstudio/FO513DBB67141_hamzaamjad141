@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>727057154921-3kem9hnfb8titnimmpo3h1lc067i25mh.apps.googleusercontent.com</string>
+	<string>727057154921-ajt0qsl4rr2725090e07lrt8bejhrmbc.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.727057154921-3kem9hnfb8titnimmpo3h1lc067i25mh</string>
+	<string>com.googleusercontent.apps.727057154921-ajt0qsl4rr2725090e07lrt8bejhrmbc</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>727057154921-0qa16heuqvfb3o81keug1ra4n8uil4ag.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.aviationApp</string>
+	<string>com.aviationApp</string>
 	<key>PROJECT_ID</key>
 	<string>lslapp-c4989</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:727057154921:ios:728474d1353b10b7e673f8</string>
+	<string>1:727057154921:ios:dd68567585526712e673f8</string>
 </dict>
 </plist>
