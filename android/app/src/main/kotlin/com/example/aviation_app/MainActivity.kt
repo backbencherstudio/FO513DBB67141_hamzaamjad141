@@ -1,4 +1,4 @@
-package com.example.aviation_app
+package com.leftseatlessons.app
 
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.android.FlutterFragmentActivity
