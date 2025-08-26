@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.aviation_app">
+    package="com.leftseatlessons.app">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
@@ -33,7 +33,7 @@
 
     <application
 
-        android:label="Left Seat"
+        android:label="Left Seat Lessons"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
 

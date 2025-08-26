@@ -4,6 +4,12 @@
 <dict>
     <key>NSMicrophoneUsageDescription</key>
     <string>We need access to your microphone for [feature]</string>
+	<key>NSLocalNetworkUsageDescription</key>
+    <string>This app uses the local network to connect to the Dart VM service.</string>
+	<key>UIBackgroundModes</key>
+    <array>
+    <string>remote-notification</string>
+    </array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
