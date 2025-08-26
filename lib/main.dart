@@ -19,17 +19,25 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize Stripe
-  await StripeServices.instance.initialize();
 
+    await StripeServices.instance.initialize();
+  
   // Initialize Firebase
   await Firebase.initializeApp();
 
   // Initialize Local Notifications
   const AndroidInitializationSettings androidInitSettings =
   AndroidInitializationSettings('@mipmap/ic_launcher');
-
+    const DarwinInitializationSettings iosInitSettings = DarwinInitializationSettings(
+    requestAlertPermission: true,
+    requestBadgePermission: true,
+    requestSoundPermission: true,
+  );
   const InitializationSettings initSettings =
-  InitializationSettings(android: androidInitSettings);
+  InitializationSettings(android: androidInitSettings,
+      iOS: iosInitSettings,
+
+  );
 
   await flutterLocalNotificationsPlugin.initialize(initSettings);
 
@@ -77,3 +85,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
