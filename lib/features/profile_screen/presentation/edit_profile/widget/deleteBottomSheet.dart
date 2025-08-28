@@ -18,7 +18,7 @@ Future<void> confirmDeleteBottomSheet({
       final textTheme = Theme.of(context).textTheme;
       return Container(
         width: 375,
-        height: 370,
+        height: 390,
         padding: EdgeInsets.only(
           left: 24,
           right: 24,

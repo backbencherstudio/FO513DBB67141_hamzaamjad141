@@ -1,5 +1,6 @@
 import 'dart:convert';
-
+import 'dart:math';
+import 'package:crypto/crypto.dart'; 
 import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/core/services/api_services/api_endpoints.dart';
 import 'package:aviation_app/core/services/api_services/api_services.dart';
@@ -7,11 +8,13 @@ import 'package:aviation_app/core/services/local_storage_services/shared_prefere
 import 'package:aviation_app/core/services/local_storage_services/shared_preferences_services/shared_preferences_key_name.dart';
 import 'package:aviation_app/features/auth_screens/auth_provider/auth_state.dart';
 import 'package:aviation_app/features/auth_screens/model/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import '../../../core/services/google_account_services/google_account_service.dart';
 
 final authProvider = StateNotifierProvider<AuthProvider, AuthState>((ref) {
@@ -44,6 +47,224 @@ class AuthProvider extends StateNotifier<AuthState> {
     }
   }
 
+
+
+
+
+
+
+//====================apple===================
+Future<String> createAccountWithApple() async {
+  try {
+    // Generate a secure random nonce
+    String generateNonce([int length = 32]) {
+      const charset =
+          '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
+      final random = Random.secure();
+      return List.generate(length, (_) => charset[random.nextInt(charset.length)])
+          .join();
+    }
+
+    // Hash string to SHA256
+    String sha256ofString(String input) {
+      final bytes = utf8.encode(input);
+      final digest = sha256.convert(bytes);
+      return digest.toString();
+    }
+
+    final rawNonce = generateNonce();
+    final nonce = sha256ofString(rawNonce);
+
+    // Request Apple credentials with proper configuration
+    final appleCredential = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+      nonce: nonce,
+      webAuthenticationOptions: WebAuthenticationOptions(
+        // Use the redirect URL from Firebase
+        clientId: nonce,
+        redirectUri: Uri.parse('https://lslapp-c4989.firebaseapp.com/__/auth/handler'),
+      ),
+    );
+
+    debugPrint("🍎 Apple credential: "
+        "email=${appleCredential.email}, "
+        "name=${appleCredential.givenName} ${appleCredential.familyName}, "
+        "idToken=${appleCredential.identityToken}, "
+        "authCode=${appleCredential.authorizationCode}");
+
+    // Verify the identity token is not null
+    if (appleCredential.identityToken == null) {
+      debugPrint("❌ Apple identityToken is null");
+      Fluttertoast.showToast(
+        msg: "Apple sign-in failed: No identity token",
+        backgroundColor: Colors.red,
+        textColor: Colors.white
+      );
+      return RouteName.signInScreen;
+    }
+
+    // Firebase OAuth credential
+    final oauthCredential = OAuthProvider("apple.com").credential(
+      idToken: appleCredential.identityToken,
+      rawNonce: rawNonce,
+    );
+
+    final userCredential = await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+
+    // If Firebase sign-in succeeds
+    if (userCredential.user != null) {
+      final user = userCredential.user;
+
+      // Apple gives email/name only on first login → fallback otherwise
+      String name = "Apple User";
+      if (appleCredential.givenName != null && appleCredential.familyName != null) {
+        name = "${appleCredential.givenName} ${appleCredential.familyName}";
+      } else if (user?.displayName != null) {
+        name = user!.displayName!;
+      }
+
+      String email = user?.email ?? "";
+      if (appleCredential.email != null) {
+        email = appleCredential.email!;
+      }
+
+      // If email is still empty, try to get it from Firebase user
+      if (email.isEmpty) {
+        // Refresh user data to get email if available
+        await user?.reload();
+        final refreshedUser = FirebaseAuth.instance.currentUser;
+        email = refreshedUser?.email ?? "";
+      }
+
+      // Prepare API request for Apple login
+      final body = {
+        "name": name,
+        "email": email,
+        "image": "https://as2.ftcdn.net/v2/jpg/02/70/34/31/1000_F_270343143_8pIbNFLxRNAEfK8uQv8JRpLtR9X9nlIm.jpg", 
+        "idToken": appleCredential.identityToken,
+        "authorizationCode": appleCredential.authorizationCode,
+        "provider": "apple",
+        "firebaseUid": user?.uid, // Send Firebase UID for better identification
+      };
+
+      final headers = {"Content-Type": "application/json"};
+
+      // Try Apple endpoint first, fallback to Google if not available
+      final String endpoint =  ApiEndPoints.googleLogin;
+      
+      debugPrint("📡 Calling endpoint: $endpoint");
+      debugPrint("📦 Request body: $body");
+
+      final response = await ApiServices.instance.postData(
+        endPoint: endpoint,
+        body: body,
+        headers: headers,
+      );
+
+      debugPrint("\n🍎 Apple Login API Response: $response\n");
+
+      if (response == null || response['success'] != true) {
+        debugPrint("❌ Apple Login failed on backend: ${response?['message']}");
+        Fluttertoast.showToast(
+          msg: response?['message'] ?? "Apple login failed. Please try again.",
+          backgroundColor: Colors.red,
+          textColor: Colors.white
+        );
+        
+        // Sign out from Firebase if backend failed
+        await FirebaseAuth.instance.signOut();
+        return RouteName.signInScreen;
+      }
+
+      // Parse user
+      final UserModel userModel = UserModel.fromJson(response['user']);
+      final userToken = response['token'];
+
+      // Save user token locally
+      await SharedPreferenceStorageService.saveString(
+        SharedPreferencesKeyName.userToken,
+        userToken ?? "",
+      );
+
+      // Update app state
+      state = state.copyWith(
+        appleUser: user,
+        user: userModel,
+        userToken: userToken,
+      );
+
+      // Debugging
+      debugPrint("\n=== APPLE LOGIN SUCCESS ===");
+      debugPrint("User Name: ${userModel.name}");
+      debugPrint("User Email: ${userModel.email}");
+      debugPrint("User Premium: ${userModel.premium}");
+      debugPrint("User Token: $userToken");
+      debugPrint("==========================\n");
+
+      // Show success message
+      Fluttertoast.showToast(
+        msg: "Apple sign-in successful",
+        backgroundColor: Colors.green,
+        textColor: Colors.white
+      );
+
+      // Redirect based on premium status
+      return userModel.premium == true
+          ? RouteName.weatherScreen
+          : RouteName.paymentIntro;
+    }
+
+    return RouteName.signInScreen;
+  } on SignInWithAppleAuthorizationException catch (e) {
+    debugPrint("❌ Apple Authorization Exception: ${e.code} - ${e.message}");
+    
+    if (e.code == AuthorizationErrorCode.canceled) {
+      debugPrint("🚪 User canceled Apple sign-in");
+      Fluttertoast.showToast(
+        msg: "Apple sign-in cancelled",
+        backgroundColor: Colors.orange,
+        textColor: Colors.white
+      );
+    } else if (e.code == AuthorizationErrorCode.invalidResponse) {
+      debugPrint("❌ Invalid response from Apple");
+      Fluttertoast.showToast(
+        msg: "Invalid response from Apple. Please try again.",
+        backgroundColor: Colors.red,
+        textColor: Colors.white
+      );
+    } else {
+      debugPrint("❌ Other Apple auth error: $e");
+      Fluttertoast.showToast(
+        msg: "Apple sign-in failed. Please try again.",
+        backgroundColor: Colors.red,
+        textColor: Colors.white
+      );
+    }
+    return RouteName.signInScreen;
+  } on FirebaseAuthException catch (e) {
+    debugPrint("❌ Firebase Auth Exception: ${e.code} - ${e.message}");
+    Fluttertoast.showToast(
+      msg: "Authentication failed: ${e.message}",
+      backgroundColor: Colors.red,
+      textColor: Colors.white
+    );
+    return RouteName.signInScreen;
+  } catch (error, stack) {
+    debugPrint("❌ Apple Sign-In Exception: $error");
+    debugPrint("Stack: $stack");
+    Fluttertoast.showToast(
+      msg: "An error occurred during Apple sign-in",
+      backgroundColor: Colors.red,
+      textColor: Colors.white
+    );
+    return RouteName.signInScreen;
+  }
+}
+
+//=========================================
   Future<String> createAccountWithGoogle() async {
     try {
       final googleUserModel = await GoogleAccountService().signInWithGoogle();

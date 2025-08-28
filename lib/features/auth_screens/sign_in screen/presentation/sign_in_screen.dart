@@ -4,6 +4,7 @@ import 'package:aviation_app/core/routes/route_name.dart';
 import 'package:aviation_app/core/utils/common_widget/primary_button/primary_button.dart';
 import 'package:aviation_app/features/auth_screens/auth_provider/auth_provider.dart';
 import 'package:aviation_app/features/auth_screens/sign_Up%20screen/Riverpod/isVisible_provider.dart';
+import 'package:aviation_app/features/auth_screens/sign_Up%20screen/presentation/widgets/custom_apple.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/customForgetME_section.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/custom_textformfiled.dart';
 import 'package:aviation_app/features/auth_screens/sign_in%20screen/presentation/widget/richtext.dart';
@@ -127,6 +128,13 @@ class _SignInScreenState extends State<SignInScreen> {
               text: 'Continue With Google',
               img: AppIcons.google,
             ),
+            SizedBox(height: 24.h),
+
+               AppleLoginButton(
+              text: 'Continue With apple',
+              img: AppIcons.apple,
+            ),
+
             SizedBox(height: 64.h),
             SignInOrSignUp(
               text: 'Sign up',
